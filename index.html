@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Study Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f1e7; --surface:#fff; --text:#201c15; --muted:#6f6858; --border:#ddd3ba;
+          --chem:#2f5d9e; --chem-bg:#dde7f6; --phys:#a8641f; --phys-bg:#f3e4ce;
+          --shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14161c; --surface:#1d2027; --text:#ece7db; --muted:#9a9385; --border:#333844;
+            --chem:#7fa8ea; --chem-bg:#1e2c46; --phys:#d99a52; --phys-bg:#3a2c19;
+            --shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3); }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:28px 16px 48px; }
+  .wrap { max-width:640px; margin:0 auto; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-size:clamp(26px,7vw,34px); margin:0 0 4px; letter-spacing:-.01em; }
+  .sub { color:var(--muted); font-size:14px; margin:0 0 26px; line-height:1.5; }
+  h2 { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:26px 0 10px; }
+  a.tool { display:block; text-decoration:none; color:inherit; background:var(--surface); border:1px solid var(--border);
+           border-radius:16px; box-shadow:var(--shadow); padding:16px 18px; margin-bottom:10px; }
+  a.tool:hover { border-color:var(--muted); }
+  .tag { display:inline-block; font:600 10.5px "IBM Plex Mono",monospace; padding:3px 9px; border-radius:99px; margin-bottom:8px; }
+  .t { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:18px; margin:0 0 4px; }
+  .d { color:var(--muted); font-size:13.5px; line-height:1.5; margin:0; }
+  .empty { color:var(--muted); font-size:13.5px; font-style:italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Study Tools</h1>
+  <p class="sub">Interactive practice for Chemistry and Physics. Works on any phone or laptop browser.</p>
+
+  <h2>Chemistry</h2>
+  <a class="tool" href="trends-to-bonds/">
+    <span class="tag" style="color:var(--chem);background:var(--chem-bg)">Interactive</span>
+    <p class="t">Trends to Bonds</p>
+    <p class="d">Four modules: compare periodic trends, build an ionic bond step by step, slide along the bond-character spectrum, and a quiz on naming covalent compounds.</p>
+  </a>
+  <a class="tool" href="bonding-flashcards/">
+    <span class="tag" style="color:var(--chem);background:var(--chem-bg)">Flashcards</span>
+    <p class="t">Bonding &amp; Formulas</p>
+    <p class="d">149 cards on electronegativity, metallic, ionic and covalent bonds, alloys, ions and naming with prefixes. Browse them all, or use Study mode for shuffled self-testing.</p>
+  </a>
+
+  <h2>Physics</h2>
+  <p class="empty">Coming soon.</p>
+</div>
+</body>
+</html>

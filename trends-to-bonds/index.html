@@ -1,0 +1,1178 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body><a href="../" style="position:relative;z-index:5;display:inline-block;margin:12px 16px 0;font:12.5px -apple-system,BlinkMacSystemFont,sans-serif;color:#6f6858;text-decoration:none">← All study tools</a>
+<title>Trends to Bonds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface-2:#F5F7FA; --ink:#141D29; --ink-2:#4B5769; --ink-3:#6E7A8C; --line:#D3DAE4;
+  --metal:#B9531C; --metal-soft:#F8E6DA; --nonmetal:#1C5FB0; --nonmetal-soft:#DDE8F7;
+  --en-lo:#EEF3FA; --en-hi:#16407F; --en-text-lo:#141D29; --en-text-hi:#FFFFFF;
+  --orb:rgba(20,29,41,.09); --orb-line:rgba(20,29,41,.30);
+  --warn:#9A5B00; --focus:#1C5FB0; --ok:#1E7A46; --bad:#B42318;
+  --shadow:0 1px 2px rgba(20,29,41,.06),0 10px 28px rgba(20,29,41,.07);
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1219; --surface:#151D27; --surface-2:#1A2430; --ink:#E6EBF2; --ink-2:#A6B2C2; --ink-3:#7C899B; --line:#29343F;
+    --metal:#F0894A; --metal-soft:#3A2518; --nonmetal:#6AABF3; --nonmetal-soft:#172A42;
+    --en-lo:#1A2330; --en-hi:#84BBFF; --en-text-lo:#E6EBF2; --en-text-hi:#0D1219;
+    --orb:rgba(230,235,242,.09); --orb-line:rgba(230,235,242,.34);
+    --warn:#E3A948; --focus:#6AABF3; --ok:#5CC98A; --bad:#F07A6E; --shadow:0 1px 0 rgba(255,255,255,.03);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1219; --surface:#151D27; --surface-2:#1A2430; --ink:#E6EBF2; --ink-2:#A6B2C2; --ink-3:#7C899B; --line:#29343F;
+  --metal:#F0894A; --metal-soft:#3A2518; --nonmetal:#6AABF3; --nonmetal-soft:#172A42;
+  --en-lo:#1A2330; --en-hi:#84BBFF; --en-text-lo:#E6EBF2; --en-text-hi:#0D1219;
+  --orb:rgba(230,235,242,.09); --orb-line:rgba(230,235,242,.34);
+  --warn:#E3A948; --focus:#6AABF3; --ok:#5CC98A; --bad:#F07A6E; --shadow:0 1px 0 rgba(255,255,255,.03);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:14px 40px;-webkit-text-size-adjust:100%}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+sub,sup{font-size:.68em;line-height:0}
+
+/* header */
+header.top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 20px}
+.brand h1{font-size:clamp(28px,4.4vw,40px);font-weight:800;line-height:1}
+.brand h1 .arrow{color:var(--ink-3);font-weight:600}
+.brand h1 .t{color:var(--metal)} .brand h1 .b{color:var(--nonmetal)}
+.brand p{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+.tabs{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.tabs button{border:0;background:transparent;padding:10px 16px;border-radius:9px;font-weight:700;font-size:15px;color:var(--ink-2);min-height:44px;display:flex;gap:8px;align-items:center}
+.tabs button .n{font-family:var(--mono);font-size:12px;border:1.5px solid currentColor;border-radius:50%;width:22px;height:22px;display:inline-grid;place-items:center}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.seg button{border:0;background:transparent;padding:9px 14px;font-weight:700;font-size:14px;color:var(--ink-2);min-height:42px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* ===== Module 1 ===== */
+.m1{display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:980px){.m1{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:start}}
+.tablebox{padding:16px;display:flex;flex-direction:column;gap:12px}
+.tablehead{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+.tablehead h2{font-size:20px}
+.pt-frame{display:grid;grid-template-columns:34px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:6px}
+.wedge-x{grid-column:2;display:flex;flex-direction:column;gap:3px}
+.wedge-y{grid-row:2;display:flex;flex-direction:row;gap:3px;align-items:stretch}
+.wlabel{font-size:12.5px;font-weight:700;color:var(--ink-2);display:flex;justify-content:space-between;gap:8px}
+.wlabel b{color:var(--ink)}
+.wedge{height:14px;background:var(--wcol,var(--orb-line))}
+.wedge-y .wedge{height:auto;width:12px}
+.wedge-y .wlabel{writing-mode:vertical-rl;font-size:12.5px;justify-content:space-between}
+.pt{display:grid;grid-template-columns:20px repeat(7,minmax(0,1fr));gap:5px;align-content:start}
+.pt .gh{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:center;align-self:end}
+.pt .ph{font-family:var(--mono);font-size:11px;color:var(--ink-3);display:grid;place-items:center}
+.tile{position:relative;aspect-ratio:1/1.06;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px;overflow:hidden;transition:background .25s,transform .12s,border-color .2s;min-width:0}
+.tile:active{transform:scale(.96)}
+.tile .orb{position:absolute;left:50%;top:50%;width:calc(var(--s) * 94%);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--orb);border:1.5px solid var(--orb-line);transition:width .3s,opacity .3s}
+.tile .sym{position:relative;font-family:var(--display);font-weight:800;font-size:clamp(15px,2.9vw,24px);line-height:1}
+.tile .val{position:relative;font-family:var(--mono);font-size:clamp(9.5px,1.5vw,12px);color:var(--ink-2);margin-top:2px}
+.tile .badge{position:absolute;top:3px;right:3px;font-family:var(--mono);font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;background:var(--ink);color:var(--bg);display:none;place-items:center}
+.tile.sel{border-color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.tile.sel .badge{display:grid}
+.tile.metal .sym{color:var(--metal)} .tile.nonmetal .sym{color:var(--nonmetal)}
+.mode-en .tile .orb{opacity:0}
+.mode-en .tile{background:color-mix(in oklab,var(--en-hi) var(--p),var(--en-lo));color:var(--en-text-lo)}
+.mode-en .tile .sym{color:inherit}
+.mode-en .tile .val{color:inherit;opacity:.85}
+.mode-en .tile.dark{color:var(--en-text-hi)}
+.mode-en .tile.sel{box-shadow:inset 0 0 0 2px var(--ink),0 0 0 2px var(--surface)}
+.keybox{grid-column:3/8;grid-row:4/7;border:1px dashed var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:6px;font-size:13px;color:var(--ink-2);line-height:1.35;min-width:0}
+.keybox .kx{}
+@media (max-width:620px){.keybox{font-size:11.5px;padding:6px 8px;gap:4px}.keybox .kx{display:none}.keybox .kt{font-size:13px!important}}
+.keybox .kt{font-family:var(--display);font-weight:800;font-size:15px;color:var(--ink)}
+.enscale{height:10px;border-radius:5px;background:linear-gradient(90deg,var(--en-lo),var(--en-hi));border:1px solid var(--line)}
+.enscale-l{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+.side{display:flex;flex-direction:column;gap:14px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:8px;min-width:0}
+.card.empty{border-style:dashed;background:transparent;color:var(--ink-3);justify-content:center;align-items:center;text-align:center;font-size:14px;min-height:150px}
+.card .row1{display:flex;align-items:center;gap:10px}
+.card .bigsym{font-family:var(--display);font-weight:800;font-size:34px;line-height:1}
+.card .slot{font-family:var(--mono);font-size:11px;font-weight:700;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;flex:none}
+.card .nm{font-weight:700;line-height:1.2}
+.card .cat{font-size:12.5px;color:var(--ink-3)}
+.card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:13.5px}
+.card dt{color:var(--ink-3)}
+.card dd{margin:0;font-family:var(--mono);font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.card dd.q{font-family:var(--body);font-weight:400;font-size:12.5px;color:var(--ink-2);text-align:right}
+.metal-t{color:var(--metal)} .nonmetal-t{color:var(--nonmetal)}
+
+.compare{padding:16px;display:flex;flex-direction:column;gap:12px}
+.compare h3{font-size:17px}
+.verdict{font-size:17px;line-height:1.45;margin:0}
+.verdict b{font-family:var(--display);font-weight:800}
+.viz{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.viz svg{display:block}
+.enbars{display:flex;flex-direction:column;gap:7px;font-size:13px}
+.enbar{display:grid;grid-template-columns:28px 1fr 34px;gap:8px;align-items:center}
+.enbar .track{height:12px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.enbar .fill{height:100%;background:var(--en-hi);border-radius:6px;transition:width .35s}
+.notes{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14.5px;color:var(--ink-2)}
+.notes li{padding-left:14px;position:relative}
+.notes li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+.notes li.bond::before{background:var(--nonmetal)}
+.notes li.warn{color:var(--ink)} .notes li.warn::before{background:var(--warn)}
+.gobtn{align-self:flex-start;border:0;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:10px;font-weight:700;min-height:44px}
+
+.m1b{display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:760px){.m1b{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}}
+.m1b>*{min-width:0}
+.react,.iebox{padding:16px;display:flex;flex-direction:column;gap:12px}
+.react h2,.iebox h2{font-size:19px}
+.series-scroll{overflow-x:auto;padding-bottom:4px}
+.series{display:flex;gap:5px;min-width:max-content}
+.chip{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;min-width:42px;height:44px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:16px;position:relative;padding:0 6px}
+.chip.intable{border-color:var(--metal);color:var(--metal)}
+.chip.intable::after{content:"";position:absolute;bottom:4px;width:5px;height:5px;border-radius:50%;background:var(--metal)}
+.chip.h{border-style:dashed;color:var(--ink-3);background:transparent;font-weight:600}
+.chip.sel{background:var(--metal);color:var(--surface);border-color:var(--metal)}
+.chip.sel::after{background:var(--surface)}
+.chip:disabled{cursor:default}
+.series-axis{display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;color:var(--ink-3);min-width:max-content;gap:40px}
+.react p,.iebox p{margin:0;font-size:14.5px;color:var(--ink-2);max-width:68ch}
+.react p b,.iebox p b{color:var(--ink)}
+.iechart svg{width:100%;height:auto;display:block}
+.src{font-size:12px;color:var(--ink-3)}
+
+/* ===== Module 2 ===== */
+.m2{display:flex;flex-direction:column;gap:16px}
+.pickers{padding:14px 16px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+.pick{display:flex;flex-direction:column;gap:6px}
+.pick .opts{display:flex;gap:6px;flex-wrap:wrap}
+.pick button{border:1.5px solid var(--line);background:var(--surface-2);border-radius:10px;min-width:56px;height:52px;font-family:var(--display);font-weight:800;font-size:20px;padding:0 10px}
+.pick.metal button[aria-pressed="true"]{background:var(--metal);border-color:var(--metal);color:var(--surface)}
+.pick.nonmetal button[aria-pressed="true"]{background:var(--nonmetal);border-color:var(--nonmetal);color:var(--surface)}
+.plus{font-family:var(--display);font-size:26px;color:var(--ink-3);align-self:end;padding-bottom:8px}
+.target{margin-left:auto;text-align:right}
+.target .f{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.1}
+.trendstrip{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;padding:12px;font-size:14px}
+.trendstrip .side-m,.trendstrip .side-n{border-radius:10px;padding:10px 12px;line-height:1.4}
+.trendstrip .side-m{background:var(--metal-soft)}
+.trendstrip .side-n{background:var(--nonmetal-soft)}
+.trendstrip .lead{font-weight:700;display:block;margin-bottom:2px}
+.trendstrip .side-m .lead{color:var(--metal)} .trendstrip .side-n .lead{color:var(--nonmetal)}
+.trendstrip .mid{display:grid;place-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);text-align:center}
+.trendstrip .mid svg{display:block}
+@media (max-width:560px){.trendstrip{grid-template-columns:1fr}.trendstrip .mid{transform:rotate(90deg);height:34px}}
+.m2grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:980px){.m2grid{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start}}
+.stagebox{padding:10px;display:flex;flex-direction:column;gap:8px}
+.stepper{display:flex;gap:4px;flex-wrap:wrap}
+.stepper button{flex:1 1 0;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:7px 4px;font-size:12.5px;font-weight:700;color:var(--ink-3);min-height:44px;line-height:1.15}
+.stepper button .k{font-family:var(--mono);display:block;font-size:11px}
+.stepper button.done{color:var(--ink-2)}
+.stepper button[aria-current="step"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#stage{width:100%;height:auto;display:block;max-width:100%}
+.stage-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2);padding:0 6px 4px}
+.stage-legend span{display:inline-flex;gap:6px;align-items:center}
+.explain{padding:16px;display:flex;flex-direction:column;gap:12px}
+.explain h3{font-size:22px}
+.explain .body{font-size:16px;margin:0;line-height:1.5}
+.tally{font-family:var(--mono);font-size:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:4px 16px}
+.tally .lost{color:var(--metal)} .tally .gain{color:var(--nonmetal)}
+.navrow{display:flex;gap:8px;flex-wrap:wrap}
+.navrow button{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:10px 16px;font-weight:700;min-height:46px}
+.navrow button.primary{background:var(--ink);color:var(--bg);border-color:var(--ink);flex:1}
+.navrow button:disabled{opacity:.4;cursor:default}
+.xnote{font-size:13.5px;color:var(--ink-2);border-left:3px solid var(--warn);padding:4px 0 4px 10px;margin:0}
+.cc{padding:16px;display:flex;flex-direction:column;gap:10px}
+.cc h3{font-size:18px}
+.cc svg{width:100%;max-width:440px;height:auto;display:block}
+.cc .res{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;font-size:15px;color:var(--ink-2)}
+.cc .final{font-family:var(--display);font-weight:800;font-size:40px;color:var(--ink);line-height:1}
+.cc .locked{color:var(--ink-3);font-size:14px}
+.cc.off svg{opacity:.28}
+.ccpath{transition:stroke-dashoffset .9s ease}
+/* tab bar with 4 tabs */
+.tabs{flex-wrap:wrap}
+@media (max-width:700px){.tabs{width:100%}.tabs button{flex:1 1 40%;padding:8px 10px;font-size:14px;justify-content:center}}
+
+/* ===== Module 3 ===== */
+.m3{display:flex;flex-direction:column;gap:16px}
+.m3pick{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.m3head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;align-items:end}
+.m3head h2{font-size:20px}
+.qpick{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.qpick button{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:8px 14px;font-weight:700;min-height:44px;font-size:14px}
+.qpick button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.elrow{display:flex;flex-direction:column;gap:6px}
+.elopts{display:flex;flex-wrap:wrap;gap:5px}
+.elopts button{border:1.5px solid var(--line);background:var(--surface-2);border-radius:9px;min-width:44px;height:44px;font-family:var(--display);font-weight:800;font-size:17px;padding:0 6px}
+.elopts button.t-metal{color:var(--metal)} .elopts button.t-nonmetal{color:var(--nonmetal)} .elopts button.t-metalloid{color:var(--ink-2)}
+.elopts button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.specbox{padding:16px;display:flex;flex-direction:column;gap:10px}
+.spechead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.spechead h3{font-size:26px;font-weight:800}
+.dcalc{font-family:var(--mono);font-size:15px;color:var(--ink-2)} .dcalc b{color:var(--ink);font-size:19px}
+.specwrap{padding:0 30px}
+.pinrow{position:relative;height:34px}
+.pin{position:absolute;bottom:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;transition:left .4s ease}
+.pin span{font-family:var(--mono);font-weight:700;font-size:13px;background:var(--ink);color:var(--bg);padding:2px 8px;border-radius:6px;white-space:nowrap}
+.pin i{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:8px solid var(--ink)}
+.spec{position:relative;height:26px;border-radius:13px;border:1px solid var(--line);background:linear-gradient(90deg,color-mix(in oklab,var(--nonmetal) 38%,var(--surface)),color-mix(in oklab,var(--nonmetal) 12%,var(--surface)) 32%,color-mix(in oklab,var(--metal) 12%,var(--surface)) 58%,color-mix(in oklab,var(--metal) 40%,var(--surface)))}
+.spec .cut{position:absolute;top:-5px;bottom:-5px;width:0;border-left:2px dashed var(--ink-3);opacity:.7}
+.spec .mk{position:absolute;top:-6px;bottom:-6px;width:4px;background:var(--ink);transform:translateX(-50%);border-radius:2px;transition:left .4s ease}
+.ticks{position:relative;height:18px;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:4px}
+.ticks span{position:absolute;transform:translateX(-50%)}
+.zones{position:relative;height:42px;font-size:12.5px;font-weight:700;line-height:1.2}
+.zones span{position:absolute;white-space:nowrap}
+.zones .z1{left:0;top:0;color:var(--nonmetal)}
+.zones .z2{left:34.4%;top:20px;transform:translateX(-50%);color:var(--ink)}
+.zones .z3{right:0;top:0;color:var(--metal)}
+@media (min-width:700px){.zones{height:22px;font-size:13.5px}.zones .z2{top:0}}
+.specnote{margin:0;font-size:13.5px;color:var(--ink-2);border-left:3px solid var(--warn);padding:4px 0 4px 10px}
+.m3grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:860px){.m3grid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:start}}
+.bondbox{padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+#bondsvg{width:100%;height:auto;display:block;max-width:520px;margin:0 auto}
+.ex3{padding:16px;display:flex;flex-direction:column;gap:10px}
+.ex3 h3{font-size:22px}
+.ex3 p{margin:0;font-size:16px;line-height:1.5}
+
+/* ===== Module 4 ===== */
+.m4{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:900px){.m4{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);align-items:start}}
+.quiz{padding:16px;display:flex;flex-direction:column;gap:14px}
+.quizhead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 16px;align-items:end}
+.quizhead h2{font-size:20px}
+.qmeta{font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.qprompt{font-family:var(--display);font-weight:800;font-size:clamp(36px,7vw,58px);line-height:1.15;text-align:center;padding:18px 8px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow-wrap:anywhere}
+.qprompt.nm{font-size:clamp(22px,4.5vw,34px)}
+.qchoices{display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:560px){.qchoices{grid-template-columns:1fr 1fr}}
+.qchoices button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:12px 14px;min-height:52px;font-size:17px;font-weight:700;text-align:left}
+.qchoices button.fx{font-family:var(--display);font-weight:800;font-size:24px;text-align:center}
+.qchoices button:hover:not(:disabled){border-color:var(--ink-3)}
+.qchoices button:disabled{cursor:default}
+.qchoices button.right{border-color:var(--ok);background:color-mix(in oklab,var(--ok) 15%,var(--surface))}
+.qchoices button.wrong{border-color:var(--bad);background:color-mix(in oklab,var(--bad) 13%,var(--surface))}
+.qfb{border-left:4px solid var(--ok);background:var(--surface-2);border-radius:0 10px 10px 0;padding:10px 14px;font-size:15.5px;margin:0}
+.qfb.no{border-left-color:var(--bad)}
+.qfb .tag{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-right:6px;color:var(--ink-2);background:var(--surface)}
+.rules{padding:16px;display:flex;flex-direction:column;gap:12px}
+.rules h3{font-size:18px}
+.ptab{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;overflow:hidden;text-align:center}
+.ptab div{padding:6px 1px;border-left:1px solid var(--line);min-width:0}
+.ptab div:first-child{border-left:0}
+.ptab b{display:block;font-family:var(--mono);font-size:17px}
+.ptab span{font-size:12px;color:var(--ink-2)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+footer{font-size:12.5px;color:var(--ink-3)}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1><span class="t">Trends</span> <span class="arrow">to</span> <span class="b">Bonds</span></h1>
+      <p>Periodic trends explain why ionic bonds form the way they do.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Module">
+      <button role="tab" id="tab-1" aria-controls="mod1" aria-selected="true"><span class="n">1</span>Periodic trends</button>
+      <button role="tab" id="tab-2" aria-controls="mod2" aria-selected="false"><span class="n">2</span>Build an ionic bond</button>
+      <button role="tab" id="tab-3" aria-controls="mod3" aria-selected="false"><span class="n">3</span>Bond character</button>
+      <button role="tab" id="tab-4" aria-controls="mod4" aria-selected="false"><span class="n">4</span>Naming covalent</button>
+    </div>
+  </header>
+
+  <!-- MODULE 1 -->
+  <section id="mod1" role="tabpanel" aria-labelledby="tab-1">
+    <div style="display:flex;flex-direction:column;gap:18px">
+    <div class="m1">
+      <div class="panel tablebox">
+        <div class="tablehead">
+          <h2>Tap two elements to compare</h2>
+          <div class="seg" role="group" aria-label="Colour the table by">
+            <button id="mode-r" aria-pressed="true">Atomic radius</button>
+            <button id="mode-en" aria-pressed="false">Electronegativity</button>
+          </div>
+        </div>
+        <div class="pt-frame">
+          <div class="wedge-x">
+            <div class="wlabel" id="wx-label"></div>
+            <div class="wedge" id="wx"></div>
+          </div>
+          <div class="wedge-y">
+            <div class="wlabel" id="wy-label"></div>
+            <div class="wedge" id="wy"></div>
+          </div>
+          <div class="pt" id="pt"></div>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--metal)"></i>Metal</span>
+          <span><i class="dot" style="background:var(--ink-2)"></i>Metalloid</span>
+          <span><i class="dot" style="background:var(--nonmetal)"></i>Nonmetal</span>
+          <span class="src">Values: NCERT Class 11 Chemistry. Radius in pm; electronegativity on the Pauling scale.</span>
+        </div>
+      </div>
+      <div class="side">
+        <div class="cards" id="cards"></div>
+        <div class="panel compare" id="compare"></div>
+      </div>
+    </div>
+    <div class="m1b">
+      <div class="panel react">
+        <div>
+          <div class="eyebrow">Connected idea</div>
+          <h2>Reactivity series of metals</h2>
+        </div>
+        <div class="series-scroll">
+          <div class="series" id="series"></div>
+          <div class="series-axis" style="margin-top:6px"><span>&larr; most reactive &middot; lowest ionization enthalpy</span><span>least reactive &rarr;</span></div>
+        </div>
+        <p><b>Why is K at the top?</b> Down group 1 the atoms get bigger (Li 152 → Na 186 → K 231 pm), so the single outer electron sits farther from the nucleus and is held less tightly. First ionization enthalpy <b>decreases down the group</b>, so the electron comes off more easily and the metal is <b>more reactive</b>: K is above Na.</p>
+        <p><b>Across period 3 it runs the other way.</b> Na (496 kJ/mol) loses its electron more easily than Mg (737 kJ/mol), so Na sits above Mg. Metals on the left and lower down lose electrons most easily, and that is the job a metal does in an ionic bond.</p>
+        <p class="src">Series from NCERT Class 10 Chemistry. Dotted chips are in the table above; tap one to select it.</p>
+      </div>
+      <div class="panel iebox">
+        <div>
+          <div class="eyebrow">Supporting data</div>
+          <h2>First ionization enthalpy, period 3</h2>
+        </div>
+        <div class="iechart" id="iechart"></div>
+        <p>The energy needed to pull off the outermost electron <b>rises across the period</b> (Na 496 → Si 786). Al dips below Mg, which is a known exception: Al's outer electron is in a higher-energy p orbital. Al still has to lose <b>three</b> electrons to become Al<sup>3+</sup>, so it sits below Mg in the series.</p>
+        <p class="src">kJ/mol, NCERT Class 11 (Problem 3.6). Group 1: decreases down the group, shown qualitatively only.</p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- MODULE 2 -->
+  <section id="mod2" role="tabpanel" aria-labelledby="tab-2" hidden>
+    <div class="m2">
+      <div class="panel pickers">
+        <div class="pick metal">
+          <div class="eyebrow">Metal (loses e<sup>−</sup>)</div>
+          <div class="opts" id="pick-m"></div>
+        </div>
+        <div class="plus" aria-hidden="true">+</div>
+        <div class="pick nonmetal">
+          <div class="eyebrow">Nonmetal (gains e<sup>−</sup>)</div>
+          <div class="opts" id="pick-n"></div>
+        </div>
+        <div class="target">
+          <div class="eyebrow">Compound</div>
+          <div class="f" id="target-name"></div>
+        </div>
+      </div>
+      <div class="panel trendstrip" id="trendstrip"></div>
+      <div class="m2grid">
+        <div class="panel stagebox">
+          <div class="stepper" id="stepper"></div>
+          <svg id="stage" viewBox="0 0 720 480" role="img" aria-label="Electron transfer diagram"></svg>
+          <div class="stage-legend">
+            <span><i class="dot" style="background:var(--metal)"></i>Metal's valence electron</span>
+            <span><i class="dot" style="background:var(--nonmetal)"></i>Nonmetal's own valence electron</span>
+            <span><i class="dot" style="border:1.5px dashed var(--ink-3)"></i>Empty spot in the octet</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="panel explain">
+            <div class="eyebrow" id="ex-k"></div>
+            <h3 id="ex-title"></h3>
+            <p class="body" id="ex-body"></p>
+            <div class="tally" id="tally"></div>
+            <p class="xnote" id="xnote" hidden></p>
+            <div class="navrow">
+              <button id="back">Back</button>
+              <button id="next" class="primary">Next step</button>
+              <button id="play">Play all</button>
+            </div>
+          </div>
+          <div class="panel cc" id="cc">
+            <h3>Criss-cross method</h3>
+            <svg viewBox="0 0 440 200" id="ccsvg" aria-hidden="true"></svg>
+            <div class="res" id="ccres"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 3 -->
+  <section id="mod3" role="tabpanel" aria-labelledby="tab-3" hidden>
+    <div class="m3">
+      <div class="panel m3pick">
+        <div class="m3head">
+          <div>
+            <div class="eyebrow">Electronegativity &amp; bond character</div>
+            <h2>Pick the two atoms joined by the bond</h2>
+          </div>
+          <div>
+            <div class="eyebrow">Quick pick</div>
+            <div class="qpick" id="quick3"></div>
+          </div>
+        </div>
+        <div class="elrow"><div class="eyebrow">Atom A</div><div class="elopts" id="pickA"></div></div>
+        <div class="elrow"><div class="eyebrow">Atom B</div><div class="elopts" id="pickB"></div></div>
+      </div>
+      <div class="panel specbox">
+        <div class="spechead">
+          <h3 id="s3title"></h3>
+          <div class="dcalc" id="s3calc"></div>
+        </div>
+        <div class="specwrap">
+          <div class="pinrow"><div class="pin" id="s3pin"><span id="s3pinlab"></span><i></i></div></div>
+          <div class="spec" aria-hidden="true">
+            <div class="cut" style="left:15.625%"></div>
+            <div class="cut" style="left:53.125%"></div>
+            <div class="mk" id="s3mk"></div>
+          </div>
+          <div class="ticks" aria-hidden="true"><span style="left:0">0</span><span style="left:31.25%">1.0</span><span style="left:62.5%">2.0</span><span style="left:93.75%">3.0</span></div>
+          <div class="zones"><span class="z1">&larr; Nonpolar covalent</span><span class="z2">Polar covalent</span><span class="z3">Ionic &rarr;</span></div>
+        </div>
+        <p class="specnote"><b>One continuous spectrum, not three boxes.</b> No real bond is 100% ionic or 100% covalent: the bigger the electronegativity difference (ΔEN), the more ionic the bond. The dashed lines at ΔEN &asymp; 0.5 and &asymp; 1.7 are a <b>general-chemistry rule of thumb</b> used here for placing the marker. They are <b>not</b> numbers from NCERT, which describes the change qualitatively.</p>
+      </div>
+      <div class="m3grid">
+        <div class="panel bondbox">
+          <div class="eyebrow">Where the bonding electrons sit (schematic)</div>
+          <svg id="bondsvg" viewBox="0 0 360 170" role="img" aria-label="Diagram of the bonding electron pair"></svg>
+        </div>
+        <div class="panel ex3">
+          <div class="eyebrow" id="v3k"></div>
+          <h3 id="v3t"></h3>
+          <p id="v3b"></p>
+          <ul class="notes" id="v3n"></ul>
+          <div id="v3go"></div>
+          <p class="src">Reasoning: NCERT Class 11 Chemistry, Ch 4, section 4.3.6 (Polarity of bonds). Electronegativity: Pauling scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 4 -->
+  <section id="mod4" role="tabpanel" aria-labelledby="tab-4" hidden>
+    <div class="m4">
+      <div class="panel quiz">
+        <div class="quizhead">
+          <div>
+            <div class="eyebrow">Binary covalent compounds</div>
+            <h2 id="q4h">What is this compound called?</h2>
+          </div>
+          <div class="seg" role="group" aria-label="Quiz direction">
+            <button id="dir-f" aria-pressed="true">Formula &rarr; name</button>
+            <button id="dir-n" aria-pressed="false">Name &rarr; formula</button>
+          </div>
+        </div>
+        <div class="qmeta" id="q4meta"></div>
+        <div class="qprompt" id="q4p"></div>
+        <div class="qchoices" id="q4o"></div>
+        <p class="qfb" id="q4fb" hidden></p>
+        <div class="navrow"><button id="q4next" class="primary">Skip</button></div>
+      </div>
+      <div class="panel rules">
+        <h3>Greek prefixes = number of atoms</h3>
+        <div class="ptab">
+          <div><b>1</b><span>mono-</span></div><div><b>2</b><span>di-</span></div><div><b>3</b><span>tri-</span></div><div><b>4</b><span>tetra-</span></div><div><b>5</b><span>penta-</span></div><div><b>6</b><span>hexa-</span></div><div><b>7</b><span>hepta-</span></div>
+        </div>
+        <h3>The rules</h3>
+        <ul class="notes">
+          <li><b>First element:</b> named as the element. <b>Mono- is left off</b> the first element: CO<sub>2</sub> is carbon dioxide, not &ldquo;monocarbon dioxide&rdquo;. It gets a prefix only when there is more than one atom (N<sub>2</sub>O<sub>4</sub>: <b>di</b>nitrogen).</li>
+          <li><b>Second element:</b> takes a prefix (mono- included) and the <b>-ide</b> ending: CO is carbon <b>mon</b>oxide.</li>
+          <li class="warn"><b>Dropped vowel:</b> the final a or o of the prefix is dropped before &ldquo;oxide&rdquo;: mon<b>o</b>xide, tetr<b>o</b>xide, pent<b>o</b>xide (not monooxide, tetraoxide, pentaoxide).</li>
+          <li class="warn"><b>Hydrogen first:</b> no prefix goes before hydrogen, whatever the count: H<sub>2</sub>S is hydrogen sulfide, not dihydrogen sulfide.</li>
+          <li class="warn"><b>Common names:</b> some compounds are known only by common names: H<sub>2</sub>O is water, NH<sub>3</sub> is ammonia.</li>
+        </ul>
+        <p class="src">Rules and examples: NCERT Class 9 Chemistry, Ch 9, section 9.4.2.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Data: NCERT Class 11 Chemistry (radius, electronegativity, first ionization enthalpy) and NCERT Class 10 (reactivity series). Bond polarity: NCERT Class 11 Ch 4 (4.3.6). Covalent naming: NCERT Class 9 Ch 9.</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- data (NCERT values as supplied) ---------- */
+const EL={
+ Li:{n:'Lithium',g:1,p:2,r:152,en:1.0,cat:'Alkali metal',t:'metal'},
+ Be:{n:'Beryllium',g:2,p:2,r:111,en:1.5,cat:'Alkaline earth metal',t:'metal'},
+ B:{n:'Boron',g:13,p:2,r:88,en:2.0,cat:'Metalloid',t:'metalloid'},
+ C:{n:'Carbon',g:14,p:2,r:77,en:2.5,cat:'Nonmetal',t:'nonmetal'},
+ N:{n:'Nitrogen',g:15,p:2,r:74,en:3.0,cat:'Nonmetal',t:'nonmetal'},
+ O:{n:'Oxygen',g:16,p:2,r:66,en:3.5,cat:'Nonmetal',t:'nonmetal'},
+ F:{n:'Fluorine',g:17,p:2,r:64,en:4.0,cat:'Halogen',t:'nonmetal'},
+ Na:{n:'Sodium',g:1,p:3,r:186,en:0.9,cat:'Alkali metal',t:'metal',ie:496},
+ Mg:{n:'Magnesium',g:2,p:3,r:160,en:1.2,cat:'Alkaline earth metal',t:'metal',ie:737},
+ Al:{n:'Aluminium',g:13,p:3,r:143,en:1.5,cat:'Metal',t:'metal',ie:577},
+ Si:{n:'Silicon',g:14,p:3,r:117,en:1.8,cat:'Metalloid',t:'metalloid',ie:786},
+ P:{n:'Phosphorus',g:15,p:3,r:110,en:2.1,cat:'Nonmetal',t:'nonmetal'},
+ S:{n:'Sulfur',g:16,p:3,r:104,en:2.5,cat:'Nonmetal',t:'nonmetal'},
+ Cl:{n:'Chlorine',g:17,p:3,r:99,en:3.0,cat:'Halogen',t:'nonmetal'},
+ K:{n:'Potassium',g:1,p:4,r:231,en:0.8,cat:'Alkali metal',t:'metal'},
+ Rb:{n:'Rubidium',g:1,p:5,r:244,en:0.8,cat:'Alkali metal',t:'metal'},
+ Cs:{n:'Caesium',g:1,p:6,r:262,en:0.7,cat:'Alkali metal',t:'metal'},
+ Br:{n:'Bromine',g:17,p:4,r:114,en:2.8,cat:'Halogen',t:'nonmetal'},
+ I:{n:'Iodine',g:17,p:5,r:133,en:2.5,cat:'Halogen',t:'nonmetal'},
+ At:{n:'Astatine',g:17,p:6,r:140,en:2.2,cat:'Halogen (radioactive)',t:'nonmetal'}
+};
+const COL={1:0,2:1,13:2,14:3,15:4,16:5,17:6};
+const RMAX=262, ENMIN=0.7, ENMAX=4.0;
+const SERIES=['K','Na','Ca','Mg','Al','Zn','Fe','Pb','H','Cu','Hg','Ag','Au'];
+const f1=x=>x.toFixed(1);
+const valence=g=>g<=2?g:g-10;
+
+/* ---------- tabs ---------- */
+function setTab(n){
+  [1,2,3,4].forEach(i=>{
+    $('#tab-'+i).setAttribute('aria-selected',String(i===n));
+    $('#mod'+i).hidden=i!==n;
+  });
+  store.set('tb-tab',String(n));
+}
+$('#tab-1').onclick=()=>setTab(1);
+$('#tab-2').onclick=()=>setTab(2);
+$('#tab-3').onclick=()=>setTab(3);
+$('#tab-4').onclick=()=>setTab(4);
+
+/* ---------- Module 1 ---------- */
+let mode=store.get('tb-mode')==='en'?'en':'r';
+let sel=['Na','Cl'];
+
+function buildTable(){
+  const pt=$('#pt'); let h='';
+  h+='<div style="grid-column:1;grid-row:1"></div>';
+  [1,2,13,14,15,16,17].forEach((g,i)=>{h+=`<div class="gh" style="grid-column:${i+2};grid-row:1">G${g}</div>`});
+  for(let p=2;p<=6;p++) h+=`<div class="ph" style="grid-column:1;grid-row:${p}">${p}</div>`;
+  for(const s in EL){
+    const e=EL[s];
+    h+=`<button class="tile ${e.t}" data-el="${s}" style="grid-column:${COL[e.g]+2};grid-row:${e.p}" aria-label="${e.n}"><span class="orb" style="--s:${(e.r/RMAX).toFixed(3)}"></span><span class="sym">${s}</span><span class="val"></span><span class="badge"></span></button>`;
+  }
+  h+='<div class="keybox" id="keybox"></div>';
+  pt.innerHTML=h;
+  pt.addEventListener('click',ev=>{const b=ev.target.closest('.tile');if(b)toggle(b.dataset.el)});
+}
+function toggle(s){
+  const i=sel.indexOf(s);
+  if(i>=0) sel.splice(i,1); else {sel.push(s); if(sel.length>2) sel.shift();}
+  renderM1();
+}
+function setMode(m){mode=m;store.set('tb-mode',m);renderM1()}
+$('#mode-r').onclick=()=>setMode('r');
+$('#mode-en').onclick=()=>setMode('en');
+
+function renderTable(){
+  const pt=$('#pt');
+  pt.classList.toggle('mode-en',mode==='en');
+  $('#mode-r').setAttribute('aria-pressed',String(mode==='r'));
+  $('#mode-en').setAttribute('aria-pressed',String(mode==='en'));
+  pt.querySelectorAll('.tile').forEach(b=>{
+    const s=b.dataset.el,e=EL[s];
+    const p=(e.en-ENMIN)/(ENMAX-ENMIN)*100;
+    b.style.setProperty('--p',p.toFixed(0)+'%');
+    b.classList.toggle('dark',p>52);
+    b.querySelector('.val').textContent=mode==='r'?e.r:f1(e.en);
+    const i=sel.indexOf(s);
+    b.classList.toggle('sel',i>=0);
+    b.querySelector('.badge').textContent=i===0?'A':i===1?'B':'';
+    b.setAttribute('aria-pressed',String(i>=0));
+    b.setAttribute('aria-label',`${e.n}, radius ${e.r} picometres, electronegativity ${f1(e.en)}`);
+  });
+  // wedges: width of wedge = size of the property
+  const wx=$('#wx'),wy=$('#wy');
+  if(mode==='r'){
+    wx.style.clipPath='polygon(0 0,100% 35%,100% 65%,0 100%)';
+    wy.style.clipPath='polygon(35% 0,65% 0,100% 100%,0 100%)';
+    wx.style.setProperty('--wcol','var(--orb-line)');wy.style.setProperty('--wcol','var(--orb-line)');
+    $('#wx-label').innerHTML='<span>Across a period &rarr;</span><span>atomic radius <b>decreases</b></span>';
+    $('#wy-label').innerHTML='<span>Down a group &rarr;</span><span>radius <b>increases</b></span>';
+    $('#keybox').innerHTML=`<div class="kt">Atomic radius (pm)</div><div>Circles drawn <b>to scale</b> (F 64 to Cs 262 pm).</div><div class="kx"><b>&rarr;</b> smaller: more protons pull the same shell in.<br><b>&darr;</b> bigger: each period adds a new shell.</div>`;
+  } else {
+    wx.style.clipPath='polygon(0 35%,100% 0,100% 100%,0 65%)';
+    wy.style.clipPath='polygon(0 0,100% 0,65% 100%,35% 100%)';
+    wx.style.setProperty('--wcol','var(--en-hi)');wy.style.setProperty('--wcol','var(--en-hi)');
+    $('#wx-label').innerHTML='<span>Across a period &rarr;</span><span>electronegativity <b>increases</b></span>';
+    $('#wy-label').innerHTML='<span>Down a group &rarr;</span><span>EN <b>decreases</b></span>';
+    $('#keybox').innerHTML=`<div class="kt">Electronegativity (Pauling)</div><div>Deeper blue means a stronger pull on electrons.</div><div class="enscale"></div><div class="enscale-l"><span>0.7 Cs</span><span>4.0 F</span></div>`;
+  }
+}
+
+function ieLine(s){
+  const e=EL[s];
+  if(e.ie) return `<dd>${e.ie}</dd>`;
+  if(s==='Li') return `<dd class="q">higher than Na (↓ decreases down G1)</dd>`;
+  if(e.g===1) return `<dd class="q">lower than Na (↓ decreases down G1)</dd>`;
+  return `<dd class="q">not in this data set</dd>`;
+}
+function card(s,slot){
+  if(!s) return `<div class="card empty">${slot==='A'?'Tap an element in the table':'Tap a second element to compare'}</div>`;
+  const e=EL[s], ri=SERIES.indexOf(s);
+  const tcls=e.t==='metal'?'metal-t':e.t==='nonmetal'?'nonmetal-t':'';
+  return `<div class="card">
+    <div class="row1"><span class="slot">${slot}</span><span class="bigsym ${tcls}">${s}</span><div><div class="nm">${e.n}</div><div class="cat">${e.cat} · G${e.g}, P${e.p}</div></div></div>
+    <dl>
+      <dt>Atomic radius</dt><dd>${e.r} pm</dd>
+      <dt>Electronegativity</dt><dd>${f1(e.en)}</dd>
+      <dt>Valence e⁻</dt><dd>${valence(e.g)}</dd>
+      <dt>1st IE, kJ/mol</dt>${ieLine(s)}
+      ${ri>=0?`<dt>Reactivity</dt><dd class="q">#${ri+1} of 13 in series</dd>`:''}
+    </dl></div>`;
+}
+const M2M=['Na','Mg','Al','Ca'], M2N=['Cl','O'];
+function compareHTML(A,B){
+  if(!A) return `<h3>Compare</h3><p class="verdict" style="color:var(--ink-2)">Tap any element, then a second. Try <b>Na</b> and <b>Cl</b>, or <b>Li</b> and <b>Cs</b>.</p>`;
+  if(!B){
+    const e=EL[A];
+    return `<h3>${e.n}</h3><p class="verdict" style="color:var(--ink-2)">Now tap a second element. Try one from the same period (row) or the same group (column) first.</p>`;
+  }
+  const a=EL[A],b=EL[B];
+  const small=a.r<=b.r?A:B, big=small===A?B:A, es=EL[small].en, eb=EL[big].en;
+  let v;
+  const rPart=a.r===b.r?`the same atomic radius as <b>${big}</b>`:`a smaller atomic radius (${EL[small].r} pm vs ${EL[big].r} pm)`;
+  const enPart=es>eb?`higher electronegativity (${f1(es)} vs ${f1(eb)})`:es<eb?`lower electronegativity (${f1(es)} vs ${f1(eb)})`:`the same electronegativity (${f1(es)})`;
+  v=`<b>${small}</b> has ${rPart} and ${enPart} than <b>${big}</b>`;
+  if(es>eb) v+=` — that's why ${small} pulls electrons ${es-eb>=1.5?'much more':'more'} strongly.`;
+  else if(es===eb) v+=`. With equal electronegativity, they pull on electrons about equally hard.`;
+  else {
+    const hi=big;
+    v+= EL[hi].g>EL[small].g
+      ? `. Size is not the whole story here: ${hi} sits much further right, where the nuclear pull is stronger, so that effect wins.`
+      : `. Size is not the whole story: trends work best when you compare along one row or one column.`;
+  }
+  const notes=[];
+  if(a.p===b.p) notes.push(`<li><b>Same period (${a.p}).</b> Going left → right, each element adds one more proton but keeps the same outer shell. The nucleus pulls harder, so atoms shrink and electronegativity rises.</li>`);
+  else if(a.g===b.g) notes.push(`<li><b>Same group (${a.g}).</b> Going down, each element adds a new shell, so the outer electrons sit farther from the nucleus. Atoms get bigger and electronegativity falls.</li>`);
+  else {
+    const lower=a.p>b.p?A:B, upper=lower===A?B:A, right=a.g>b.g?A:B;
+    notes.push(`<li><b>Different period and group.</b> ${lower} is lower down than ${upper}, and ${right} is further right, so read both wedges. Trends compare most cleanly along one row or one column.</li>`);
+  }
+  if(a.ie&&b.ie){
+    const pair=[A,B].sort().join();
+    notes.push(`<li><b>1st ionization enthalpy:</b> ${A} ${a.ie} vs ${B} ${b.ie} kJ/mol.${pair==='Al,Mg'?' Al < Mg is a known exception to the rising trend.':''}</li>`);
+  } else if(a.g===1&&b.g===1){
+    const up=a.p<b.p?A:B, dn=up===A?B:A;
+    notes.push(`<li><b>1st ionization enthalpy decreases down group 1</b>, so ${dn} loses its outer electron more easily than ${up}.</li>`);
+  }
+  const ra=SERIES.indexOf(A), rb=SERIES.indexOf(B);
+  if(ra>=0&&rb>=0){const hi=ra<rb?A:B, lo=hi===A?B:A; notes.push(`<li><b>Reactivity series:</b> ${hi} is above ${lo}, because it gives up electrons more easily.</li>`);}
+  const d=Math.abs(a.en-b.en).toFixed(1);
+  const types=[a.t,b.t].sort().join('+');
+  let go='';
+  if(types==='metal+nonmetal'){
+    const m=a.t==='metal'?A:B, n=m===A?B:A;
+    notes.push(`<li class="bond"><b>Metal + nonmetal (ΔEN = ${d}):</b> the metal hands its electrons to the nonmetal, forming an <b>ionic bond</b>.</li>`);
+    if(M2M.includes(m)&&M2N.includes(n)) go=`<button class="gobtn" data-m="${m}" data-n="${n}">Build ${m} + ${n} in Module 2 →</button>`;
+  } else if(types==='nonmetal+nonmetal'){
+    notes.push(`<li class="bond"><b>Two nonmetals (ΔEN = ${d}):</b> both want electrons, so neither gives them up. They <b>share</b> electrons (covalent bond).</li>`);
+  } else if(types==='metal+metal'){
+    notes.push(`<li class="bond"><b>Two metals:</b> neither pulls electrons off the other. Metals hold together by <b>metallic bonding</b>, positive ions in a sea of shared electrons. That's also how alloys mix metals.</li>`);
+  } else {
+    notes.push(`<li class="bond"><b>ΔEN = ${d}.</b> ${a.t==='metalloid'?A:B} is a metalloid, so its bonding falls between the metal and nonmetal patterns.</li>`);
+  }
+  // to-scale circles
+  const k=44/RMAX, ra_=a.r*k, rb_=b.r*k, W=ra_*2+rb_*2+26, H=Math.max(ra_,rb_)*2+24;
+  const cy=Math.max(ra_,rb_)+2;
+  const circ=(x,r,s,e)=>`<circle cx="${x}" cy="${cy}" r="${r}" fill="${e.t==='metal'?'var(--metal-soft)':e.t==='nonmetal'?'var(--nonmetal-soft)':'var(--surface-2)'}" stroke="${e.t==='metal'?'var(--metal)':e.t==='nonmetal'?'var(--nonmetal)':'var(--ink-3)'}" stroke-width="1.5"/><text x="${x}" y="${cy+5}" text-anchor="middle" font-family="var(--display)" font-weight="800" font-size="14" fill="var(--ink)">${s}</text><text x="${x}" y="${cy*2+16}" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--ink-2)">${e.r} pm</text>`;
+  const svg=`<svg width="${W}" height="${H+6}" viewBox="0 0 ${W} ${H+6}" aria-label="Atomic radii drawn to scale">${circ(ra_+1,ra_,A,a)}${circ(ra_*2+26+rb_-1,rb_,B,b)}</svg>`;
+  const bars=`<div class="enbars"><div class="eyebrow">Electronegativity</div>${[[A,a],[B,b]].map(([s,e])=>`<div class="enbar"><b>${s}</b><div class="track"><div class="fill" style="width:${e.en/4*100}%"></div></div><span class="mono">${f1(e.en)}</span></div>`).join('')}</div>`;
+  return `<h3>${A} vs ${B}</h3><p class="verdict">${v}</p><div class="viz">${svg}${bars}</div><ul class="notes">${notes.join('')}</ul>${go}`;
+}
+function renderSeries(){
+  $('#series').innerHTML=SERIES.map(s=>{
+    if(s==='H') return `<button class="chip h" disabled aria-label="Hydrogen, reference point">(H)</button>`;
+    const inT=!!EL[s];
+    return `<button class="chip ${inT?'intable':''} ${sel.includes(s)?'sel':''}" ${inT?`data-el="${s}"`:'disabled'}>${s}</button>`;
+  }).join('');
+}
+$('#series').addEventListener('click',ev=>{const b=ev.target.closest('.chip[data-el]');if(b)toggle(b.dataset.el)});
+function renderIE(){
+  const d=[['Na',496],['Mg',737],['Al',577],['Si',786]], W=360, bh=26, gap=10, left=36, max=900, w=W-left-56;
+  let s=`<svg viewBox="0 0 ${W} ${d.length*(bh+gap)+20}" role="img" aria-label="First ionization enthalpy: Na 496, Mg 737, Al 577, Si 786 kilojoules per mole">`;
+  [0,300,600,900].forEach(t=>{const x=left+t/max*w;s+=`<line x1="${x}" x2="${x}" y1="0" y2="${d.length*(bh+gap)}" stroke="var(--line)" stroke-width="1"/><text x="${x}" y="${d.length*(bh+gap)+14}" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">${t}</text>`});
+  d.forEach(([el,v],i)=>{
+    const y=i*(bh+gap), bw=v/max*w, isSel=sel.includes(el);
+    s+=`<text x="0" y="${y+bh/2+5}" font-family="var(--display)" font-weight="800" font-size="15" fill="var(--ink)">${el}</text>`;
+    s+=`<rect x="${left}" y="${y}" width="${bw}" height="${bh}" rx="5" fill="${isSel?'var(--metal)':'var(--orb-line)'}"/>`;
+    s+=`<text x="${left+bw+6}" y="${y+bh/2+5}" font-family="var(--mono)" font-weight="700" font-size="12.5" fill="var(--ink)">${v}${el==='Al'?' ↓':''}</text>`;
+  });
+  $('#iechart').innerHTML=s+'</svg>';
+}
+function renderM1(){
+  renderTable();
+  $('#cards').innerHTML=card(sel[0],'A')+card(sel[1],'B');
+  $('#compare').innerHTML=compareHTML(sel[0],sel[1]);
+  renderSeries(); renderIE();
+}
+$('#compare').addEventListener('click',ev=>{const b=ev.target.closest('.gobtn');if(b){M.m=b.dataset.m;M.n=b.dataset.n;M.step=0;renderM2();setTab(2);window.scrollTo({top:0,behavior:reduced?'auto':'smooth'})}});
+
+/* ---------- Module 2 ---------- */
+const MET={
+ Na:{name:'Sodium',v:1,cfg:'2,8,1',ion:'2,8',g:1,p:3,ie:496,en:0.9},
+ Mg:{name:'Magnesium',v:2,cfg:'2,8,2',ion:'2,8',g:2,p:3,ie:737,en:1.2},
+ Al:{name:'Aluminium',v:3,cfg:'2,8,3',ion:'2,8',g:13,p:3,ie:577,en:1.5},
+ Ca:{name:'Calcium',v:2,cfg:'2,8,8,2',ion:'2,8,8',g:2,p:4}
+};
+const NON={
+ Cl:{name:'Chlorine',v:7,cfg:'2,8,7',ion:'2,8,8',g:17,p:3,en:3.0,ionName:'chloride'},
+ O:{name:'Oxygen',v:6,cfg:'2,6',ion:'2,8',g:16,p:2,en:3.5,ionName:'oxide'}
+};
+const GAS={'2,8':'Ne','2,8,8':'Ar'};
+const M={m:'Na',n:'Cl',step:0,anim:0,playTimer:0};
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const SUBS='₀₁₂₃₄₅₆₇₈₉';
+const subTxt=n=>String(n).split('').map(d=>SUBS[d]).join('');
+function combo(){
+  const cm=MET[M.m].v, cn=8-NON[M.n].v, g=gcd(cm,cn), L=cm*cn/g;
+  return {cm,cn,g,L,nM:L/cm,nN:L/cn};
+}
+const formulaHTML=(m,nM,n,nN)=>`${m}${nM>1?`<sub>${nM}</sub>`:''}${n}${nN>1?`<sub>${nN}</sub>`:''}`;
+const chargeTxt=(c,sign)=>(c===1?'':c)+sign;
+function compName(){
+  const mn=MET[M.m].name.toLowerCase();
+  return `${mn} ${NON[M.n].ionName}`;
+}
+
+function buildPickers(){
+  $('#pick-m').innerHTML=Object.keys(MET).map(s=>`<button data-s="${s}" aria-label="${MET[s].name}">${s}</button>`).join('');
+  $('#pick-n').innerHTML=Object.keys(NON).map(s=>`<button data-s="${s}" aria-label="${NON[s].name}">${s}</button>`).join('');
+  $('#pick-m').onclick=e=>{const b=e.target.closest('button');if(b){M.m=b.dataset.s;M.step=0;stopPlay();renderM2()}};
+  $('#pick-n').onclick=e=>{const b=e.target.closest('button');if(b){M.n=b.dataset.s;M.step=0;stopPlay();renderM2()}};
+}
+const STEPS=['Valence electrons','Balance the count','Transfer','Ions form','Criss-cross'];
+function buildStepper(){
+  $('#stepper').innerHTML=STEPS.map((t,i)=>`<button data-i="${i}"><span class="k">${i+1}</span>${t}</button>`).join('');
+  $('#stepper').onclick=e=>{const b=e.target.closest('button');if(b){stopPlay();go(+b.dataset.i,false)}};
+}
+
+/* geometry */
+const XM=205, XN=515, R=46;
+const ys=c=>c===1?[235]:c===2?[165,310]:[95,240,385];
+const ORDER_N=[['t',-1],['r',-1],['b',-1],['l',-1],['t',1],['r',1],['b',1],['l',1]];
+const ORDER_M=[['r',-1],['t',-1],['b',-1],['r',1]];
+function slot([side,o]){
+  const d=8*o;
+  return side==='t'?[d,-R]:side==='b'?[d,R]:side==='r'?[R,d]:[-R,d];
+}
+function transfers(nM,nN,cm,cn,vN){
+  const list=[]; let k=0;
+  const slots=[]; for(let j=0;j<nN;j++) for(let s=0;s<cn;s++) slots.push([j,vN+s]);
+  for(let i=0;i<nM;i++) for(let e=0;e<cm;e++){ list.push({i,e,j:slots[k][0],s:slots[k][1]}); k++; }
+  return list;
+}
+
+function stageSVG(step){
+  const c=combo(), vN=NON[M.n].v;
+  const nM=step===0?1:c.nM, nN=step===0?1:c.nN;
+  const yM=ys(nM), yN=ys(nN);
+  let s='';
+  s+=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker></defs>`;
+  // captions
+  s+=`<text x="${XM}" y="22" text-anchor="middle" font-family="var(--body)" font-weight="700" font-size="13" fill="var(--metal)" letter-spacing="1">${step>=3?'CATION':'METAL ATOM'}${nM>1?'S':''} · LOSES e⁻</text>`;
+  s+=`<text x="${XN}" y="22" text-anchor="middle" font-family="var(--body)" font-weight="700" font-size="13" fill="var(--nonmetal)" letter-spacing="1">${step>=3?'ANION':'NONMETAL ATOM'}${nN>1?'S':''} · GAINS e⁻</text>`;
+  // metals
+  yM.forEach(y=>{
+    s+=`<g transform="translate(${XM},${y})">`;
+    if(step<2) s+=`<circle r="${R}" fill="none" stroke="var(--metal)" stroke-width="1.6" opacity=".55"/>`;
+    else if(step===2) s+=`<circle r="${R}" fill="none" stroke="var(--metal)" stroke-width="1.4" stroke-dasharray="3 5" opacity=".45"/>`;
+    const kr=step>=3?26:24;
+    s+=`<circle r="${kr}" fill="var(--metal-soft)" stroke="var(--metal)" stroke-width="2"/>`;
+    s+=`<text y="7" text-anchor="middle" font-family="var(--display)" font-weight="800" font-size="21" fill="var(--ink)">${M.m}</text>`;
+    if(step>=3) s+=`<text x="${kr+2}" y="-${kr-6}" font-family="var(--mono)" font-weight="700" font-size="17" fill="var(--metal)">${chargeTxt(c.cm,'+')}</text>`;
+    if(step<2) for(let e=0;e<c.cm;e++){const [x,yy]=slot(ORDER_M[e]);s+=`<circle cx="${x}" cy="${yy}" r="6.5" fill="var(--metal)"/>`;}
+    const lab=step>=3?`${MET[M.m].ion} · like ${GAS[MET[M.m].ion]}`:MET[M.m].cfg;
+    s+=`<text y="${R+19}" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-2)">${lab}</text>`;
+    s+=`</g>`;
+  });
+  // nonmetals
+  yN.forEach(y=>{
+    s+=`<g transform="translate(${XN},${y})">`;
+    s+=`<circle r="${R}" fill="none" stroke="var(--nonmetal)" stroke-width="1.6" opacity=".55"/>`;
+    s+=`<circle r="24" fill="var(--nonmetal-soft)" stroke="var(--nonmetal)" stroke-width="2"/>`;
+    s+=`<text y="7" text-anchor="middle" font-family="var(--display)" font-weight="800" font-size="21" fill="var(--ink)">${M.n}</text>`;
+    for(let e=0;e<vN;e++){const [x,yy]=slot(ORDER_N[e]);s+=`<circle cx="${x}" cy="${yy}" r="6.5" fill="var(--nonmetal)"/>`;}
+    if(step<2) for(let e=vN;e<8;e++){const [x,yy]=slot(ORDER_N[e]);s+=`<circle cx="${x}" cy="${yy}" r="6" fill="none" stroke="var(--ink-3)" stroke-width="1.4" stroke-dasharray="2.5 2.5"/>`;}
+    if(step>=3){
+      const bx=R+12;
+      s+=`<path d="M${-bx+8},${-R-8} h-8 v${2*R+16} h8" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+      s+=`<path d="M${bx-8},${-R-8} h8 v${2*R+16} h-8" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+      s+=`<text x="${bx+4}" y="${-R+4}" font-family="var(--mono)" font-weight="700" font-size="17" fill="var(--nonmetal)">${chargeTxt(c.cn,'−')}</text>`;
+    }
+    const lab=step>=3?`${NON[M.n].ion} · like ${GAS[NON[M.n].ion]}`:NON[M.n].cfg;
+    s+=`<text y="${R+(step>=3?24:19)}" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink-2)">${lab}</text>`;
+    s+=`</g>`;
+  });
+  // step 1: pairing arrows
+  if(step===1){
+    const tr=transfers(c.nM,c.nN,c.cm,c.cn,vN), seen=new Set();
+    tr.forEach(t=>{const key=t.i+'-'+t.j; if(seen.has(key))return; seen.add(key);
+      s+=`<line x1="${XM+R+10}" y1="${yM[t.i]}" x2="${XN-R-14}" y2="${yN[t.j]}" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#ah)"/>`;});
+  }
+  // transferred electrons layer
+  if(step>=2){
+    const tr=transfers(c.nM,c.nN,c.cm,c.cn,vN);
+    tr.forEach((t,idx)=>{
+      const [sx,sy]=slot(ORDER_M[t.e]), [dx,dy]=slot(ORDER_N[t.s]);
+      const x0=XM+sx,y0=yM[t.i]+sy,x1=XN+dx,y1=yN[t.j]+dy;
+      s+=`<circle class="fly" data-x0="${x0}" data-y0="${y0}" data-x1="${x1}" data-y1="${y1}" data-i="${idx}" cx="${x1}" cy="${y1}" r="6.5" fill="var(--metal)" stroke="var(--surface)" stroke-width="1.5"/>`;
+    });
+    if(step===2) s+=`<text id="flycount" x="360" y="470" text-anchor="middle" font-family="var(--mono)" font-weight="700" font-size="14" fill="var(--ink-2)">${tr.length} of ${tr.length} electrons transferred</text>`;
+  }
+  if(step>=3){
+    s+=`<text x="360" y="470" text-anchor="middle" font-family="var(--body)" font-weight="700" font-size="14" fill="var(--ink-2)">+ and − attract: that electrostatic pull is the ionic bond</text>`;
+  }
+  return s;
+}
+function animateTransfer(){
+  const svg=$('#stage'), flies=[...svg.querySelectorAll('.fly')], cnt=svg.querySelector('#flycount');
+  if(reduced||!flies.length) return;
+  const n=flies.length, dur=750, stag=Math.max(260,Math.min(520,2200/n)), t0=performance.now();
+  flies.forEach(f=>{f.setAttribute('cx',f.dataset.x0);f.setAttribute('cy',f.dataset.y0)});
+  if(cnt) cnt.textContent=`0 of ${n} electrons transferred`;
+  const token=++M.anim;
+  function frame(now){
+    if(token!==M.anim) return;
+    let done=0;
+    flies.forEach((f,i)=>{
+      let t=(now-t0-i*stag)/dur; t=Math.max(0,Math.min(1,t));
+      const e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+      const x0=+f.dataset.x0,y0=+f.dataset.y0,x1=+f.dataset.x1,y1=+f.dataset.y1;
+      const cx=(x0+x1)/2, cy=Math.min(y0,y1)-70;
+      const x=(1-e)*(1-e)*x0+2*(1-e)*e*cx+e*e*x1, y=(1-e)*(1-e)*y0+2*(1-e)*e*cy+e*e*y1;
+      f.setAttribute('cx',x.toFixed(1));f.setAttribute('cy',y.toFixed(1));
+      if(t>=1) done++;
+    });
+    if(cnt) cnt.textContent=`${done} of ${n} electron${n>1?'s':''} transferred`;
+    if(done<n) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+function ccSVG(on){
+  const c=combo(), m=M.m, n=M.n;
+  const mEnd=150, nEnd=315;
+  let s=`<defs><marker id="ahm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--metal)"/></marker><marker id="ahn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--nonmetal)"/></marker></defs>`;
+  const sym=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="end" font-family="var(--display)" font-weight="800" font-size="38" fill="var(--ink)">${t}</text>`;
+  s+=sym(mEnd,62,m)+`<text x="${mEnd+4}" y="36" font-family="var(--mono)" font-weight="700" font-size="20" fill="var(--metal)">${c.cm}+</text>`;
+  s+=sym(nEnd,62,n)+`<text x="${nEnd+4}" y="36" font-family="var(--mono)" font-weight="700" font-size="20" fill="var(--nonmetal)">${c.cn}−</text>`;
+  s+=sym(mEnd,172,m)+`<text x="${mEnd+4}" y="184" font-family="var(--mono)" font-weight="700" font-size="22" fill="var(--nonmetal)">${c.cn}</text>`;
+  s+=sym(nEnd,172,n)+`<text x="${nEnd+4}" y="184" font-family="var(--mono)" font-weight="700" font-size="22" fill="var(--metal)">${c.cm}</text>`;
+  const p1=`M${mEnd+14},46 C${mEnd+40},110 ${nEnd-20},110 ${nEnd+10},160`;
+  const p2=`M${nEnd+14},46 C${nEnd-10},110 ${mEnd+40},110 ${mEnd+12},160`;
+  s+=`<path class="ccpath" d="${p1}" fill="none" stroke="var(--metal)" stroke-width="2.5" marker-end="url(#ahm)" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${on?0:100}"/>`;
+  s+=`<path class="ccpath" d="${p2}" fill="none" stroke="var(--nonmetal)" stroke-width="2.5" marker-end="url(#ahn)" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${on?0:100}" style="transition-delay:.35s"/>`;
+  return s;
+}
+
+function trendHTML(){
+  const m=MET[M.m], n=NON[M.n];
+  const mText=m.ie
+    ? `Group ${m.g}, left of period 3. <b>Low first ionization enthalpy</b> (${m.ie} kJ/mol) and EN ${f1(m.en)}, so it gives electrons away.`
+    : `Group 2, one period below Mg: a bigger atom whose outer electrons are farther out, so they come off <b>even more easily</b>. Ca is above Mg in the reactivity series.`;
+  const nText=`Group ${n.g}, right side of period ${n.p}. <b>High electronegativity</b> (${f1(n.en)}), so it pulls electrons in.`;
+  return `<div class="side-m"><span class="lead">${M.m} · loses electrons</span>${mText}</div>
+  <div class="mid"><svg width="64" height="24" viewBox="0 0 64 24" aria-hidden="true"><path d="M4 12 H56" stroke="var(--ink-3)" stroke-width="2"/><path d="M50 5 L60 12 L50 19" fill="none" stroke="var(--ink-3)" stroke-width="2"/><circle cx="24" cy="12" r="5" fill="var(--metal)"/></svg>e⁻ moves</div>
+  <div class="side-n"><span class="lead">${M.n} · gains electrons</span>${nText}</div>`;
+}
+
+function explain(step){
+  const c=combo(), m=M.m, n=M.n, vN=NON[n].v, pl=(k,w)=>`${k} ${w}${k>1?'s':''}`;
+  let t='',b='',tally='';
+  if(step===0){
+    t='Count the valence electrons';
+    b=`<b>${m}</b> (${MET[m].cfg}) has ${pl(c.cm,'valence electron')}. Losing ${c.cm>1?'them':'it'} leaves a full shell underneath. <b>${n}</b> (${NON[n].cfg}) has ${vN} and is <b>${c.cn} short</b> of an octet.`;
+    tally=`<span class="lost">${m} can give: ${c.cm}</span><span class="gain">${n} needs: ${c.cn}</span>`;
+  } else if(step===1){
+    t='Make electrons lost = electrons gained';
+    if(c.nM===1&&c.nN===1) b=`${m} gives ${c.cm} and ${n} needs ${c.cn}, a perfect match. One ${m} for every one ${n}.`;
+    else if(c.nM===1) b=`${m} gives ${c.cm}, but each ${n} can take only ${c.cn}. So one ${m} needs <b>${c.nN} ${n} atoms</b>.`;
+    else if(c.nN===1) b=`Each ${m} gives only ${c.cm}, but ${n} needs ${c.cn}. So <b>${c.nM} ${m} atoms</b> supply one ${n}.`;
+    else b=`${m} gives ${c.cm} and each ${n} needs ${c.cn}. The smallest number both divide into is <b>${c.L}</b>, so ${c.nM} ${m} atoms lose ${c.L} and ${c.nN} ${n} atoms gain ${c.L}.`;
+    tally=`<span class="lost">Lost: ${c.nM} × ${c.cm} = ${c.L}</span><span class="gain">Gained: ${c.nN} × ${c.cn} = ${c.L}</span>`;
+  } else if(step===2){
+    t='Transfer the electrons';
+    b=`${pl(c.L,'electron')} move from ${m} to ${n}. `;
+    if(c.nM===1&&c.nN>1) b+=`${m}'s ${c.cm} electrons split up: <b>${c.cn===1?'one':c.cn} lands on each ${n}</b>.`;
+    else if(c.nM>1&&c.nN===1) b+=`<b>Each ${m} gives ${c.cm===1?'one':c.cm}</b>, and together they fill ${n}'s ${c.cn} empty spots.`;
+    else if(c.nM>1&&c.nN>1) b+=`Each ${m} gives ${c.cm} and each ${n} takes ${c.cn}, so one ${m}'s electrons can end up on two different ${n} atoms.`;
+    else b+=`${m} gives ${c.cm===1?'its electron':`all ${c.cm}`}, filling every empty spot on ${n}.`;
+    b+=` Copper dots show where the electrons came from.`;
+    tally=`<span class="lost">${m} low IE → lets go</span><span class="gain">${n} high EN → pulls in</span>`;
+  } else if(step===3){
+    t='Ions form';
+    const gm=GAS[MET[m].ion], gn=GAS[NON[n].ion];
+    b=`${m} becomes <b>${m}<sup>${chargeTxt(c.cm,'+')}</sup></b> (${MET[m].ion}, like ${gm}). ${n} becomes <b>${n}<sup>${chargeTxt(c.cn,'−')}</sup></b> (${NON[n].ion}, like ${gn}). Both now have noble-gas shells. The cation is smaller than its atom because a whole shell is gone, and the anion is a little larger.`;
+    tally=`<span class="lost">${c.nM} × (${c.cm}+) = +${c.L}</span><span class="gain">${c.nN} × (${c.cn}−) = −${c.L}</span><span>net charge 0</span>`;
+  } else {
+    t='Criss-cross to the formula';
+    b=`Each ion's charge number becomes the other ion's subscript: ${m} gets ${c.cn} and ${n} gets ${c.cm}.`+(c.g>1?` Both are divisible by ${c.g}, so simplify.`:'')+` The formula matches the atom counts in the diagram: <b>${c.nM} ${m} : ${c.nN} ${n}</b>.`;
+    tally=`<span>${m}${subTxt(c.cn)}${n}${subTxt(c.cm)}${c.g>1?` ÷ ${c.g}`:''} → ${m}${c.nM>1?subTxt(c.nM):''}${n}${c.nN>1?subTxt(c.nN):''}</span>`;
+  }
+  return {t,b,tally};
+}
+
+function renderM2(animate){
+  const c=combo(), step=M.step;
+  M.anim++;
+  $('#pick-m').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.s===M.m)));
+  $('#pick-n').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.s===M.n)));
+  $('#target-name').innerHTML=step>=4?formulaHTML(M.m,c.nM,M.n,c.nN):`${M.m} + ${M.n} → ?`;
+  $('#trendstrip').innerHTML=trendHTML();
+  $('#stepper').querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('done',i<step); if(i===step)b.setAttribute('aria-current','step'); else b.removeAttribute('aria-current');});
+  $('#stage').innerHTML=stageSVG(step);
+  const ex=explain(step);
+  $('#ex-k').textContent=`Step ${step+1} of 5`;
+  $('#ex-title').textContent=ex.t;
+  $('#ex-body').innerHTML=ex.b;
+  $('#tally').innerHTML=ex.tally;
+  const xn=$('#xnote');
+  if(M.m==='Al'&&M.n==='Cl'&&step>=3){xn.hidden=false;xn.innerHTML='<b>Grade 11 extension:</b> ΔEN for Al–Cl is only 1.5, so real AlCl<sub>3</sub> has a lot of covalent character. The ionic model still gives the correct formula.';}
+  else xn.hidden=true;
+  $('#back').disabled=step===0;
+  $('#next').textContent=step===2?'Form the ions':step===4?'Replay from start':'Next step';
+  $('#play').textContent=M.playTimer?'Stop':'Play all';
+  // criss-cross
+  const on=step>=4, cc=$('#cc');
+  cc.classList.toggle('off',!on);
+  const svg=$('#ccsvg');
+  svg.innerHTML=ccSVG(false);
+  if(on){ if(animate&&!reduced){ requestAnimationFrame(()=>requestAnimationFrame(()=>{svg.querySelectorAll('.ccpath').forEach(p=>p.setAttribute('stroke-dashoffset','0')); svg.querySelectorAll('text[opacity]').forEach(t=>t.setAttribute('opacity','1'));})); } else svg.innerHTML=ccSVG(true); }
+  const raw=`${M.m}<sub>${c.cn}</sub>${M.n}<sub>${c.cm}</sub>`;
+  $('#ccres').innerHTML=on
+    ? `<span style="flex-basis:100%">Charges cross over to become subscripts:</span><span class="mono">${raw}</span><span>then ${c.g>1?`divide both by ${c.g}`:(c.cn===1||c.cm===1)?'drop the 1s':'already simplest'} →</span><span class="final">${formulaHTML(M.m,c.nM,M.n,c.nN)}</span><span style="flex-basis:100%">${compName()}</span>`
+    : `<span class="locked">Reach step 5 to see ${M.m}<sup>?</sup> and ${M.n}<sup>?</sup> cross over into the formula.</span>`;
+  if(step===2&&animate) animateTransfer();
+}
+function go(step,animate){M.step=Math.max(0,Math.min(4,step));renderM2(animate)}
+$('#back').onclick=()=>{stopPlay();go(M.step-1,false)};
+$('#next').onclick=()=>{stopPlay();go(M.step===4?0:M.step+1,true)};
+function stopPlay(){if(M.playTimer){clearTimeout(M.playTimer);M.playTimer=0;$('#play').textContent='Play all'}}
+$('#play').onclick=()=>{
+  if(M.playTimer){stopPlay();return}
+  if(M.step===4) M.step=0;
+  const waitFor=st=>st===2?Math.max(3400,combo().L*520+1900):2800;
+  const tick=()=>{M.playTimer=setTimeout(()=>{go(M.step+1,true);if(M.step<4)tick();else{M.playTimer=0;$('#play').textContent='Play all'}},waitFor(M.step))};
+  tick(); go(M.step,M.step===2);
+};
+
+
+/* ---------- Module 3: electronegativity & bond character ---------- */
+const E3LIST=['H','Li','Be','B','C','N','O','F','Na','Mg','Al','Si','P','S','Cl'];
+const E3=s=>s==='H'?{n:'Hydrogen',en:2.1,t:'nonmetal'}:EL[s];
+const DMAX=3.2;
+const QUICK=[['H','H'],['H','F'],['Na','Cl'],['Cl','Cl'],['H','Cl'],['Mg','O']];
+const S3={a:'H',b:'F'};
+function build3(){
+  const btns=id=>E3LIST.map(s=>`<button class="t-${E3(s).t}" data-s="${s}" aria-label="${E3(s).n}">${s}</button>`).join('');
+  $('#pickA').innerHTML=btns(); $('#pickB').innerHTML=btns();
+  $('#pickA').onclick=e=>{const b=e.target.closest('button');if(b){S3.a=b.dataset.s;render3()}};
+  $('#pickB').onclick=e=>{const b=e.target.closest('button');if(b){S3.b=b.dataset.s;render3()}};
+  $('#quick3').innerHTML=QUICK.map(([a,b])=>`<button data-a="${a}" data-b="${b}">${a}–${b}</button>`).join('');
+  $('#quick3').onclick=e=>{const b=e.target.closest('button');if(b){S3.a=b.dataset.a;S3.b=b.dataset.b;render3()}};
+  $('#v3go').onclick=e=>{const b=e.target.closest('.gobtn');if(b){stopPlay();M.m=b.dataset.m;M.n=b.dataset.n;M.step=0;renderM2();setTab(2);window.scrollTo({top:0,behavior:reduced?'auto':'smooth'})}};
+}
+function bondKind(A,B){
+  const a=E3(A),b=E3(B), d=Math.round(Math.abs(a.en-b.en)*10)/10;
+  const mA=a.t==='metal', mB=b.t==='metal';
+  let hi=a.en>=b.en?A:B, lo=hi===A?B:A;
+  let kind;
+  if(mA&&mB) kind='metallic';
+  else if((mA&&b.t==='metalloid')||(mB&&a.t==='metalloid')) kind='mixed';
+  else if(d===0) kind='nonpolar';
+  else if(!mA&&!mB) kind=d<0.5?'nearly':'polar';
+  else kind=d>1.7?'ionic':'partial';
+  return {A,B,a,b,d,hi,lo,kind};
+}
+const zoneOf=d=>d<0.5?'nonpolar covalent':d<=1.7?'polar covalent':'ionic';
+function bondSVG(k){
+  const left=k.d===0?k.A:k.lo, right=k.d===0?k.B:k.hi, L=E3(left), R_=E3(right);
+  const X1=110,X2=250,Y=78,r=26;
+  const fillOf=e=>e.t==='metal'?'var(--metal-soft)':e.t==='nonmetal'?'var(--nonmetal-soft)':'var(--surface-2)';
+  const strOf=e=>e.t==='metal'?'var(--metal)':e.t==='nonmetal'?'var(--nonmetal)':'var(--ink-3)';
+  let s='';
+  const covalent=['nonpolar','nearly','polar','partial'].includes(k.kind);
+  let px=180, cap='';
+  if(covalent){
+    const frac=Math.min(k.d/2.4,1);
+    px=180+frac*(k.kind==='partial'?38:32);
+    s+=`<line x1="${X1}" y1="${Y}" x2="${X2}" y2="${Y}" stroke="var(--line)" stroke-width="3"/>`;
+    s+=`<ellipse cx="${px}" cy="${Y}" rx="${46-frac*10}" ry="${28}" fill="var(--nonmetal)" opacity=".13"/>`;
+  }
+  s+=`<circle cx="${X1}" cy="${Y}" r="${r}" fill="${fillOf(L)}" stroke="${strOf(L)}" stroke-width="2"/><text x="${X1}" y="${Y+7}" text-anchor="middle" font-family="var(--display)" font-weight="800" font-size="21" fill="var(--ink)">${left}</text>`;
+  s+=`<circle cx="${X2}" cy="${Y}" r="${r}" fill="${fillOf(R_)}" stroke="${strOf(R_)}" stroke-width="2"/><text x="${X2}" y="${Y+7}" text-anchor="middle" font-family="var(--display)" font-weight="800" font-size="21" fill="var(--ink)">${right}</text>`;
+  s+=`<text x="${X1}" y="${Y+48}" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-2)">EN ${f1(L.en)}</text><text x="${X2}" y="${Y+48}" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--ink-2)">EN ${f1(R_.en)}</text>`;
+  const top=(x,t,c)=>`<text x="${x}" y="${Y-36}" text-anchor="middle" font-family="var(--mono)" font-weight="700" font-size="17" fill="${c}">${t}</text>`;
+  if(covalent){
+    s+=`<circle cx="${px}" cy="${Y-7}" r="5.5" fill="var(--ink)"/><circle cx="${px}" cy="${Y+7}" r="5.5" fill="var(--ink)"/>`;
+    if(k.kind==='nonpolar') cap='Shared pair exactly midway: equal pull';
+    else {
+      s+=top(X1,'δ+','var(--metal)')+top(X2,'δ−','var(--nonmetal)');
+      cap=`Shared pair pulled toward ${right}`+(k.kind==='nearly'?' (only slightly)':'');
+    }
+  } else if(k.kind==='ionic'){
+    s+=`<circle cx="${X2-r-9}" cy="${Y}" r="6" fill="var(--metal)" stroke="var(--surface)" stroke-width="1.5"/>`;
+    s+=`<path d="M${X1+r+6},${Y-20} Q180,${Y-44} ${X2-r-14},${Y-18}" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#ah3)"/>`;
+    s+=top(X1+r,'+','var(--metal)')+top(X2+r,'−','var(--nonmetal)');
+    cap=`Electron(s) essentially transferred to ${right}`;
+  } else {
+    cap=k.kind==='metallic'?'Two metals: metallic bonding, no pair to place':'Metal + metalloid: not a simple two-atom bond';
+  }
+  s=`<defs><marker id="ah3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker></defs>`+s;
+  s+=`<text x="180" y="160" text-anchor="middle" font-family="var(--body)" font-weight="700" font-size="14" fill="var(--ink-2)">${cap}</text>`;
+  return s;
+}
+function explain3(k){
+  const {A,B,a,b,d,hi,lo}=k, H=E3(hi), Lo=E3(lo), same=A===B;
+  const notes=[]; let t='',body='',go='';
+  if(k.kind==='nonpolar'){
+    t='Nonpolar covalent bond';
+    if(same){
+      body=`Both atoms are ${a.n.toLowerCase()}, so they pull on the shared electron pair equally (ΔEN = 0). The shared pair sits <b>exactly midway between the two nuclei</b>, so neither end of the bond is more negative than the other.`;
+      notes.push(`<li>NCERT's examples of nonpolar covalent bonds: H<sub>2</sub>, O<sub>2</sub>, Cl<sub>2</sub>, N<sub>2</sub>, F<sub>2</sub>, all bonds between identical atoms.</li>`);
+    } else {
+      body=`${a.n} and ${b.n} are different atoms, but on this Pauling table they have the same electronegativity (${f1(a.en)}), so ΔEN = 0 and the pair is shared essentially equally.`;
+      notes.push(`<li>At one decimal place the values are equal; tiny real differences would make the bond very slightly polar at most.</li>`);
+    }
+  } else if(k.kind==='nearly'){
+    t='Nearly nonpolar (very slightly polar)';
+    body=`${H.n} is slightly more electronegative (${f1(H.en)} vs ${f1(Lo.en)}), so the shared pair is displaced <b>a little</b> toward ${hi}. Strictly, any ΔEN above 0 makes a bond polar, but a difference this small gives only a tiny dipole.`;
+    notes.push(`<li>By the rule of thumb (ΔEN below about 0.5) this is usually treated as nonpolar covalent.</li>`);
+  } else if(k.kind==='polar'){
+    t='Polar covalent bond';
+    body=`The atoms still <b>share</b> the electron pair, but ${hi} (EN ${f1(H.en)}) pulls harder than ${lo} (EN ${f1(Lo.en)}). The shared pair is <b>displaced toward ${hi}</b>, so ${hi} carries a partial negative charge (δ−) and ${lo} a partial positive charge (δ+). The bond has a dipole moment.`;
+    if([A,B].sort().join()==='F,H') notes.push(`<li class="bond"><b>This is the NCERT textbook's own example</b> of a polar covalent bond: in HF the shared pair is displaced toward fluorine.</li>`);
+    if(d>1.7) notes.push(`<li class="warn">By the 1.7 rule of thumb this ΔEN lands past the "ionic" line, yet both atoms are nonmetals that share electrons, so the bond is <b>strongly polar covalent</b>. This is exactly why the line is only a guide: bond character changes continuously.</li>`);
+  } else if(k.kind==='partial'){
+    t='Polar covalent, with strong ionic character';
+    body=`${Lo.n} is a metal and ${hi} pulls much harder (${f1(H.en)} vs ${f1(Lo.en)}), so the electrons are drawn well toward ${hi}. At ΔEN = ${f1(d)} the transfer is not complete, so this bond sits <b>between polar covalent and ionic</b> on the spectrum.`;
+    notes.push(`<li class="warn">The rule-of-thumb line puts this in the polar covalent zone, but metal–nonmetal bonds like this are often substantially ionic. Treat the zone lines as rough guides.</li>`);
+    if([A,B].sort().join()==='Al,Cl') notes.push(`<li class="bond"><b>Link to Module 2:</b> this is why real AlCl<sub>3</sub> has a lot of covalent character, even though the ionic model gives the correct formula.</li>`);
+  } else if(k.kind==='ionic'){
+    t='Ionic bond';
+    body=`The difference is large (ΔEN = ${f1(d)}). ${H.n} pulls so much harder than ${Lo.n.toLowerCase()} that the electron(s) <b>essentially transfer completely</b>: ${lo} becomes a positive ion and ${hi} a negative ion, held together by electrostatic attraction.`;
+    notes.push(`<li>Even here the bond is not 100% ionic, but it sits far toward the ionic end of the spectrum.</li>`);
+    if([A,B].sort().join()==='Cl,Na') notes.push(`<li class="bond"><b>Link to Module 2:</b> this is the NaCl you built there. Na (EN 0.9) gives up its one valence electron and Cl (EN 3.0) takes it: Na<sup>+</sup> and Cl<sup>−</sup>.</li>`);
+  } else if(k.kind==='metallic'){
+    t='Two metals: not a covalent or ionic pair';
+    body=`Both are metals with low electronegativity, so neither pulls electrons off the other or holds a shared pair tightly. Metals hold together by <b>metallic bonding</b> (see Module 1). The marker only shows the size of ΔEN.`;
+  } else {
+    t='Metal + metalloid: not a simple case';
+    body=`A metal with a metalloid usually forms an alloy-like solid, not a simple two-atom bond, so this tool does not classify it. The marker only shows the size of ΔEN. Try a nonmetal partner instead.`;
+  }
+  if((k.kind==='ionic'||k.kind==='partial')&&M2M.includes(lo)&&M2N.includes(hi)) go=`<button class="gobtn" data-m="${lo}" data-n="${hi}">Build ${lo} + ${hi} step by step in Module 2 →</button>`;
+  return {t,body,notes,go};
+}
+function render3(){
+  const k=bondKind(S3.a,S3.b);
+  $('#pickA').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.s===S3.a)));
+  $('#pickB').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.s===S3.b)));
+  $('#quick3').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.a===S3.a&&b.dataset.b===S3.b)));
+  $('#s3title').textContent=`${S3.a}–${S3.b}`;
+  $('#s3calc').innerHTML=`ΔEN = |${f1(k.a.en)} − ${f1(k.b.en)}| = <b>${f1(k.d)}</b>`;
+  const p=(k.d/DMAX*100).toFixed(2)+'%';
+  $('#s3pin').style.left=p; $('#s3mk').style.left=p;
+  $('#s3pinlab').textContent=`ΔEN ${f1(k.d)}`;
+  $('#bondsvg').innerHTML=bondSVG(k);
+  const ex=explain3(k);
+  $('#v3k').textContent=`Marker in the rule-of-thumb ${zoneOf(k.d)} zone`;
+  $('#v3t').textContent=ex.t;
+  $('#v3b').innerHTML=ex.body;
+  $('#v3n').innerHTML=ex.notes.join('');
+  $('#v3go').innerHTML=ex.go;
+}
+
+/* ---------- Module 4: naming covalent compounds ---------- */
+const NAMES=[
+ {f:'CO',n:'carbon monoxide',d:['monocarbon monoxide','carbon monooxide','carbon oxide'],fd:['CO2','C2O','CO3'],tag:'Mono- rules + dropped vowel',
+  r:'One carbon, so no prefix on the first element (not "monocarbon"). The single O still gets mono-, and mono + oxide drops the extra o: monoxide, not monooxide.'},
+ {f:'CO2',n:'carbon dioxide',d:['monocarbon dioxide','carbon dioxygen','dicarbon oxide'],fd:['C2O','CO','C2O2'],tag:'Mono- omitted',
+  r:'One carbon, so no prefix on the first element (never "monocarbon dioxide"). Two oxygens take di-: dioxide.'},
+ {f:'CS2',n:'carbon disulfide',d:['monocarbon disulfide','dicarbon sulfide','carbon disulfate'],fd:['C2S','CS','C2S2'],tag:'Prefix count',
+  r:'One carbon (no prefix), two sulfurs: di- + sulfide. The second element takes the -ide ending (sulfate is a different, oxygen-containing ion).'},
+ {f:'PCl3',n:'phosphorus trichloride',d:['monophosphorus trichloride','triphosphorus chloride','phosphorus chloride'],fd:['P3Cl','PCl5','P3Cl3'],tag:'Prefix count',
+  r:'One phosphorus, so no prefix on the first element. Three chlorines take tri-: trichloride.'},
+ {f:'SF6',n:'sulfur hexafluoride',d:['sulfur heptafluoride','monosulfur hexafluoride','sulfur pentafluoride'],fd:['S6F','SF5','SF7'],tag:'Prefix count',
+  r:'One sulfur (no prefix). Six fluorines take hexa- (hepta- would be 7, penta- 5): hexafluoride.'},
+ {f:'N2O4',n:'dinitrogen tetroxide',d:['dinitrogen tetraoxide','nitrogen tetroxide','dinitrogen pentoxide'],fd:['N4O2','NO4','N2O5'],tag:'Dropped vowel',
+  r:'Two nitrogens take di- (the first element does get a prefix when there is more than one). Four oxygens take tetra-, but the a is dropped before oxide: tetroxide, not tetraoxide.'},
+ {f:'N2O5',n:'dinitrogen pentoxide',d:['dinitrogen pentaoxide','nitrogen pentoxide','dinitrogen tetroxide'],fd:['N5O2','N2O4','NO5'],tag:'Dropped vowel',
+  r:'Two nitrogens: dinitrogen. Five oxygens take penta-, but the a is dropped before oxide: pentoxide, not pentaoxide.'},
+ {f:'H2S',n:'hydrogen sulfide',d:['dihydrogen sulfide','hydrogen disulfide','hydrogen sulfate'],fd:['HS','HS2','H2S2'],tag:'Hydrogen first',
+  r:'Hydrogen is written first, so no prefix goes before hydrogen, whatever the count: hydrogen sulfide, not dihydrogen sulfide.',
+  rr:' The name does not show the 2, so use valency: sulfur (group 16) needs 2 more electrons, so it bonds with 2 H.'},
+ {f:'H2O',n:'water',d:['hydrogen monoxide','dihydrogen monoxide','hydrogen oxide'],fd:['HO','H2O2','HO2'],tag:'Common name',
+  r:'H2O is known only by its common name, water, not "hydrogen monoxide".'},
+ {f:'NH3',n:'ammonia',d:['nitrogen hydride','trihydrogen nitride','hydrogen nitride'],fd:['NH4','N3H','NH2'],tag:'Common name',
+  r:'NH3 is known by its common name, ammonia. Its systematic name would be nitrogen trihydride, but that name is not used.'}
+];
+const fm=s=>s.replace(/(\d+)/g,'<sub>$1</sub>');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const Q={dir:'f',order:[],i:0,score:0,answered:false,opts:[],pick:null};
+function newQuiz(){Q.order=shuffle(NAMES.map((_,i)=>i));Q.i=0;Q.score=0;loadQ();}
+function loadQ(){
+  Q.answered=false;Q.pick=null;
+  if(Q.i<Q.order.length){const it=NAMES[Q.order[Q.i]];Q.opts=shuffle(Q.dir==='f'?[it.n,...it.d]:[it.f,...it.fd]);}
+  renderQ();
+}
+function renderQ(){
+  $('#dir-f').setAttribute('aria-pressed',String(Q.dir==='f'));
+  $('#dir-n').setAttribute('aria-pressed',String(Q.dir==='n'));
+  const P=$('#q4p'), O=$('#q4o'), FB=$('#q4fb'), N=$('#q4next');
+  const total=Q.order.length;
+  if(Q.i>=total){
+    $('#q4h').textContent='Round complete';
+    $('#q4meta').textContent=`${total} of ${total} done`;
+    P.className='qprompt nm'; P.innerHTML=`Score: ${Q.score} / ${total}`;
+    O.innerHTML=''; FB.hidden=true; N.textContent='Play again';
+    return;
+  }
+  const it=NAMES[Q.order[Q.i]], fwd=Q.dir==='f';
+  $('#q4h').textContent=fwd?'What is this compound called?':'Which formula matches this name?';
+  $('#q4meta').textContent=`Question ${Q.i+1} of ${total} · Score ${Q.score}`;
+  P.className=fwd?'qprompt':'qprompt nm';
+  P.innerHTML=fwd?fm(it.f):it.n;
+  const correct=fwd?it.n:it.f;
+  O.innerHTML=Q.opts.map((o,i)=>{
+    let c=fwd?'':'fx';
+    if(Q.answered){ if(o===correct) c+=' right'; else if(i===Q.pick) c+=' wrong'; }
+    return `<button class="${c}" data-i="${i}" ${Q.answered?'disabled':''}>${fwd?o:fm(o)}</button>`;
+  }).join('');
+  if(Q.answered){
+    const ok=Q.opts[Q.pick]===correct;
+    FB.hidden=false; FB.className='qfb'+(ok?'':' no');
+    const reason=it.r.replace(/([A-Z][a-z]?)(\d+)/g,(m,e,n)=>e+'<sub>'+n+'</sub>');
+    FB.innerHTML=`<b>${ok?'Correct!':'Not quite.'}</b> ${fm(it.f)} = <b>${it.n}</b>. <span class="tag">${it.tag}</span>${reason}${!fwd&&it.rr?it.rr:''}`;
+    N.textContent=Q.i+1<total?'Next question':'See score';
+  } else { FB.hidden=true; N.textContent='Skip'; }
+}
+function buildQuiz(){
+  $('#q4o').onclick=e=>{const b=e.target.closest('button');if(!b||Q.answered)return;Q.pick=+b.dataset.i;Q.answered=true;
+    const it=NAMES[Q.order[Q.i]];if(Q.opts[Q.pick]===(Q.dir==='f'?it.n:it.f))Q.score++;renderQ();};
+  $('#q4next').onclick=()=>{if(Q.i>=Q.order.length){newQuiz();return}Q.i++;loadQ();};
+  $('#dir-f').onclick=()=>{if(Q.dir!=='f'){Q.dir='f';newQuiz()}};
+  $('#dir-n').onclick=()=>{if(Q.dir!=='n'){Q.dir='n';newQuiz()}};
+  newQuiz();
+}
+
+/* ---------- boot ---------- */
+buildTable(); buildPickers(); buildStepper();
+renderM1(); renderM2(false);
+build3(); render3(); buildQuiz();
+{const t=+store.get('tb-tab'); setTab(t>=1&&t<=4?t:1);}
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Bonding &amp; Formulas — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f1e7; --surface:#ffffff; --text:#201c15; --text-muted:#6f6858; --border:#ddd3ba;
+    --accent:#201c15; --accent-text:#f5f1e7;
+    --good:#157a45; --again:#b4371f;
+    --shadow:0 1px 2px rgba(32,28,21,.06), 0 6px 18px rgba(32,28,21,.07);
+    --c-en:#0f766e; --c-en-bg:#d5efeb;
+    --c-metal:#a8641f; --c-metal-bg:#f3e4ce;
+    --c-alloy:#9a3b5c; --c-alloy-bg:#f5dde6;
+    --c-ionic:#2f5d9e; --c-ionic-bg:#dde7f6;
+    --c-poly:#7c3aed; --c-poly-bg:#e9e0fc;
+    --c-mono:#157a45; --c-mono-bg:#dbeee0;
+    --c-cov:#b4371f; --c-cov-bg:#f8ded6;
+    --c-name:#4a4f9c; --c-name-bg:#e1e2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#14161c; --surface:#1d2027; --text:#ece7db; --text-muted:#9a9385; --border:#333844;
+      --accent:#ece7db; --accent-text:#14161c;
+      --good:#6bce93; --again:#f08a70;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.3);
+      --c-en:#5fd0c2; --c-en-bg:#123330;
+      --c-metal:#d99a52; --c-metal-bg:#3a2c19;
+      --c-alloy:#e58aab; --c-alloy-bg:#3b1d28;
+      --c-ionic:#7fa8ea; --c-ionic-bg:#1e2c46;
+      --c-poly:#b294f6; --c-poly-bg:#2c2246;
+      --c-mono:#6bce93; --c-mono-bg:#16321f;
+      --c-cov:#f08a70; --c-cov-bg:#3d1d16;
+      --c-name:#9ea3f0; --c-name-bg:#23254a;
+    }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--text-muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; }
+  .subtitle { color:var(--text-muted); font-size:13.5px; margin:0 0 6px; line-height:1.5; }
+  .howto { font-size:12.5px; color:var(--text-muted); background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; margin:14px 0 16px; line-height:1.5; }
+
+  /* mode switch (only with JS) */
+  .modes { display:none; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:5px; margin:14px 0 16px; }
+  .js .modes { display:flex; }
+  .modes button { flex:1; border:0; background:transparent; color:var(--text-muted); font:600 14px "IBM Plex Sans",sans-serif; padding:10px; border-radius:10px; cursor:pointer; }
+  .modes button[aria-pressed="true"] { background:var(--accent); color:var(--accent-text); }
+  .js .howto.nojs { display:none; }
+  .howto.jsonly { display:none; }
+  .js .howto.jsonly { display:block; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 20px; }
+  .chip { font:600 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; text-decoration:none; border:1.5px solid transparent; cursor:pointer; }
+  .chip b { font-family:"IBM Plex Mono",monospace; font-weight:600; opacity:.75; margin-left:2px; }
+
+  .tools { display:none; justify-content:flex-end; gap:8px; margin:-8px 0 14px; }
+  .js .tools { display:flex; }
+  .btn-sm { border:1px solid var(--border); background:var(--surface); color:var(--text-muted); font:500 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; cursor:pointer; }
+
+  section { margin-bottom:26px; scroll-margin-top:12px; }
+  .sec-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .sec-badge { font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.03em; padding:4px 10px; border-radius:99px; }
+  .sec-count { font-size:12px; color:var(--text-muted); }
+
+  details.qa { background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); margin-bottom:8px; overflow:hidden; }
+  details.qa summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 16px; }
+  details.qa summary::-webkit-details-marker { display:none; }
+  details.qa summary::marker { content:""; }
+  .dot { flex:none; width:9px; height:9px; border-radius:50%; }
+  .q-text { flex:1; font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:15.5px; line-height:1.4; }
+  .chev { flex:none; color:var(--text-muted); font-size:20px; transition:transform .15s; }
+  details[open] .chev { transform:rotate(90deg); }
+  .a-text { margin:0; padding:0 16px 15px 37px; font-size:14.5px; line-height:1.55; }
+  .sup { display:inline-block; font:600 10px "IBM Plex Mono",monospace; letter-spacing:.02em; color:var(--text-muted); border:1px dashed var(--border); border-radius:6px; padding:1px 6px; margin-left:4px; vertical-align:1px; white-space:nowrap; }
+
+  /* study mode */
+  #study { display:none; }
+  .studying #study { display:block; }
+  .studying #browse { display:none; }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; }
+  .label { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); margin:0 0 8px; }
+  #pick .chip { border-color:transparent; opacity:.45; }
+  #pick .chip[aria-pressed="true"] { opacity:1; border-color:currentColor; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .btn { border:0; border-radius:12px; font:600 15px "IBM Plex Sans",sans-serif; padding:13px 18px; cursor:pointer; }
+  .btn-primary { background:var(--accent); color:var(--accent-text); flex:1; }
+  .btn-primary:disabled { opacity:.35; cursor:default; }
+  .btn-again { background:var(--c-cov-bg); color:var(--again); flex:1; }
+  .btn-good { background:var(--c-mono-bg); color:var(--good); flex:1; }
+  .btn-ghost { background:transparent; color:var(--text-muted); border:1px solid var(--border); }
+  label.opt { font-size:13px; color:var(--text-muted); display:flex; gap:6px; align-items:center; }
+
+  .bar { height:6px; background:var(--border); border-radius:99px; overflow:hidden; margin:2px 0 6px; }
+  .bar i { display:block; height:100%; width:0; background:var(--good); transition:width .25s; }
+  .meta { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:12px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); min-height:260px; padding:20px; display:flex; flex-direction:column; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; }
+  .card .sec-badge { align-self:flex-start; }
+  .card .cq { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(19px,5vw,23px); line-height:1.35; margin:18px 0 0; }
+  .card .ca { display:none; border-top:1px dashed var(--border); margin-top:18px; padding-top:16px; font-size:16px; line-height:1.55; }
+  .card.revealed .ca { display:block; animation:fade .18s ease-out; }
+  .card .hint { margin-top:auto; padding-top:18px; font-size:12px; color:var(--text-muted); text-align:center; }
+  .card.revealed .hint { display:none; }
+  @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  .actions { margin-top:12px; }
+  .done h2 { font-family:"Fraunces",Georgia,serif; margin:0 0 6px; }
+  .done p { color:var(--text-muted); margin:0 0 16px; line-height:1.5; }
+  .kbd { font-size:11.5px; color:var(--text-muted); text-align:center; margin-top:10px; }
+  @media (hover:none) { .kbd { display:none; } }
+
+  footer { font-size:12px; color:var(--text-muted); text-align:center; margin-top:30px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>Bonding &amp; Formulas</h1>
+  <p class="subtitle">Electronegativity &amp; bond character · Metallic bonds &amp; pure metals · Alloys · Ionic bonds &amp; ratios · Polyatomic ions · Monoatomic ions · Covalent bonds · Naming with prefixes — 149 cards</p>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button type="button" id="m-browse" aria-pressed="true">Browse all</button>
+    <button type="button" id="m-study" aria-pressed="false">Study mode</button>
+  </div>
+
+  <div id="browse">
+    <p class="howto nojs">Tap any question to reveal the answer; tap again to close it. Cards tagged <span class="sup">beyond NCERT</span> are standard chemistry that isn't in the NCERT chapters.</p>
+    <p class="howto jsonly">Tap a question to see its answer. Want to test yourself? Switch to <b>Study mode</b> for one shuffled card at a time, with “Again” cards coming back until you get them. Cards tagged <span class="sup">beyond NCERT</span> are standard chemistry that isn't in the NCERT chapters.</p>
+    <nav class="chips">
+    <a class="chip" href="#en" style="color:var(--c-en);background:var(--c-en-bg)">Electronegativity &amp; Bond Character <b>18</b></a>
+    <a class="chip" href="#metal" style="color:var(--c-metal);background:var(--c-metal-bg)">Metallic Bonds &amp; Pure Metals <b>15</b></a>
+    <a class="chip" href="#alloy" style="color:var(--c-alloy);background:var(--c-alloy-bg)">Alloys <b>14</b></a>
+    <a class="chip" href="#ionic" style="color:var(--c-ionic);background:var(--c-ionic-bg)">Ionic Bonds &amp; Ratios <b>25</b></a>
+    <a class="chip" href="#poly" style="color:var(--c-poly);background:var(--c-poly-bg)">Polyatomic Ions <b>19</b></a>
+    <a class="chip" href="#mono" style="color:var(--c-mono);background:var(--c-mono-bg)">Monoatomic Ions <b>21</b></a>
+    <a class="chip" href="#cov" style="color:var(--c-cov);background:var(--c-cov-bg)">Covalent Bonds <b>11</b></a>
+    <a class="chip" href="#name" style="color:var(--c-name);background:var(--c-name-bg)">Naming &amp; Formulas with Prefixes <b>26</b></a>
+    </nav>
+    <div class="tools"><button class="btn-sm" id="expand">Expand all</button><button class="btn-sm" id="collapse">Collapse all</button></div>
+  <section id="en" data-topic="en" data-title="Electronegativity &amp; Bond Character">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-en);background:var(--c-en-bg)">Electronegativity &amp; Bond Character</span>
+      <span class="sec-count">18 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">What is electronegativity?</span><span class="chev">›</span></summary><p class="a-text">The ability of an atom in a chemical compound to attract the shared electron pair towards itself.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">Can electronegativity be measured directly, like ionization enthalpy?</span><span class="chev">›</span></summary><p class="a-text">No — it isn't a measurable quantity. It's a relative number on a scale.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">Which electronegativity scale is most widely used, and what value does fluorine get?</span><span class="chev">›</span></summary><p class="a-text">The <strong>Pauling scale</strong>. Fluorine = 4.0, the most electronegative element.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">How does electronegativity change across a period (left → right)?</span><span class="chev">›</span></summary><p class="a-text">It <strong>increases</strong>, e.g. Li 1.0 → F 4.0. Atoms get smaller, so the nucleus pulls harder on the bonding electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">How does electronegativity change down a group?</span><span class="chev">›</span></summary><p class="a-text">It <strong>decreases</strong>, e.g. F 4.0 → Cl 3.0 → Br 2.8 → I 2.5. Atoms get bigger, so the bonding electrons are farther from the nucleus.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">How is electronegativity linked to metallic / non-metallic character?</span><span class="chev">›</span></summary><p class="a-text">High EN means more non-metallic. Low EN means more metallic. So non-metallic character increases across a period, and metallic character increases down a group.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">What is ΔEN, and how do you calculate it?</span><span class="chev">›</span></summary><p class="a-text">The difference in electronegativity between the two bonded atoms: ΔEN = |EN(A) − EN(B)|. The bigger ΔEN is, the more ionic the bond.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">Is any bond 100% ionic or 100% covalent?</span><span class="chev">›</span></summary><p class="a-text">No. Real bonds have partial ionic <em>and</em> partial covalent character. Bond type is a spectrum.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">ΔEN = 0 gives which bond type? Give examples.</span><span class="chev">›</span></summary><p class="a-text"><strong>Nonpolar covalent</strong>: the pair is shared equally. Examples: H₂, O₂, N₂, F₂, Cl₂ (two identical atoms).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">A small-to-moderate ΔEN gives which bond type?</span><span class="chev">›</span></summary><p class="a-text"><strong>Polar covalent</strong>: the pair is still shared, but pulled toward the more electronegative atom. Example: H–F.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">A large ΔEN gives which bond type?</span><span class="chev">›</span></summary><p class="a-text"><strong>Ionic</strong>: the electron is effectively transferred. Example: NaCl.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">What are the rule-of-thumb ΔEN cutoffs?</span><span class="chev">›</span></summary><p class="a-text">Below ~0.5 → nonpolar covalent · ~0.5–1.7 → polar covalent · above ~1.7 → ionic. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">In H–F, which atom is δ+ and which is δ−?</span><span class="chev">›</span></summary><p class="a-text">F is <strong>δ−</strong> (EN 4.0, pulls the pair toward itself). H is <strong>δ+</strong> (EN 2.1).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">What does δ (delta) mean in δ+ and δ−?</span><span class="chev">›</span></summary><p class="a-text">A <em>partial</em> charge, less than a full +1 or −1, because the electrons are only shifted, not fully transferred.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">What is a dipole moment?</span><span class="chev">›</span></summary><p class="a-text">A measure of how polar a bond is: μ = charge × distance between the charge centres, in debye (D). Polar bonds have one; nonpolar bonds don't.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">ΔEN for Na–Cl (0.9, 3.0)? Bond type?</span><span class="chev">›</span></summary><p class="a-text">|0.9 − 3.0| = <strong>2.1 → ionic</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">ΔEN for H–Cl (2.1, 3.0)? Bond type?</span><span class="chev">›</span></summary><p class="a-text">|2.1 − 3.0| = <strong>0.9 → polar covalent</strong>, with Cl as δ−.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-en)"></span><span class="q-text">ΔEN for Mg–O (1.2, 3.5)? Bond type?</span><span class="chev">›</span></summary><p class="a-text">|1.2 − 3.5| = <strong>2.3 → ionic</strong>.</p></details>
+  </section>
+  <section id="metal" data-topic="metal" data-title="Metallic Bonds &amp; Pure Metals">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-metal);background:var(--c-metal-bg)">Metallic Bonds &amp; Pure Metals</span>
+      <span class="sec-count">15 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">What is a metallic bond?</span><span class="chev">›</span></summary><p class="a-text">The electrostatic attraction between positive metal ions and the surrounding sea of delocalized electrons. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">What two parts make up the electron-sea model of a metal?</span><span class="chev">›</span></summary><p class="a-text">A lattice of positive metal ions + a sea of delocalized (mobile) electrons. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Why are metals good conductors of electricity and heat?</span><span class="chev">›</span></summary><p class="a-text">The delocalized electrons are free to move, carrying charge and energy easily. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Why are metals malleable (can be hammered into sheets)?</span><span class="chev">›</span></summary><p class="a-text">Layers of metal ions can slide past each other while the electron sea flows around them, so the bond doesn't break. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Why are metals ductile (can be drawn into wires)?</span><span class="chev">›</span></summary><p class="a-text">Same reason as malleability — ion layers slide past each other without breaking the metallic bond. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Why are metals lustrous (shiny)?</span><span class="chev">›</span></summary><p class="a-text">The free electrons in the electron sea reflect light. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">List the physical properties of pure metals.</span><span class="chev">›</span></summary><p class="a-text">Lustrous, malleable, ductile, good conductors of heat and electricity, sonorous, generally hard, with high melting points.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">What does <em>sonorous</em> mean?</span><span class="chev">›</span></summary><p class="a-text">Makes a ringing sound when struck (which is why bells are made of metal).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Which metals are the best conductors of heat? Which are poor ones?</span><span class="chev">›</span></summary><p class="a-text">Best: <strong>silver and copper</strong>. Poor: lead and mercury.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Name a metal that is liquid at room temperature.</span><span class="chev">›</span></summary><p class="a-text">Mercury.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Name metals soft enough to cut with a knife, and metals that melt in your palm.</span><span class="chev">›</span></summary><p class="a-text">Cut with a knife: sodium, potassium (and lithium). Melt in your palm: gallium and caesium.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Why do most metals have high melting points?</span><span class="chev">›</span></summary><p class="a-text">The attraction between the metal ions and the electron sea is strong and runs through the whole lattice, so breaking it takes a lot of energy. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Metallic bond vs ionic bond: what's the key difference?</span><span class="chev">›</span></summary><p class="a-text">Metallic: positive metal ions in a sea of shared, delocalized electrons (metal + metal). Ionic: electrons are transferred from a metal to a non-metal, and the oppositely charged ions attract in a lattice.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Why can a metal be hammered flat, while an ionic crystal shatters?</span><span class="chev">›</span></summary><p class="a-text">In a metal, layers slide and the electron sea keeps holding them together. In an ionic crystal, shifting a layer brings like charges face to face. They repel, so the crystal cracks. <span class="sup">beyond NCERT</span></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-metal)"></span><span class="q-text">Why do solid metals conduct electricity when solid ionic compounds don't?</span><span class="chev">›</span></summary><p class="a-text">Metals have free-moving electrons. In an ionic solid the ions are locked in place, so there are no mobile charges until it's melted or dissolved.</p></details>
+  </section>
+  <section id="alloy" data-topic="alloy" data-title="Alloys">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-alloy);background:var(--c-alloy-bg)">Alloys</span>
+      <span class="sec-count">14 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Define an alloy.</span><span class="chev">›</span></summary><p class="a-text">A homogeneous mixture of two or more metals, or a metal and a non-metal.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Can metals dissolve into each other at room temperature?</span><span class="chev">›</span></summary><p class="a-text">No — only when melted at high temperature. The hot mixture solidifies into an alloy on cooling.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Can the components of an alloy be separated by physical methods?</span><span class="chev">›</span></summary><p class="a-text">No.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Why are alloys made instead of using pure metals?</span><span class="chev">›</span></summary><p class="a-text">To get materials that are stronger, more rigid, or more corrosion-resistant than the pure metal.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">What is the composition of brass?</span><span class="chev">›</span></summary><p class="a-text">~80% copper + ~20% zinc.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">What is the composition of bronze?</span><span class="chev">›</span></summary><p class="a-text">~80% copper + ~20% tin.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">What is stainless steel made of?</span><span class="chev">›</span></summary><p class="a-text">Iron + carbon (0.03–0.8%) + chromium (16–18%) + nickel (10–14%) + molybdenum (2–3%).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Is an alloy a compound or a mixture?</span><span class="chev">›</span></summary><p class="a-text">A mixture (homogeneous) — no new chemical bond forms between the different metal atoms.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">What is solder, and what is it used for?</span><span class="chev">›</span></summary><p class="a-text">An alloy of <strong>lead + tin</strong>. It has a low melting point, so it's used to weld electrical wires together.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">What is an amalgam?</span><span class="chev">›</span></summary><p class="a-text">An alloy in which one of the metals is <strong>mercury</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Why is jewellery made from 22-carat gold rather than 24-carat?</span><span class="chev">›</span></summary><p class="a-text">Pure (24-carat) gold is very soft. Alloying it with silver or copper (22 parts gold : 2 parts Cu/Ag) makes it hard enough to wear.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">How do an alloy's conductivity and melting point compare with the pure metal's?</span><span class="chev">›</span></summary><p class="a-text">Both are <strong>lower</strong>. Brass and bronze conduct worse than copper, and solder melts lower than lead or tin.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Why is iron alloyed rather than used pure?</span><span class="chev">›</span></summary><p class="a-text">Pure iron is very soft and stretches easily when hot. A little carbon makes it hard and strong. Adding nickel and chromium gives stainless steel, which doesn't rust.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-alloy)"></span><span class="q-text">Why are alloys usually harder than the pure metal?</span><span class="chev">›</span></summary><p class="a-text">Atoms of a different size disrupt the neat layers, so the layers can't slide past each other as easily. <span class="sup">beyond NCERT</span></p></details>
+  </section>
+  <section id="ionic" data-topic="ionic" data-title="Ionic Bonds &amp; Ratios">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-ionic);background:var(--c-ionic-bg)">Ionic Bonds &amp; Ratios</span>
+      <span class="sec-count">25 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Define an ionic bond.</span><span class="chev">›</span></summary><p class="a-text">The electrostatic force of attraction between oppositely charged ions that holds them together.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">How is an ionic bond formed?</span><span class="chev">›</span></summary><p class="a-text">By transfer of electrons, typically from a metal atom to a non-metal atom.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">What happens to an atom with fewer than 4 valence electrons?</span><span class="chev">›</span></summary><p class="a-text">It tends to donate/lose electrons, forming a positive ion (cation).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">What happens to an atom with more than 4 valence electrons?</span><span class="chev">›</span></summary><p class="a-text">It tends to gain or share electrons to complete its octet.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">How does a sodium atom become Na⁺?</span><span class="chev">›</span></summary><p class="a-text">It loses its one valence electron.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">How does a chlorine atom become Cl⁻?</span><span class="chev">›</span></summary><p class="a-text">It gains one electron to complete its octet.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Define a cation.</span><span class="chev">›</span></summary><p class="a-text">A positively charged ion, formed when an atom loses electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Define an anion.</span><span class="chev">›</span></summary><p class="a-text">A negatively charged ion, formed when an atom gains electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Do ionic compounds form molecules?</span><span class="chev">›</span></summary><p class="a-text">No — they form 3-D crystal lattices, a repeating pattern of ions.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">In the NaCl crystal lattice, how many Cl⁻ ions surround each Na⁺ ion?</span><span class="chev">›</span></summary><p class="a-text">Six (and each Cl⁻ is surrounded by six Na⁺).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">What order are ionic compounds named in?</span><span class="chev">›</span></summary><p class="a-text">Cation name first, then anion name.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">What ending do simple anion names usually have?</span><span class="chev">›</span></summary><p class="a-text">“-ide” — e.g. chloride, oxide, sulfide.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">In the criss-cross method, what do you write first?</span><span class="chev">›</span></summary><p class="a-text">The cation symbol, then the anion symbol, with charges written underneath (not as superscripts).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Formula of calcium chloride (Ca²⁺ + Cl⁻)?</span><span class="chev">›</span></summary><p class="a-text">CaCl₂</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Formula of aluminium oxide (Al³⁺ + O²⁻)?</span><span class="chev">›</span></summary><p class="a-text">Al₂O₃</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Formula of magnesium hydroxide (Mg²⁺ + OH⁻)?</span><span class="chev">›</span></summary><p class="a-text">Mg(OH)₂</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">When do you need brackets ( ) in an ionic formula?</span><span class="chev">›</span></summary><p class="a-text">When 2 or more of the same polyatomic ion appear in the formula.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Do ionic compounds conduct electricity as solids?</span><span class="chev">›</span></summary><p class="a-text">No — the ions are locked in the lattice and can't move.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">When DO ionic compounds conduct electricity?</span><span class="chev">›</span></summary><p class="a-text">When molten or dissolved in water — the ions become free to move.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Are ionic compounds generally soluble in water or in kerosene/petrol?</span><span class="chev">›</span></summary><p class="a-text">Soluble in water; insoluble in kerosene and petrol.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Are melting/boiling points of ionic compounds high or low, and why?</span><span class="chev">›</span></summary><p class="a-text">High — due to strong inter-ionic (electrostatic) attraction.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">What rule decides the ratio of ions in an ionic compound?</span><span class="chev">›</span></summary><p class="a-text">Total positive charge = total negative charge. The compound is electrically neutral overall.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Formula of sodium oxide (Na⁺ + O²⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>Na₂O</strong>. Two Na⁺ are needed to balance one O²⁻.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Formula of magnesium oxide (Mg²⁺ + O²⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>MgO</strong>. Criss-cross gives Mg₂O₂; simplify to the lowest ratio, 1 : 1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ionic)"></span><span class="q-text">Formula of ferric chloride (Fe³⁺ + Cl⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>FeCl₃</strong></p></details>
+  </section>
+  <section id="poly" data-topic="poly" data-title="Polyatomic Ions">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-poly);background:var(--c-poly-bg)">Polyatomic Ions</span>
+      <span class="sec-count">19 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Define a polyatomic ion.</span><span class="chev">›</span></summary><p class="a-text">An ion formed from two or more atoms bonded together, carrying one overall charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Do polyatomic ion names usually end in “-ide”?</span><span class="chev">›</span></summary><p class="a-text">No — unlike simple monoatomic anions.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula and valency of hydroxide?</span><span class="chev">›</span></summary><p class="a-text">OH⁻, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula and valency of nitrate?</span><span class="chev">›</span></summary><p class="a-text">NO₃⁻, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula and valency of hydrogencarbonate (bicarbonate)?</span><span class="chev">›</span></summary><p class="a-text">HCO₃⁻, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula and valency of carbonate?</span><span class="chev">›</span></summary><p class="a-text">CO₃²⁻, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula and valency of sulfate?</span><span class="chev">›</span></summary><p class="a-text">SO₄²⁻, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula and valency of ammonium?</span><span class="chev">›</span></summary><p class="a-text">NH₄⁺, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Which is the only common polyatomic CATION in this list?</span><span class="chev">›</span></summary><p class="a-text">Ammonium, NH₄⁺ — all the others are anions.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Inside a polyatomic ion, what holds the atoms together?</span><span class="chev">›</span></summary><p class="a-text"><strong>Covalent</strong> bonds. The whole group carries one charge and forms <strong>ionic</strong> bonds with other ions.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Why write Ca(OH)₂ and not CaOH₂?</span><span class="chev">›</span></summary><p class="a-text">CaOH₂ would mean 1 O and 2 H. The brackets show the whole OH⁻ unit is taken twice.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula of calcium carbonate (Ca²⁺ + CO₃²⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>CaCO₃</strong>. The 2+ and 2− balance 1 : 1, so no brackets are needed.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula of calcium nitrate (Ca²⁺ + NO₃⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>Ca(NO₃)₂</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula of ammonium sulfate (NH₄⁺ + SO₄²⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>(NH₄)₂SO₄</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula of aluminium sulfate (Al³⁺ + SO₄²⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>Al₂(SO₄)₃</strong>. 2 × (+3) = +6 balances 3 × (−2) = −6.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula of aluminium hydroxide (Al³⁺ + OH⁻)?</span><span class="chev">›</span></summary><p class="a-text"><strong>Al(OH)₃</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula of sodium hydrogencarbonate (baking soda)?</span><span class="chev">›</span></summary><p class="a-text"><strong>NaHCO₃</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Formula of ammonium chloride?</span><span class="chev">›</span></summary><p class="a-text"><strong>NH₄Cl</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-poly)"></span><span class="q-text">Name these: Na₂SO₄ and K₂CO₃.</span><span class="chev">›</span></summary><p class="a-text">Sodium sulfate; potassium carbonate.</p></details>
+  </section>
+  <section id="mono" data-topic="mono" data-title="Monoatomic Ions">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-mono);background:var(--c-mono-bg)">Monoatomic Ions</span>
+      <span class="sec-count">21 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Define a monoatomic ion.</span><span class="chev">›</span></summary><p class="a-text">An ion formed from a single atom that has gained or lost electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of sodium ion?</span><span class="chev">›</span></summary><p class="a-text">Na⁺, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of lithium ion?</span><span class="chev">›</span></summary><p class="a-text">Li⁺, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of potassium ion?</span><span class="chev">›</span></summary><p class="a-text">K⁺, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of silver ion?</span><span class="chev">›</span></summary><p class="a-text">Ag⁺, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of calcium ion?</span><span class="chev">›</span></summary><p class="a-text">Ca²⁺, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of barium ion?</span><span class="chev">›</span></summary><p class="a-text">Ba²⁺, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of the ferrous ion?</span><span class="chev">›</span></summary><p class="a-text">Fe²⁺, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of the ferric ion?</span><span class="chev">›</span></summary><p class="a-text">Fe³⁺, valency 3</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of the cuprous ion?</span><span class="chev">›</span></summary><p class="a-text">Cu⁺, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of the cupric ion?</span><span class="chev">›</span></summary><p class="a-text">Cu²⁺, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of magnesium ion?</span><span class="chev">›</span></summary><p class="a-text">Mg²⁺, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of zinc ion?</span><span class="chev">›</span></summary><p class="a-text">Zn²⁺, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of aluminium ion?</span><span class="chev">›</span></summary><p class="a-text">Al³⁺, valency 3</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of fluoride ion?</span><span class="chev">›</span></summary><p class="a-text">F⁻, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of chloride ion?</span><span class="chev">›</span></summary><p class="a-text">Cl⁻, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of bromide ion?</span><span class="chev">›</span></summary><p class="a-text">Br⁻, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of iodide ion?</span><span class="chev">›</span></summary><p class="a-text">I⁻, valency 1</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of oxide ion?</span><span class="chev">›</span></summary><p class="a-text">O²⁻, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Formula and valency of sulfide ion?</span><span class="chev">›</span></summary><p class="a-text">S²⁻, valency 2</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mono)"></span><span class="q-text">Which two metals in this list each have two possible ions?</span><span class="chev">›</span></summary><p class="a-text">Iron (Fe²⁺ ferrous / Fe³⁺ ferric) and copper (Cu⁺ cuprous / Cu²⁺ cupric).</p></details>
+  </section>
+  <section id="cov" data-topic="cov" data-title="Covalent Bonds">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-cov);background:var(--c-cov-bg)">Covalent Bonds</span>
+      <span class="sec-count">11 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Define a covalent bond.</span><span class="chev">›</span></summary><p class="a-text">A bond formed by <strong>sharing</strong> a pair of electrons between two atoms. Each shared pair is one bond.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Between which kinds of elements do covalent bonds usually form?</span><span class="chev">›</span></summary><p class="a-text">Non-metal + non-metal.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Why do two non-metals share electrons instead of transferring them?</span><span class="chev">›</span></summary><p class="a-text">Both atoms attract electrons strongly and neither will give one up, so they share to complete their octets.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">What is the octet rule?</span><span class="chev">›</span></summary><p class="a-text">Atoms tend to lose, gain or share electrons until they have 8 electrons in their outer shell (a noble-gas configuration). Hydrogen aims for 2.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Single, double, triple bond: how many shared pairs? Give examples.</span><span class="chev">›</span></summary><p class="a-text">1, 2 and 3 pairs. Single: H₂, Cl₂. Double: O₂. Triple: N₂.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">How many electrons are shared in a triple bond?</span><span class="chev">›</span></summary><p class="a-text">6 (three pairs), e.g. N≡N in N₂.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Do covalent compounds exist as molecules or as lattices?</span><span class="chev">›</span></summary><p class="a-text">As separate <strong>molecules</strong> (H₂O, CO₂, CH₄), unlike the lattice of an ionic compound.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Are melting/boiling points of covalent compounds high or low? Why?</span><span class="chev">›</span></summary><p class="a-text">Generally <strong>low</strong>. The forces <em>between</em> molecules are weak, even though the bonds <em>inside</em> each molecule are strong.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Do covalent compounds conduct electricity?</span><span class="chev">›</span></summary><p class="a-text">Generally no. They have no ions or free electrons to carry charge (e.g. a sugar solution doesn't conduct).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Metallic vs ionic vs covalent: what are the electrons doing?</span><span class="chev">›</span></summary><p class="a-text">Metallic: delocalized in a shared sea. Ionic: transferred. Covalent: shared between two specific atoms.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-cov)"></span><span class="q-text">Is a polar covalent bond still a covalent bond?</span><span class="chev">›</span></summary><p class="a-text">Yes. The electrons are still shared, just unequally.</p></details>
+  </section>
+  <section id="name" data-topic="name" data-title="Naming &amp; Formulas with Prefixes">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-name);background:var(--c-name-bg)">Naming &amp; Formulas with Prefixes</span>
+      <span class="sec-count">26 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Greek prefixes for 1 to 7?</span><span class="chev">›</span></summary><p class="a-text">mono-1 · di-2 · tri-3 · tetra-4 · penta-5 · hexa-6 · hepta-7</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Which prefix means 4? Which means 6?</span><span class="chev">›</span></summary><p class="a-text">tetra- = 4 · hexa- = 6</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Which prefix means 5? Which means 7?</span><span class="chev">›</span></summary><p class="a-text">penta- = 5 · hepta- = 7</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Which compounds are named with Greek prefixes: ionic or covalent?</span><span class="chev">›</span></summary><p class="a-text"><strong>Covalent</strong> (non-metal + non-metal) only.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Why don't ionic compounds get prefixes? (MgCl₂ is not "magnesium dichloride")</span><span class="chev">›</span></summary><p class="a-text">The ions' charges already fix the ratio, so the name doesn't need to state it. MgCl₂ = magnesium chloride.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Is mono- used on the first element?</span><span class="chev">›</span></summary><p class="a-text">No. CO = carbon monoxide, not "monocarbon monoxide". Mono- is only used on the second element.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">What ending does the second element get?</span><span class="chev">›</span></summary><p class="a-text"><strong>-ide</strong>: oxide, chloride, sulfide, fluoride.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">What is the vowel-drop rule?</span><span class="chev">›</span></summary><p class="a-text">When a prefix ending in <em>a</em> or <em>o</em> comes before <em>oxide</em>, the vowel drops: mono + oxide → monoxide, penta + oxide → pentoxide, tetra + oxide → tetroxide.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">What is the hydrogen rule?</span><span class="chev">›</span></summary><p class="a-text">When hydrogen comes first, it gets no prefix: H₂S = hydrogen sulfide, not "dihydrogen sulfide".</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Which compounds keep their common names?</span><span class="chev">›</span></summary><p class="a-text">H₂O = <strong>water</strong>, NH₃ = <strong>ammonia</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name CO₂.</span><span class="chev">›</span></summary><p class="a-text">Carbon dioxide</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name CO.</span><span class="chev">›</span></summary><p class="a-text">Carbon monoxide</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name N₂O₅.</span><span class="chev">›</span></summary><p class="a-text">Dinitrogen pentoxide</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name N₂O₄.</span><span class="chev">›</span></summary><p class="a-text">Dinitrogen tetroxide</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name PCl₃.</span><span class="chev">›</span></summary><p class="a-text">Phosphorus trichloride</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name PCl₅.</span><span class="chev">›</span></summary><p class="a-text">Phosphorus pentachloride</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name SF₆.</span><span class="chev">›</span></summary><p class="a-text">Sulfur hexafluoride</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name CCl₄.</span><span class="chev">›</span></summary><p class="a-text">Carbon tetrachloride</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Name SO₃.</span><span class="chev">›</span></summary><p class="a-text">Sulfur trioxide</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Formula of carbon disulfide?</span><span class="chev">›</span></summary><p class="a-text"><strong>CS₂</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Formula of diphosphorus pentoxide?</span><span class="chev">›</span></summary><p class="a-text"><strong>P₂O₅</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Formula of nitrogen dioxide?</span><span class="chev">›</span></summary><p class="a-text"><strong>NO₂</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Formula of dinitrogen trioxide?</span><span class="chev">›</span></summary><p class="a-text"><strong>N₂O₃</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Formula of iodine heptafluoride?</span><span class="chev">›</span></summary><p class="a-text"><strong>IF₇</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Trap: name Al₂O₃.</span><span class="chev">›</span></summary><p class="a-text"><strong>Aluminium oxide</strong>. It's ionic (metal + non-metal), so no prefixes. Not "dialuminium trioxide".</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-name)"></span><span class="q-text">Trap: name CaCl₂.</span><span class="chev">›</span></summary><p class="a-text"><strong>Calcium chloride</strong>. It's ionic, so no "di-".</p></details>
+  </section>
+  </div>
+
+  <div id="study">
+    <div id="setup" class="panel">
+      <p class="label">Topics to study</p>
+      <div class="chips" id="pick"></div>
+      <div class="row" style="margin-bottom:14px">
+        <button class="btn-sm" id="all">Select all</button><button class="btn-sm" id="none">Clear</button>
+        <label class="opt" style="margin-left:auto"><input type="checkbox" id="shuffle" checked> Shuffle</label>
+      </div>
+      <button class="btn btn-primary" id="start" style="width:100%">Start</button>
+    </div>
+
+    <div id="run" hidden>
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="meta"><span id="m-left"></span><span id="m-again"></span></div>
+      <div class="card" id="card" tabindex="0" role="button" aria-label="Flashcard. Tap to reveal the answer.">
+        <span class="sec-badge" id="c-topic"></span>
+        <div class="cq" id="c-q"></div>
+        <div class="ca" id="c-a"></div>
+        <div class="hint">Tap to reveal the answer</div>
+      </div>
+      <div class="actions row" id="rate" hidden>
+        <button class="btn btn-again" id="again">↺ Again</button>
+        <button class="btn btn-good" id="good">✓ Got it</button>
+      </div>
+      <div class="actions row" id="revealrow">
+        <button class="btn btn-primary" id="reveal">Show answer</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn-sm" id="quit">End session</button></div>
+      <p class="kbd">Keyboard: Space = show answer · 1 = Again · 2 = Got it</p>
+    </div>
+
+    <div id="done" class="panel done" hidden>
+      <h2 id="d-title"></h2>
+      <p id="d-text"></p>
+      <div class="row">
+        <button class="btn btn-primary" id="d-missed">Review the tricky ones</button>
+        <button class="btn btn-ghost" id="d-restart">New session</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Grounded in NCERT Class 9 (Ch5 Exploring Mixtures, Ch9 Atomic Foundations of Matter), Class 10 (Ch3 Metals &amp; Non-metals) and Class 11 (Ch3 Periodicity, Ch4 Chemical Bonding).<br>The electron-sea model and the 0.5 / 1.7 ΔEN cutoffs are standard chemistry, not NCERT.</footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- deck from the page itself (single source of truth) ----
+  var topics = [], deck = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[data-topic]'), function (sec) {
+    var t = { id: sec.dataset.topic, title: sec.dataset.title, n: 0 };
+    topics.push(t);
+    Array.prototype.forEach.call(sec.querySelectorAll('details.qa'), function (d) {
+      deck.push({ t: t, q: d.querySelector('.q-text').innerHTML, a: d.querySelector('.a-text').innerHTML });
+      t.n++;
+    });
+  });
+
+  // ---- browse tools ----
+  function setAll(open) { Array.prototype.forEach.call(document.querySelectorAll('details.qa'), function (d) { d.open = open; }); }
+  $('expand').onclick = function () { setAll(true); };
+  $('collapse').onclick = function () { setAll(false); };
+
+  // ---- mode switch ----
+  function mode(study) {
+    document.body.classList.toggle('studying', study);
+    $('m-browse').setAttribute('aria-pressed', !study);
+    $('m-study').setAttribute('aria-pressed', study);
+    window.scrollTo(0, 0);
+  }
+  $('m-browse').onclick = function () { mode(false); };
+  $('m-study').onclick = function () { mode(true); };
+
+  // ---- topic picker ----
+  var pick = $('pick'), chosen = {};
+  topics.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    b.style.color = 'var(--c-' + t.id + ')'; b.style.background = 'var(--c-' + t.id + '-bg)';
+    b.innerHTML = t.title + ' <b>' + t.n + '</b>';
+    b.setAttribute('aria-pressed', 'true'); chosen[t.id] = true;
+    b.onclick = function () { chosen[t.id] = !chosen[t.id]; b.setAttribute('aria-pressed', chosen[t.id]); updStart(); };
+    t.btn = b; pick.appendChild(b);
+  });
+  function selected() { return deck.filter(function (c) { return chosen[c.t.id]; }); }
+  function updStart() {
+    var n = selected().length;
+    $('start').disabled = !n;
+    $('start').textContent = n ? 'Start · ' + n + ' cards' : 'Pick at least one topic';
+  }
+  function setChosen(v) { topics.forEach(function (t) { chosen[t.id] = v; t.btn.setAttribute('aria-pressed', v); }); updStart(); }
+  $('all').onclick = function () { setChosen(true); };
+  $('none').onclick = function () { setChosen(false); };
+  updStart();
+
+  // ---- session ----
+  var queue, cur, total, learned, missed, revealed;
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function begin(cards) {
+    queue = $('shuffle').checked ? shuffle(cards.slice()) : cards.slice();
+    total = queue.length; learned = 0; missed = [];
+    $('setup').hidden = true; $('done').hidden = true; $('run').hidden = false;
+    next();
+  }
+  function next() {
+    if (!queue.length) return finish();
+    cur = queue.shift(); revealed = false;
+    var c = $('card'); c.classList.remove('revealed');
+    var tp = $('c-topic');
+    tp.innerHTML = cur.t.title;
+    tp.style.color = 'var(--c-' + cur.t.id + ')'; tp.style.background = 'var(--c-' + cur.t.id + '-bg)';
+    $('c-q').innerHTML = cur.q; $('c-a').innerHTML = cur.a;
+    $('rate').hidden = true; $('revealrow').hidden = false;
+    $('barfill').style.width = (100 * learned / total) + '%';
+    $('m-left').textContent = learned + ' / ' + total + ' learned';
+    $('m-again').textContent = missed.length ? missed.length + ' marked “Again”' : '';
+  }
+  function reveal() {
+    if (revealed) return;
+    revealed = true; $('card').classList.add('revealed');
+    $('rate').hidden = false; $('revealrow').hidden = true;
+  }
+  function rate(ok) {
+    if (!revealed) return;
+    if (ok) { learned++; }
+    else {
+      if (missed.indexOf(cur) < 0) missed.push(cur);
+      queue.splice(Math.min(3, queue.length), 0, cur);  // comes back a few cards later
+    }
+    next();
+  }
+  function finish() {
+    $('run').hidden = true; $('done').hidden = false;
+    $('barfill').style.width = '100%';
+    $('d-title').textContent = 'All ' + total + ' cards done';
+    $('d-text').textContent = missed.length
+      ? missed.length + ' card' + (missed.length > 1 ? 's' : '') + ' needed another go. Run them again until they stick.'
+      : 'Every card was right first time.';
+    $('d-missed').hidden = !missed.length;
+  }
+  $('start').onclick = function () { begin(selected()); };
+  $('card').onclick = reveal;
+  $('reveal').onclick = reveal;
+  $('again').onclick = function () { rate(false); };
+  $('good').onclick = function () { rate(true); };
+  $('quit').onclick = function () { $('run').hidden = true; $('setup').hidden = false; };
+  $('d-missed').onclick = function () { begin(missed); };
+  $('d-restart').onclick = function () { $('done').hidden = true; $('setup').hidden = false; };
+  document.addEventListener('keydown', function (e) {
+    if (!document.body.classList.contains('studying') || $('run').hidden) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
+    else if (e.key === '1') rate(false);
+    else if (e.key === '2') rate(true);
+  });
+})();
+</script>
+</body>
+</html>
