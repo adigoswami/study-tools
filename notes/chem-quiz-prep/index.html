@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Chemistry Quiz Prep: Bonding &amp; Ions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f1e7;--surface:#fff;--surface2:#faf7f0;--text:#201c15;--muted:#6f6858;--border:#ddd3ba;--ink:#201c15;--ink-text:#f5f1e7;--accent:#1f4e8c;--accent-bg:#dde7f6;--code:#f1ece0;--shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07)}
+@media (prefers-color-scheme:dark){:root{--bg:#14161c;--surface:#1d2027;--surface2:#181b21;--text:#ece7db;--muted:#9a9385;--border:#333844;--ink:#ece7db;--ink-text:#14161c;--accent:#7fa8ea;--accent-bg:#1e2c46;--code:#262a33;--shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.62 "IBM Plex Sans",Arial,sans-serif;padding:16px 14px 48px;-webkit-text-size-adjust:100%}
+.wrap{max-width:820px;margin:0 auto}
+a{color:var(--accent)}
+a.back{font-size:12.5px;color:var(--muted);text-decoration:none}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 6px}
+.crumb{font:600 11.5px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-bg);padding:3px 9px;border-radius:99px}
+.btn{border:0;border-radius:11px;font:600 14px "IBM Plex Sans",sans-serif;padding:9px 13px;cursor:pointer;background:var(--ink);color:var(--ink-text);text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0;font-size:13px;color:var(--muted);align-items:center}
+.tools a{border:1px solid var(--border);border-radius:99px;padding:3px 10px;text-decoration:none;background:var(--surface)}
+article{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:6px 20px 22px;margin-top:12px;overflow-wrap:break-word}
+@media (max-width:520px){article{padding:4px 14px 18px;border-radius:14px}}
+article h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(24px,5.5vw,32px);line-height:1.2;margin:18px 0 10px;letter-spacing:-.01em}
+article h2{font-family:"Fraunces",Georgia,serif;font-size:22px;margin:30px 0 8px;padding-top:10px;border-top:1px solid var(--border)}
+article h3{font-size:17px;margin:22px 0 6px;color:var(--accent)}
+article h4{font-size:15.5px;margin:18px 0 4px}
+code{font-family:"IBM Plex Mono",monospace;font-size:.88em;background:var(--code);padding:1px 5px;border-radius:5px}
+pre{background:var(--code);padding:10px 12px;border-radius:10px;overflow-x:auto}
+pre code{padding:0;background:none}
+blockquote{margin:14px 0;padding:10px 14px;background:var(--surface2);border-left:4px solid var(--accent);border-radius:0 10px 10px 0}
+blockquote p{margin:4px 0}
+.tw{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--surface2)}
+img{max-width:100%;height:auto;display:block;margin:12px auto;border-radius:8px;background:#fff}
+figure{margin:14px 0} figcaption{text-align:center;font-size:13.5px;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--border);margin:22px 0}
+li{margin:3px 0}
+math{font-size:1.06em;font-family:"STIX Two Math","Cambria Math","Latin Modern Math",math}
+.mx{display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;vertical-align:middle}
+.mw{overflow-x:auto;overflow-y:hidden;max-width:100%;padding:4px 0;-webkit-overflow-scrolling:touch}
+footer{margin-top:22px;font-size:12px;color:var(--muted);text-align:center}
+@media print{body{background:#fff;padding:0}.bar,.tools,a.back,footer{display:none}article{border:0;box-shadow:none}}
+
+.dt{font:500 12.5px "IBM Plex Mono",monospace;color:var(--muted)}</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../">← All notes</a>
+<div class="bar"><span class="crumb">Chemistry</span><span class="dt">Class of Sep 21, 2026</span></div>
+<div class="bar"><a class="btn" href="../../Sessions/Chemistry/2026-09-21%20Chemistry%20C1%20-%20Quiz%20Prep%20-%20Bonding%20and%20Ions/2026-09-21%20Chemistry%20C1%20-%20Quiz%20Prep%20-%20Bonding%20and%20Ions.pdf" download>⬇ Download PDF</a><a class="btn ghost" href="../../Sessions/Chemistry/2026-09-21%20Chemistry%20C1%20-%20Quiz%20Prep%20-%20Bonding%20and%20Ions/2026-09-21%20Chemistry%20C1%20-%20Quiz%20Prep%20-%20Bonding%20and%20Ions.pdf" target="_blank" rel="noopener">Open PDF</a></div>
+<div class="tools">Practice: <a href="../../bonding-flashcards/">Bonding &amp; Formulas flashcards</a></div>
+<article>
+<h1 id="chemistry-quiz-prep-bonding-ions">Chemistry Quiz Prep: Bonding &amp; Ions</h1>
+<p><strong>Topics:</strong> Metallic Bonds and Alloys · Ionic Bonding · Polyatomic Ions · Monoatomic Ions <strong>Source:</strong> <em>Ch9 — Atomic Foundations of Matter</em> (sections 9.4.2, 9.5, 9.6, Table 9.1) and <em>Ch5 — Exploring Mixtures and their Separation</em> (alloys). One part is supplemented from standard curriculum knowledge — flagged clearly where it appears, since it wasn’t found in either chapter.</p>
+<blockquote>
+<p><strong>How to use this</strong>: This is a fast, quiz-ready review, not a full lesson — read it once slowly, then skim it again right before the test. Flashcards for quick self-testing are linked separately.</p>
+</blockquote>
+<hr />
+<h2 id="metallic-bonds-and-alloys">1. Metallic Bonds and Alloys</h2>
+<h3 id="metallic-bonding-not-in-your-two-chapters-standard-chemistry-model-included-so-this-topic-is-covered">Metallic bonding (not in your two chapters — standard chemistry model, included so this topic is covered)</h3>
+<p>Metal atoms in a solid release their loosely-held outer (valence) electrons into a shared “sea” that moves freely around the whole structure. What’s left behind is a lattice of positively charged metal ions sitting inside this sea of mobile (“delocalized”) electrons.</p>
+<p><strong>Metallic bond = the electrostatic attraction between the positive metal ions and the surrounding sea of delocalized electrons.</strong></p>
+<p>This one model explains all the typical metal properties:</p>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Why (from the electron-sea model)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Good conductor of electricity &amp; heat</td>
+<td>Free electrons carry charge/energy easily</td>
+</tr>
+<tr class="even">
+<td>Malleable (hammers into sheets)</td>
+<td>Layers of ions slide past each other; electron sea just flows around them, bond doesn’t break</td>
+</tr>
+<tr class="odd">
+<td>Ductile (draws into wires)</td>
+<td>Same reason as malleability</td>
+</tr>
+<tr class="even">
+<td>Lustrous (shiny)</td>
+<td>Free electrons reflect light</td>
+</tr>
+<tr class="odd">
+<td>Generally high melting/boiling point</td>
+<td>Strong attraction between ions and electron sea</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="alloys-this-part-is-in-your-ch5-textbook">Alloys (this part <strong>is</strong> in your Ch5 textbook)</h3>
+<ul>
+<li>Metals do <strong>not</strong> dissolve into each other at room temperature.</li>
+<li>Melt two or more metals at high temperature → they mix into a solution → cool it → it solidifies into a new material that looks like a single metal.</li>
+<li><strong>Definition:</strong> an alloy is a <strong>homogeneous mixture</strong> of two or more metals, or a metal and a non-metal.</li>
+<li>Alloys <strong>cannot</strong> be separated by physical methods.</li>
+<li><strong>Why make alloys?</strong> To get materials that are stronger, more rigid, or more corrosion-resistant than the pure metal.</li>
+<li>An alloy is a <strong>mixture, not a compound</strong> — no new chemical bond forms between the different metal atoms; it’s physical mixing at the atomic scale.</li>
+</ul>
+<p><strong>Memorize these three (straight from the textbook):</strong></p>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Alloy</th>
+<th>Composition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Brass</td>
+<td>~80% copper + ~20% zinc</td>
+</tr>
+<tr class="even">
+<td>Bronze</td>
+<td>~80% copper + ~20% tin</td>
+</tr>
+<tr class="odd">
+<td>Stainless steel</td>
+<td>Iron + carbon (0.03–0.8%) + chromium (16–18%) + nickel (10–14%) + molybdenum (2–3%)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="ionic-bonding">2. Ionic Bonding</h2>
+<p><strong>Rule of thumb:</strong> fewer than 4 valence electrons → atom <strong>donates/loses</strong> electrons → forms a <strong>positive</strong> ion. More than 4 valence electrons → atom usually <strong>gains or shares</strong> electrons to complete its octet.</p>
+<blockquote>
+<p><strong>Ionic bond</strong> = the electrostatic force of attraction between oppositely charged ions that holds them together.</p>
+</blockquote>
+<p>Formed by <strong>transfer of electrons</strong>, typically from a metal atom to a non-metal atom.</p>
+<h3 id="classic-example-sodium-chloride-nacl">Classic example: sodium chloride (NaCl)</h3>
+<ul>
+<li>Sodium (Na): 1 valence electron → <strong>loses it</strong> → becomes <strong>Na<sup>+</sup></strong> (sodium cation) — 11 protons, 10 electrons.</li>
+<li>Chlorine (Cl): 7 valence electrons → <strong>gains 1 electron</strong> → becomes <strong>Cl<sup>–</sup></strong> (chloride anion).</li>
+<li>Na<sup>+</sup> and Cl<sup>–</sup> attract each other electrostatically → ionic bond → NaCl.</li>
+</ul>
+<p><strong>Vocabulary:</strong></p>
+<ul>
+<li><strong>Cation</strong> = positively charged ion (atom <strong>lost</strong> electrons).</li>
+<li><strong>Anion</strong> = negatively charged ion (atom <strong>gained</strong> electrons).</li>
+<li>Cations + anions, together = “ions.”</li>
+</ul>
+<p><strong>Ionic compounds form 3-D crystal lattices, not molecules.</strong> In NaCl, each Na<sup>+</sup> is surrounded by 6 Cl<sup>–</sup>, and each Cl<sup>–</sup> is surrounded by 6 Na<sup>+</sup>, in a repeating pattern (a crystal lattice).</p>
+<h3 id="naming-ionic-compounds">Naming ionic compounds</h3>
+<ul>
+<li>Cation name first, then anion name.</li>
+<li>Simple anion names end in <strong>“-ide”</strong> (chloride, oxide, sulfide…).</li>
+<li>Metals form cations; non-metals form anions.</li>
+<li>Polyatomic ion names generally do <strong>not</strong> end in “-ide” (see Section 3).</li>
+</ul>
+<h3 id="writing-formulas-the-criss-cross-method">Writing formulas — the criss-cross method</h3>
+<ol type="1">
+<li>Write the cation symbol first, then the anion symbol.</li>
+<li>Write the charges under the symbols (not as superscripts).</li>
+<li>Criss-cross the numbers (only) to get the subscripts.</li>
+<li>Simplify the subscripts by their common factor, if any.</li>
+</ol>
+<p><strong>Worked examples:</strong></p>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Compound</th>
+<th>Cation</th>
+<th>Anion</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Calcium chloride</td>
+<td>Ca<sup>2+</sup></td>
+<td>Cl<sup>–</sup></td>
+<td>CaCl₂</td>
+</tr>
+<tr class="even">
+<td>Aluminium oxide</td>
+<td>Al<sup>3+</sup></td>
+<td>O<sup>2–</sup></td>
+<td>Al₂O₃</td>
+</tr>
+<tr class="odd">
+<td>Magnesium oxide</td>
+<td>Mg<sup>2+</sup></td>
+<td>O<sup>2–</sup></td>
+<td>MgO <em>(2:2 simplifies to 1:1)</em></td>
+</tr>
+<tr class="even">
+<td>Calcium carbonate</td>
+<td>Ca<sup>2+</sup></td>
+<td>CO₃<sup>2–</sup></td>
+<td>CaCO₃ <em>(2:2 simplifies to 1:1)</em></td>
+</tr>
+<tr class="odd">
+<td>Magnesium hydroxide</td>
+<td>Mg<sup>2+</sup></td>
+<td>OH<sup>–</sup></td>
+<td>Mg(OH)₂</td>
+</tr>
+<tr class="even">
+<td>Aluminium hydroxide</td>
+<td>Al<sup>3+</sup></td>
+<td>OH<sup>–</sup></td>
+<td>Al(OH)₃</td>
+</tr>
+<tr class="odd">
+<td>Aluminium sulfate</td>
+<td>Al<sup>3+</sup></td>
+<td>SO₄<sup>2–</sup></td>
+<td>Al₂(SO₄)₃</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brackets ( )</strong> are only needed when <strong>2 or more of the same polyatomic ion</strong> appear in the formula.</p>
+<h3 id="properties-of-ionic-compounds">Properties of ionic compounds</h3>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Ionic compounds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Solubility</td>
+<td>Soluble in water; insoluble in kerosene/petrol</td>
+</tr>
+<tr class="even">
+<td>Conducts electricity as a solid?</td>
+<td><strong>No</strong> — ions are locked in the lattice, can’t move</td>
+</tr>
+<tr class="odd">
+<td>Conducts electricity molten or dissolved?</td>
+<td><strong>Yes</strong> — ions become free to move</td>
+</tr>
+<tr class="even">
+<td>Melting / boiling point</td>
+<td>High — strong inter-ionic attraction</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="polyatomic-ions">3. Polyatomic Ions</h2>
+<p><strong>Definition:</strong> ions made of <strong>two or more atoms bonded together</strong>, carrying one overall charge. Names generally do <strong>not</strong> end in “-ide.”</p>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>Name of ion</th>
+<th>Formula</th>
+<th>Valency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hydroxide</td>
+<td>OH<sup>–</sup></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Nitrate</td>
+<td>NO₃<sup>–</sup></td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Hydrogencarbonate (bicarbonate)</td>
+<td>HCO₃<sup>–</sup></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Carbonate</td>
+<td>CO₃<sup>2–</sup></td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Sulfate</td>
+<td>SO₄<sup>2–</sup></td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Ammonium</td>
+<td>NH₄<sup>+</sup></td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Watch out:</strong> Ammonium (NH₄<sup>+</sup>) is the only <strong>cation</strong> in this table — every other polyatomic ion here is an anion.</p>
+<hr />
+<h2 id="monoatomic-ions">4. Monoatomic Ions</h2>
+<p><strong>Definition:</strong> an ion made from a <strong>single atom</strong> that has gained or lost electrons (contrast with polyatomic ions, made of multiple bonded atoms).</p>
+<p><strong>Cations (metals — lose electrons):</strong></p>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>Name of ion</th>
+<th>Formula</th>
+<th>Valency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sodium</td>
+<td>Na<sup>+</sup></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Lithium</td>
+<td>Li<sup>+</sup></td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Potassium</td>
+<td>K<sup>+</sup></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Silver</td>
+<td>Ag<sup>+</sup></td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Calcium</td>
+<td>Ca<sup>2+</sup></td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Barium</td>
+<td>Ba<sup>2+</sup></td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Iron (Ferrous)</td>
+<td>Fe<sup>2+</sup></td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Iron (Ferric)</td>
+<td>Fe<sup>3+</sup></td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Copper (Cuprous)</td>
+<td>Cu<sup>+</sup></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Copper (Cupric)</td>
+<td>Cu<sup>2+</sup></td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Magnesium</td>
+<td>Mg<sup>2+</sup></td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Zinc</td>
+<td>Zn<sup>2+</sup></td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Aluminium</td>
+<td>Al<sup>3+</sup></td>
+<td>3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Anions (non-metals — gain electrons):</strong></p>
+<div class="tw"><table>
+<thead>
+<tr class="header">
+<th>Name of ion</th>
+<th>Formula</th>
+<th>Valency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fluoride</td>
+<td>F<sup>–</sup></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Chloride</td>
+<td>Cl<sup>–</sup></td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Bromide</td>
+<td>Br<sup>–</sup></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Iodide</td>
+<td>I<sup>–</sup></td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Oxide</td>
+<td>O<sup>2–</sup></td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Sulfide</td>
+<td>S<sup>2–</sup></td>
+<td>2</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trickiest pair to double-check:</strong> iron and copper each have <strong>two</strong> possible ions — know which name goes with which charge:</p>
+<ul>
+<li>Ferrous = Fe<sup>2+</sup> · Ferric = Fe<sup>3+</sup></li>
+<li>Cuprous = Cu<sup>+</sup> · Cupric = Cu<sup>2+</sup></li>
+</ul>
+<hr />
+<h2 id="second-self-check">60-Second Self-Check</h2>
+<p>Cover the right-hand column and test yourself.</p>
+<div class="tw"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>What holds a metal lattice together?</td>
+<td>Electrostatic attraction between metal cations and a “sea” of delocalized electrons</td>
+</tr>
+<tr class="even">
+<td>Why are metals malleable?</td>
+<td>Ion layers slide past each other while the electron sea keeps the bond intact</td>
+</tr>
+<tr class="odd">
+<td>What is an alloy?</td>
+<td>A homogeneous mixture of two or more metals, or a metal and a non-metal</td>
+</tr>
+<tr class="even">
+<td>Composition of brass?</td>
+<td>~80% copper, ~20% zinc</td>
+</tr>
+<tr class="odd">
+<td>What is an ionic bond?</td>
+<td>Electrostatic attraction between oppositely charged ions</td>
+</tr>
+<tr class="even">
+<td>How does Na become Na<sup>+</sup>?</td>
+<td>It loses its one valence electron</td>
+</tr>
+<tr class="odd">
+<td>Do ionic solids conduct electricity?</td>
+<td>No — only when molten or dissolved in water</td>
+</tr>
+<tr class="even">
+<td>What’s a polyatomic ion?</td>
+<td>An ion made of 2+ atoms bonded together, carrying one overall charge</td>
+</tr>
+<tr class="odd">
+<td>Name the only common polyatomic cation</td>
+<td>Ammonium, NH₄<sup>+</sup></td>
+</tr>
+<tr class="even">
+<td>What’s a monoatomic ion?</td>
+<td>An ion formed from a single atom</td>
+</tr>
+<tr class="odd">
+<td>Ferric vs. Ferrous?</td>
+<td>Ferric = Fe<sup>3+</sup>, Ferrous = Fe<sup>2+</sup></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><em>Notes prepared from Ch9 “Atomic Foundations of Matter” and Ch5 “Exploring Mixtures and their Separation.” The metallic-bonding electron-sea model was not found in either chapter and is included from standard chemistry curriculum content, since “metallic bonds” was one of the requested topics. If your teacher covered metallic bonding differently in class, check your class notes against Section 1 before the test.</em></p>
+
+</article>
+<footer>Study notes · <a href="../../">All study tools</a></footer>
+</div>
+</body>
+</html>

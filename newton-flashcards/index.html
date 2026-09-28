@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Newton's Laws — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f1e7; --surface:#ffffff; --text:#201c15; --text-muted:#6f6858; --border:#ddd3ba;
+    --accent:#201c15; --accent-text:#f5f1e7;
+    --good:#157a45; --again:#b4371f;
+    --shadow:0 1px 2px rgba(32,28,21,.06), 0 6px 18px rgba(32,28,21,.07);
+    --c-forces:#0f766e; --c-forces-bg:#d5efeb;
+    --c-law1:#a8641f; --c-law1-bg:#f3e4ce;
+    --c-law2:#2f5d9e; --c-law2-bg:#dde7f6;
+    --c-weight:#4a4f9c; --c-weight-bg:#e1e2f5;
+    --c-law3:#157a45; --c-law3-bg:#dbeee0;
+    --c-fbd:#7c3aed; --c-fbd-bg:#e9e0fc;
+    --c-fric:#b4371f; --c-fric-bg:#f8ded6;
+    --c-incline:#8a5a14; --c-incline-bg:#f1e6cf;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#14161c; --surface:#1d2027; --text:#ece7db; --text-muted:#9a9385; --border:#333844;
+      --accent:#ece7db; --accent-text:#14161c;
+      --good:#6bce93; --again:#f08a70;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.3);
+      --c-forces:#5fd0c2; --c-forces-bg:#123330;
+      --c-law1:#d99a52; --c-law1-bg:#3a2c19;
+      --c-law2:#7fa8ea; --c-law2-bg:#1e2c46;
+      --c-weight:#9ea3f0; --c-weight-bg:#23254a;
+      --c-law3:#6bce93; --c-law3-bg:#16321f;
+      --c-fbd:#b294f6; --c-fbd-bg:#2c2246;
+      --c-fric:#f08a70; --c-fric-bg:#3d1d16;
+      --c-incline:#d9ad62; --c-incline-bg:#352813;
+    }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--text-muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; }
+  .subtitle { color:var(--text-muted); font-size:13.5px; margin:0 0 6px; line-height:1.5; }
+  .howto { font-size:12.5px; color:var(--text-muted); background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; margin:14px 0 16px; line-height:1.5; }
+
+  /* mode switch (only with JS) */
+  .modes { display:none; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:5px; margin:14px 0 16px; }
+  .js .modes { display:flex; }
+  .modes button { flex:1; border:0; background:transparent; color:var(--text-muted); font:600 14px "IBM Plex Sans",sans-serif; padding:10px; border-radius:10px; cursor:pointer; }
+  .modes button[aria-pressed="true"] { background:var(--accent); color:var(--accent-text); }
+  .js .howto.nojs { display:none; }
+  .howto.jsonly { display:none; }
+  .js .howto.jsonly { display:block; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 20px; }
+  .chip { font:600 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; text-decoration:none; border:1.5px solid transparent; cursor:pointer; }
+  .chip b { font-family:"IBM Plex Mono",monospace; font-weight:600; opacity:.75; margin-left:2px; }
+
+  .tools { display:none; justify-content:flex-end; gap:8px; margin:-8px 0 14px; }
+  .js .tools { display:flex; }
+  .btn-sm { border:1px solid var(--border); background:var(--surface); color:var(--text-muted); font:500 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; cursor:pointer; }
+
+  section { margin-bottom:26px; scroll-margin-top:12px; }
+  .sec-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .sec-badge { font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.03em; padding:4px 10px; border-radius:99px; }
+  .sec-count { font-size:12px; color:var(--text-muted); }
+
+  details.qa { background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); margin-bottom:8px; overflow:hidden; }
+  details.qa summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 16px; }
+  details.qa summary::-webkit-details-marker { display:none; }
+  details.qa summary::marker { content:""; }
+  .dot { flex:none; width:9px; height:9px; border-radius:50%; }
+  .q-text { flex:1; font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:15.5px; line-height:1.4; }
+  .chev { flex:none; color:var(--text-muted); font-size:20px; transition:transform .15s; }
+  details[open] .chev { transform:rotate(90deg); }
+  .a-text { margin:0; padding:0 16px 15px 37px; font-size:14.5px; line-height:1.55; }
+  .sup { display:inline-block; font:600 10px "IBM Plex Mono",monospace; letter-spacing:.02em; color:var(--text-muted); border:1px dashed var(--border); border-radius:6px; padding:1px 6px; margin-left:4px; vertical-align:1px; white-space:nowrap; }
+
+  /* study mode */
+  #study { display:none; }
+  .studying #study { display:block; }
+  .studying #browse { display:none; }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; }
+  .label { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); margin:0 0 8px; }
+  #pick .chip { border-color:transparent; opacity:.45; }
+  #pick .chip[aria-pressed="true"] { opacity:1; border-color:currentColor; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .btn { border:0; border-radius:12px; font:600 15px "IBM Plex Sans",sans-serif; padding:13px 18px; cursor:pointer; }
+  .btn-primary { background:var(--accent); color:var(--accent-text); flex:1; }
+  .btn-primary:disabled { opacity:.35; cursor:default; }
+  .btn-again { background:var(--c-fric-bg); color:var(--again); flex:1; }
+  .btn-good { background:var(--c-law3-bg); color:var(--good); flex:1; }
+  .btn-ghost { background:transparent; color:var(--text-muted); border:1px solid var(--border); }
+  label.opt { font-size:13px; color:var(--text-muted); display:flex; gap:6px; align-items:center; }
+
+  .bar { height:6px; background:var(--border); border-radius:99px; overflow:hidden; margin:2px 0 6px; }
+  .bar i { display:block; height:100%; width:0; background:var(--good); transition:width .25s; }
+  .meta { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:12px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); min-height:260px; padding:20px; display:flex; flex-direction:column; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; }
+  .card .sec-badge { align-self:flex-start; }
+  .card .cq { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(19px,5vw,23px); line-height:1.35; margin:18px 0 0; }
+  .card .ca { display:none; border-top:1px dashed var(--border); margin-top:18px; padding-top:16px; font-size:16px; line-height:1.55; }
+  .card.revealed .ca { display:block; animation:fade .18s ease-out; }
+  .card .hint { margin-top:auto; padding-top:18px; font-size:12px; color:var(--text-muted); text-align:center; }
+  .card.revealed .hint { display:none; }
+  @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  .actions { margin-top:12px; }
+  .done h2 { font-family:"Fraunces",Georgia,serif; margin:0 0 6px; }
+  .done p { color:var(--text-muted); margin:0 0 16px; line-height:1.5; }
+  .kbd { font-size:11.5px; color:var(--text-muted); text-align:center; margin-top:10px; }
+  @media (hover:none) { .kbd { display:none; } }
+
+  footer { font-size:12px; color:var(--text-muted); text-align:center; margin-top:30px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>Newton's Laws of Motion</h1>
+  <p class="subtitle">Forces &amp; net force · First Law · F = ma · Mass, weight &amp; elevators · Third Law · Free-body diagrams · Friction · Inclines &amp; pulleys — 77 cards</p>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button type="button" id="m-browse" aria-pressed="true">Browse all</button>
+    <button type="button" id="m-study" aria-pressed="false">Study mode</button>
+  </div>
+
+  <div id="browse">
+    <p class="howto nojs">Tap any question to reveal the answer; tap again to close it. Cards tagged <span class="sup">beyond the test</span> go a little past what the school test is likely to ask.</p>
+    <p class="howto jsonly">Tap a question to see its answer. Want to test yourself? Switch to <b>Study mode</b> for one shuffled card at a time, with “Again” cards coming back until you get them. Cards tagged <span class="sup">beyond the test</span> go a little past what the school test is likely to ask.</p>
+    <nav class="chips">
+    <a class="chip" href="#forces" style="color:var(--c-forces);background:var(--c-forces-bg)">Forces &amp; net force <b>8</b></a>
+    <a class="chip" href="#law1" style="color:var(--c-law1);background:var(--c-law1-bg)">First Law &amp; inertia <b>10</b></a>
+    <a class="chip" href="#law2" style="color:var(--c-law2);background:var(--c-law2-bg)">Second Law: F = ma <b>12</b></a>
+    <a class="chip" href="#weight" style="color:var(--c-weight);background:var(--c-weight-bg)">Mass, weight &amp; apparent weight <b>11</b></a>
+    <a class="chip" href="#law3" style="color:var(--c-law3);background:var(--c-law3-bg)">Third Law <b>11</b></a>
+    <a class="chip" href="#fbd" style="color:var(--c-fbd);background:var(--c-fbd-bg)">Free-body diagrams <b>8</b></a>
+    <a class="chip" href="#fric" style="color:var(--c-fric);background:var(--c-fric-bg)">Friction <b>7</b></a>
+    <a class="chip" href="#incline" style="color:var(--c-incline);background:var(--c-incline-bg)">Inclines &amp; connected objects <b>10</b></a>
+    </nav>
+    <div class="tools"><button class="btn-sm" id="expand">Expand all</button><button class="btn-sm" id="collapse">Collapse all</button></div>
+  <section id="forces" data-topic="forces" data-title="Forces &amp; net force">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-forces);background:var(--c-forces-bg)">Forces &amp; net force</span>
+      <span class="sec-count">8 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">What is a force?</span><span class="chev">›</span></summary><p class="a-text">A push or a pull on an object, caused by an interaction with another object. It is a <strong>vector</strong> (size + direction), measured in newtons (N).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">Contact force vs field force?</span><span class="chev">›</span></summary><p class="a-text">Contact forces need touching (push, normal, friction, tension, air resistance). Field forces act at a distance (gravity, magnetic, electric).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">What is the "agent" of a force?</span><span class="chev">›</span></summary><p class="a-text">The object that exerts it (the table, the Earth, the rope). If you can't name an agent, the force isn't real.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">What is the net force?</span><span class="chev">›</span></summary><p class="a-text">The <strong>vector sum of all the forces</strong> acting on one object. In 1D: choose a positive direction and add with signs.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">10 N right and 4 N left act on a box. Net force?</span><span class="chev">›</span></summary><p class="a-text"><strong>6 N right</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">Balanced vs unbalanced forces?</span><span class="chev">›</span></summary><p class="a-text">Balanced: F_net = 0, so the motion doesn't change. Unbalanced: F_net ≠ 0, so the object accelerates.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">What is 1 newton?</span><span class="chev">›</span></summary><p class="a-text">The net force that gives a 1 kg mass an acceleration of 1 m/s². <strong>1 N = 1 kg·m/s²</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-forces)"></span><span class="q-text">Is there a "force of motion" that keeps a thrown ball going?</span><span class="chev">›</span></summary><p class="a-text"><strong>No.</strong> Nothing exerts it. The ball keeps moving because of inertia (First Law).</p></details>
+  </section>
+  <section id="law1" data-topic="law1" data-title="First Law &amp; inertia">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-law1);background:var(--c-law1-bg)">First Law &amp; inertia</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">State Newton's First Law.</span><span class="chev">›</span></summary><p class="a-text">An object stays at rest, or keeps moving in a straight line at constant speed, unless a <strong>net external force</strong> acts on it.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">First Law in symbols?</span><span class="chev">›</span></summary><p class="a-text"><strong>F_net = 0 ⇔ a = 0</strong> (v constant, including v = 0).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">What is inertia?</span><span class="chev">›</span></summary><p class="a-text">The tendency of an object to resist any change in its motion.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">What measures inertia?</span><span class="chev">›</span></summary><p class="a-text"><strong>Mass.</strong> More mass means it's harder to start, stop or turn.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">What did Aristotle believe about motion?</span><span class="chev">›</span></summary><p class="a-text">That a force is needed to <strong>keep</strong> an object moving, and rest is the natural state.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">What did Galileo's inclined-plane thought experiment show?</span><span class="chev">›</span></summary><p class="a-text">With no friction, a ball rolling onto a flat surface would roll on forever. Force is needed to <strong>change</strong> motion, not to keep it.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">A jet cruises at constant velocity with 80 000 N thrust. How big is the air resistance?</span><span class="chev">›</span></summary><p class="a-text"><strong>80 000 N</strong>. Constant velocity means F_net = 0.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">Why do passengers lurch forward when a bus brakes?</span><span class="chev">›</span></summary><p class="a-text">Their bodies keep moving forward (inertia) until the seat or belt pushes them back.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">A stone whirled on a string is released. Which way does it go?</span><span class="chev">›</span></summary><p class="a-text">Along the <strong>tangent</strong>, in a straight line. With no string force, nothing changes its velocity.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law1)"></span><span class="q-text">What is an inertial frame?</span><span class="chev">›</span></summary><p class="a-text">A frame of reference that isn't accelerating. The First Law holds in it. <span class="sup">beyond the test</span></p></details>
+  </section>
+  <section id="law2" data-topic="law2" data-title="Second Law: F = ma">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-law2);background:var(--c-law2-bg)">Second Law: F = ma</span>
+      <span class="sec-count">12 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">State Newton's Second Law.</span><span class="chev">›</span></summary><p class="a-text">Acceleration is directly proportional to net force, inversely proportional to mass, and in the direction of the net force: <strong>F_net = m·a</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">The two facts behind F = ma?</span><span class="chev">›</span></summary><p class="a-text">a ∝ F_net (mass fixed) and a ∝ 1/m (force fixed). Combined: a ∝ F_net/m, and the newton is defined so the constant is 1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">Double the net force on the same mass: what happens to a?</span><span class="chev">›</span></summary><p class="a-text">a <strong>doubles</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">Double the mass with the same net force: what happens to a?</span><span class="chev">›</span></summary><p class="a-text">a <strong>halves</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">Do F_net and a always point the same way?</span><span class="chev">›</span></summary><p class="a-text"><strong>Yes.</strong> Velocity can point elsewhere (a braking car: v forward, a backward).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">How is the First Law a special case of the Second?</span><span class="chev">›</span></summary><p class="a-text">Put F_net = 0 into a = F_net/m: a = 0, so v is constant.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">30 000 kg jet, a = 1.5 m/s². Thrust?</span><span class="chev">›</span></summary><p class="a-text">F = ma = 30 000 × 1.5 = <strong>45 000 N</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">2000 N on a 1000 kg car. a?</span><span class="chev">›</span></summary><p class="a-text">a = F/m = <strong>2.0 m/s²</strong>. Towing an identical car: <strong>1.0 m/s²</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">A 1200 kg car goes 0 → 27 m/s in 9.0 s. Net force?</span><span class="chev">›</span></summary><p class="a-text">a = 27/9.0 = 3.0 m/s², so F = 1200 × 3.0 = <strong>3600 N</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">Second Law in 2D?</span><span class="chev">›</span></summary><p class="a-text">Separately on each axis: <strong>F_net,x = m·a_x</strong> and <strong>F_net,y = m·a_y</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">Net force needed for circular motion?</span><span class="chev">›</span></summary><p class="a-text"><strong>F_net = m·v²/r</strong>, toward the center. It is supplied by real forces (tension, friction, gravity).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law2)"></span><span class="q-text">Newton's own form of the Second Law?</span><span class="chev">›</span></summary><p class="a-text">F_net = Δp/Δt, where p = mv is momentum. If m is constant this gives F = ma. <span class="sup">beyond the test</span></p></details>
+  </section>
+  <section id="weight" data-topic="weight" data-title="Mass, weight &amp; apparent weight">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-weight);background:var(--c-weight-bg)">Mass, weight &amp; apparent weight</span>
+      <span class="sec-count">11 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">Mass vs weight?</span><span class="chev">›</span></summary><p class="a-text">Mass (kg) = amount of matter/inertia, the same everywhere. Weight (N) = the gravitational force on it, which depends on g.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">Derive W = mg.</span><span class="chev">›</span></summary><p class="a-text">In free fall the only force is W and a = g. N2: F_net = ma, so <strong>W = mg</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">Weight of a 1 kg mass on Earth?</span><span class="chev">›</span></summary><p class="a-text"><strong>9.81 N</strong> (about 2.2 lb).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">A 60 kg student on the Moon (g = 1.62 m/s²): mass and weight?</span><span class="chev">›</span></summary><p class="a-text">Mass <strong>60 kg</strong>; weight 60 × 1.62 = <strong>97 N</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">Why do heavy and light objects fall with the same acceleration?</span><span class="chev">›</span></summary><p class="a-text">a = W/m = mg/m = <strong>g</strong>. More weight, but also proportionally more mass (inertia).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">What does a bathroom scale actually read?</span><span class="chev">›</span></summary><p class="a-text">The <strong>normal force N</strong> it pushes up on you with, not your weight.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">Scale reading in an accelerating elevator (up +)?</span><span class="chev">›</span></summary><p class="a-text"><strong>N = m(g + a)</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">60 kg person, elevator accelerating up at 2.0 m/s². Scale?</span><span class="chev">›</span></summary><p class="a-text">60 × 11.81 = <strong>709 N</strong> (feels heavier).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">Elevator moving DOWN but slowing down. Scale more or less than mg?</span><span class="chev">›</span></summary><p class="a-text"><strong>More.</strong> Slowing while moving down means a points up.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">Scale reading in free fall?</span><span class="chev">›</span></summary><p class="a-text"><strong>0</strong>: "weightless". The weight is still mg; there's just no support force.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-weight)"></span><span class="q-text">What is terminal velocity?</span><span class="chev">›</span></summary><p class="a-text">The constant speed reached when air resistance grows to equal the weight: F_net = 0, so a = 0.</p></details>
+  </section>
+  <section id="law3" data-topic="law3" data-title="Third Law">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-law3);background:var(--c-law3-bg)">Third Law</span>
+      <span class="sec-count">11 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">State Newton's Third Law.</span><span class="chev">›</span></summary><p class="a-text">When A exerts a force on B, B exerts a force on A that is equal in size and opposite in direction: <strong>F(A on B) = −F(B on A)</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">Recipe for finding a reaction force?</span><span class="chev">›</span></summary><p class="a-text">Write the action as "A exerts a force on B". The reaction is "<strong>B exerts a force on A</strong>". Swap A and B.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">Four properties of a third-law pair?</span><span class="chev">›</span></summary><p class="a-text">Same size · opposite direction · same type of force · act on <strong>different objects</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">Why don't action and reaction cancel?</span><span class="chev">›</span></summary><p class="a-text">They act on <strong>different objects</strong>. Forces cancel only when they act on the same object.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">Earth pulls a ball down. Reaction?</span><span class="chev">›</span></summary><p class="a-text">The <strong>ball pulls Earth up</strong> with the same force.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">A book rests on a table. Are N and W a third-law pair?</span><span class="chev">›</span></summary><p class="a-text"><strong>No.</strong> Both act on the book and are different types. They're equal because of the First Law (a = 0).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">Reaction to "the table pushes up on the book"?</span><span class="chev">›</span></summary><p class="a-text">The <strong>book pushes down on the table</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">A tire pushes backward on the road. Reaction?</span><span class="chev">›</span></summary><p class="a-text">The road pushes the tire <strong>forward</strong>, and that is what drives the car.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">A bug hits a bus windshield. Which feels the bigger force? Which accelerates more?</span><span class="chev">›</span></summary><p class="a-text">The <strong>same force</strong>. The bug accelerates far more, because a = F/m.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">How does a horse pull a cart forward if the cart pulls back equally?</span><span class="chev">›</span></summary><p class="a-text">Those two forces act on different objects. The horse pushes back on the ground and the <strong>ground pushes the horse forward</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-law3)"></span><span class="q-text">Why can't you move a stalled car by pushing its dashboard from inside?</span><span class="chev">›</span></summary><p class="a-text">That's an <strong>internal</strong> force. Only outside forces accelerate a system.</p></details>
+  </section>
+  <section id="fbd" data-topic="fbd" data-title="Free-body diagrams">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-fbd);background:var(--c-fbd-bg)">Free-body diagrams</span>
+      <span class="sec-count">8 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">What is a free-body diagram?</span><span class="chev">›</span></summary><p class="a-text">A sketch of <strong>one</strong> object showing every force acting <strong>on</strong> it as an arrow from the object.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">Direction of the normal force?</span><span class="chev">›</span></summary><p class="a-text"><strong>Perpendicular</strong> to the surface, pushing away from it.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">Direction of tension?</span><span class="chev">›</span></summary><p class="a-text">Along the rope, <strong>pulling</strong> away from the object.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">Direction of friction?</span><span class="chev">›</span></summary><p class="a-text"><strong>Parallel</strong> to the surface, opposing sliding (or the tendency to slide).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">Forces on a puck sliding on frictionless ice?</span><span class="chev">›</span></summary><p class="a-text">Only <strong>weight (down)</strong> and <strong>normal (up)</strong>. Nothing pushes it forward.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">Forces on a ball thrown upward, after it leaves your hand (no air)?</span><span class="chev">›</span></summary><p class="a-text">Only <strong>weight, down</strong>. Its net force is down even while it's rising.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">10 kg box; someone pushes down on it with 20 N. N?</span><span class="chev">›</span></summary><p class="a-text">N = 98.1 + 20 = <strong>118 N</strong>. N isn't always mg.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fbd)"></span><span class="q-text">Tension in each of two vertical cords holding a 12 kg lamp?</span><span class="chev">›</span></summary><p class="a-text">T = mg/2 = <strong>58.9 N</strong>.</p></details>
+  </section>
+  <section id="fric" data-topic="fric" data-title="Friction">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-fric);background:var(--c-fric-bg)">Friction</span>
+      <span class="sec-count">7 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fric)"></span><span class="q-text">Static vs kinetic friction?</span><span class="chev">›</span></summary><p class="a-text">Static: surfaces not sliding, f_s adjusts up to <strong>μ_s·N</strong>. Kinetic: surfaces sliding, <strong>f_k = μ_k·N</strong> (constant).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fric)"></span><span class="q-text">Usually, which is bigger: μ_s or μ_k?</span><span class="chev">›</span></summary><p class="a-text"><strong>μ_s</strong>. That's why it's harder to start a box moving than to keep it moving.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fric)"></span><span class="q-text">A 20 kg crate, μ_s = 0.45. A 60 N push doesn't move it. Friction?</span><span class="chev">›</span></summary><p class="a-text"><strong>60 N</strong>. Static friction matches the push; 88 N is only the maximum.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fric)"></span><span class="q-text">Units of μ?</span><span class="chev">›</span></summary><p class="a-text"><strong>None.</strong> It's a ratio of two forces (f/N).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fric)"></span><span class="q-text">Which friction pushes a car or walker forward?</span><span class="chev">›</span></summary><p class="a-text"><strong>Static</strong> friction from the ground (the tire or foot isn't sliding).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fric)"></span><span class="q-text">Push needed to keep a crate sliding at constant velocity?</span><span class="chev">›</span></summary><p class="a-text">Equal to kinetic friction: <strong>F = μ_k·N</strong> (F_net = 0).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fric)"></span><span class="q-text">A puck slows at 1.2 m/s². μ_k?</span><span class="chev">›</span></summary><p class="a-text">μ_k = a/g = 1.2/9.81 ≈ <strong>0.12</strong>. The mass cancels.</p></details>
+  </section>
+  <section id="incline" data-topic="incline" data-title="Inclines &amp; connected objects">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-incline);background:var(--c-incline-bg)">Inclines &amp; connected objects</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Components of weight on an incline of angle θ?</span><span class="chev">›</span></summary><p class="a-text"><strong>mg sinθ</strong> down the slope; <strong>mg cosθ</strong> into the slope.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Normal force on an incline?</span><span class="chev">›</span></summary><p class="a-text"><strong>N = mg cosθ</strong> (if no other perpendicular forces).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Acceleration down a frictionless incline?</span><span class="chev">›</span></summary><p class="a-text"><strong>a = g sinθ</strong>. It doesn't depend on mass.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Acceleration sliding down with kinetic friction?</span><span class="chev">›</span></summary><p class="a-text"><strong>a = g(sinθ − μ_k cosθ)</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">What is the angle of repose?</span><span class="chev">›</span></summary><p class="a-text">The steepest angle at which a block can rest: <strong>tanθ = μ_s</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Two masses joined by a string over a pulley: what's the same for both?</span><span class="chev">›</span></summary><p class="a-text">The <strong>size of the acceleration</strong> and the <strong>tension</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Atwood machine acceleration?</span><span class="chev">›</span></summary><p class="a-text"><strong>a = (m₂ − m₁)g/(m₁ + m₂)</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Atwood machine tension?</span><span class="chev">›</span></summary><p class="a-text"><strong>T = 2m₁m₂g/(m₁ + m₂)</strong>, between m₁g and m₂g.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Block on a table pulled by a hanging mass: acceleration?</span><span class="chev">›</span></summary><p class="a-text"><strong>a = (m₂ − μ_k m₁)g/(m₁ + m₂)</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-incline)"></span><span class="q-text">Is the string tension equal to the hanging weight m₂g?</span><span class="chev">›</span></summary><p class="a-text"><strong>No</strong>, less, while m₂ accelerates down: T = m₂(g − a).</p></details>
+  </section>
+  </div>
+
+  <div id="study">
+    <div id="setup" class="panel">
+      <p class="label">Topics to study</p>
+      <div class="chips" id="pick"></div>
+      <div class="row" style="margin-bottom:14px">
+        <button class="btn-sm" id="all">Select all</button><button class="btn-sm" id="none">Clear</button>
+        <label class="opt" style="margin-left:auto"><input type="checkbox" id="shuffle" checked> Shuffle</label>
+      </div>
+      <button class="btn btn-primary" id="start" style="width:100%">Start</button>
+    </div>
+
+    <div id="run" hidden>
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="meta"><span id="m-left"></span><span id="m-again"></span></div>
+      <div class="card" id="card" tabindex="0" role="button" aria-label="Flashcard. Tap to reveal the answer.">
+        <span class="sec-badge" id="c-topic"></span>
+        <div class="cq" id="c-q"></div>
+        <div class="ca" id="c-a"></div>
+        <div class="hint">Tap to reveal the answer</div>
+      </div>
+      <div class="actions row" id="rate" hidden>
+        <button class="btn btn-again" id="again">↺ Again</button>
+        <button class="btn btn-good" id="good">✓ Got it</button>
+      </div>
+      <div class="actions row" id="revealrow">
+        <button class="btn btn-primary" id="reveal">Show answer</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn-sm" id="quit">End session</button></div>
+      <p class="kbd">Keyboard: Space = show answer · 1 = Again · 2 = Got it</p>
+    </div>
+
+    <div id="done" class="panel done" hidden>
+      <h2 id="d-title"></h2>
+      <p id="d-text"></p>
+      <div class="row">
+        <button class="btn btn-primary" id="d-missed">Review the tricky ones</button>
+        <button class="btn btn-ghost" id="d-restart">New session</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Follows Physics Sessions 5 and 6: Glencoe <i>Physics: Principles and Problems</i> Ch4–5 and Hewitt <i>Conceptual Physics</i> Ch3–5. g = 9.81 m/s².</footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- deck from the page itself (single source of truth) ----
+  var topics = [], deck = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[data-topic]'), function (sec) {
+    var t = { id: sec.dataset.topic, title: sec.dataset.title, n: 0 };
+    topics.push(t);
+    Array.prototype.forEach.call(sec.querySelectorAll('details.qa'), function (d) {
+      deck.push({ t: t, q: d.querySelector('.q-text').innerHTML, a: d.querySelector('.a-text').innerHTML });
+      t.n++;
+    });
+  });
+
+  // ---- browse tools ----
+  function setAll(open) { Array.prototype.forEach.call(document.querySelectorAll('details.qa'), function (d) { d.open = open; }); }
+  $('expand').onclick = function () { setAll(true); };
+  $('collapse').onclick = function () { setAll(false); };
+
+  // ---- mode switch ----
+  function mode(study) {
+    document.body.classList.toggle('studying', study);
+    $('m-browse').setAttribute('aria-pressed', !study);
+    $('m-study').setAttribute('aria-pressed', study);
+    window.scrollTo(0, 0);
+  }
+  $('m-browse').onclick = function () { mode(false); };
+  $('m-study').onclick = function () { mode(true); };
+
+  // ---- topic picker ----
+  var pick = $('pick'), chosen = {};
+  topics.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    b.style.color = 'var(--c-' + t.id + ')'; b.style.background = 'var(--c-' + t.id + '-bg)';
+    b.innerHTML = t.title + ' <b>' + t.n + '</b>';
+    b.setAttribute('aria-pressed', 'true'); chosen[t.id] = true;
+    b.onclick = function () { chosen[t.id] = !chosen[t.id]; b.setAttribute('aria-pressed', chosen[t.id]); updStart(); };
+    t.btn = b; pick.appendChild(b);
+  });
+  function selected() { return deck.filter(function (c) { return chosen[c.t.id]; }); }
+  function updStart() {
+    var n = selected().length;
+    $('start').disabled = !n;
+    $('start').textContent = n ? 'Start · ' + n + ' cards' : 'Pick at least one topic';
+  }
+  function setChosen(v) { topics.forEach(function (t) { chosen[t.id] = v; t.btn.setAttribute('aria-pressed', v); }); updStart(); }
+  $('all').onclick = function () { setChosen(true); };
+  $('none').onclick = function () { setChosen(false); };
+  updStart();
+
+  // ---- session ----
+  var queue, cur, total, learned, missed, revealed;
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function begin(cards) {
+    queue = $('shuffle').checked ? shuffle(cards.slice()) : cards.slice();
+    total = queue.length; learned = 0; missed = [];
+    $('setup').hidden = true; $('done').hidden = true; $('run').hidden = false;
+    next();
+  }
+  function next() {
+    if (!queue.length) return finish();
+    cur = queue.shift(); revealed = false;
+    var c = $('card'); c.classList.remove('revealed');
+    var tp = $('c-topic');
+    tp.innerHTML = cur.t.title;
+    tp.style.color = 'var(--c-' + cur.t.id + ')'; tp.style.background = 'var(--c-' + cur.t.id + '-bg)';
+    $('c-q').innerHTML = cur.q; $('c-a').innerHTML = cur.a;
+    $('rate').hidden = true; $('revealrow').hidden = false;
+    $('barfill').style.width = (100 * learned / total) + '%';
+    $('m-left').textContent = learned + ' / ' + total + ' learned';
+    $('m-again').textContent = missed.length ? missed.length + ' marked “Again”' : '';
+  }
+  function reveal() {
+    if (revealed) return;
+    revealed = true; $('card').classList.add('revealed');
+    $('rate').hidden = false; $('revealrow').hidden = true;
+  }
+  function rate(ok) {
+    if (!revealed) return;
+    if (ok) { learned++; }
+    else {
+      if (missed.indexOf(cur) < 0) missed.push(cur);
+      queue.splice(Math.min(3, queue.length), 0, cur);  // comes back a few cards later
+    }
+    next();
+  }
+  function finish() {
+    $('run').hidden = true; $('done').hidden = false;
+    $('barfill').style.width = '100%';
+    $('d-title').textContent = 'All ' + total + ' cards done';
+    $('d-text').textContent = missed.length
+      ? missed.length + ' card' + (missed.length > 1 ? 's' : '') + ' needed another go. Run them again until they stick.'
+      : 'Every card was right first time.';
+    $('d-missed').hidden = !missed.length;
+  }
+  $('start').onclick = function () { begin(selected()); };
+  $('card').onclick = reveal;
+  $('reveal').onclick = reveal;
+  $('again').onclick = function () { rate(false); };
+  $('good').onclick = function () { rate(true); };
+  $('quit').onclick = function () { $('run').hidden = true; $('setup').hidden = false; };
+  $('d-missed').onclick = function () { begin(missed); };
+  $('d-restart').onclick = function () { $('done').hidden = true; $('setup').hidden = false; };
+  document.addEventListener('keydown', function (e) {
+    if (!document.body.classList.contains('studying') || $('run').hidden) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
+    else if (e.key === '1') rate(false);
+    else if (e.key === '2') rate(true);
+  });
+})();
+</script>
+</body>
+</html>

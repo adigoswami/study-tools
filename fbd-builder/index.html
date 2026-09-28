@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Free-Body Diagram Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f1e7;--surface:#fff;--surface2:#faf7f0;--text:#201c15;--muted:#6f6858;--border:#ddd3ba;--ink:#201c15;--ink-text:#f5f1e7;
+--accent:#a8641f;--accent-bg:#f3e4ce;--good:#157a45;--good-bg:#dbeee0;--warn:#b7791f;--warn-bg:#fbefd5;--bad:#b4371f;--bad-bg:#f8ded6;
+--W:#c0392b;--N:#1f5fa8;--T:#7b3fa0;--f:#d97a1c;--F:#2e8b57;--D:#8a6d3b;--X:#777;
+--scene:#e7dfcc;--scene2:#cdbf9f;--obj:#e9eef6;--objline:#333;--shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07)}
+@media (prefers-color-scheme:dark){:root{--bg:#14161c;--surface:#1d2027;--surface2:#181b21;--text:#ece7db;--muted:#9a9385;--border:#333844;--ink:#ece7db;--ink-text:#14161c;
+--accent:#d99a52;--accent-bg:#3a2c19;--good:#6bce93;--good-bg:#16321f;--warn:#f0b75a;--warn-bg:#3a2c12;--bad:#f08a70;--bad-bg:#3d1d16;
+--W:#f07563;--N:#7fb0f0;--T:#c39af0;--f:#f0a55a;--F:#6bce93;--D:#d0b07a;--X:#aaa;
+--scene:#2c3038;--scene2:#454a55;--obj:#2a3445;--objline:#c9c4b8;--shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3)}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "IBM Plex Sans",Arial,sans-serif;padding:16px 14px 40px;-webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto}
+a.back{font-size:12.5px;color:var(--muted);text-decoration:none}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(24px,6vw,31px);margin:6px 0 2px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{border:1.5px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;min-width:40px;padding:6px 8px;font:600 14px "IBM Plex Mono",monospace;cursor:pointer}
+.chip.cur{border-color:var(--accent);background:var(--accent-bg)}
+.chip.done{border-color:var(--good)} .chip.done{background:var(--good-bg);color:var(--good)} .chip.cur{outline:2.5px solid var(--accent);outline-offset:1px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.head{padding:13px 15px 4px}
+.head .n{font:600 12px "IBM Plex Mono",monospace;color:var(--muted)}
+.head h2{font-family:"Fraunces",Georgia,serif;font-size:21px;margin:2px 0 4px}
+.head p{margin:0;color:var(--muted);font-size:14px}
+.stage{background:var(--surface2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stage svg{display:block;width:100%;height:auto;max-height:46vh}
+.panel{padding:12px 15px}
+.lab{font:600 11.5px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.palette{display:flex;flex-wrap:wrap;gap:6px}
+.fbtn{border:1.5px solid var(--border);background:var(--surface);color:var(--text);border-radius:11px;padding:7px 10px;font:600 13.5px "IBM Plex Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.fbtn i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--ink-text);border-color:var(--ink)}
+.dirs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.dbtn{border:1.5px solid var(--border);background:var(--surface2);color:var(--text);border-radius:10px;padding:8px 4px;font:600 13px "IBM Plex Sans",sans-serif;cursor:pointer;text-align:center}
+.dbtn b{display:block;font-size:20px;line-height:1}
+.added{display:flex;flex-wrap:wrap;gap:6px;min-height:34px}
+.tag{border-radius:99px;padding:5px 10px;font:600 13px "IBM Plex Sans",sans-serif;border:1.5px solid currentColor;background:transparent;cursor:pointer}
+.tag::after{content:"  ×";opacity:.6}
+.empty{color:var(--muted);font-size:13px;font-style:italic;padding-top:6px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{border:0;border-radius:11px;font:600 14.5px "IBM Plex Sans",sans-serif;padding:10px 14px;cursor:pointer;background:var(--ink);color:var(--ink-text);flex:1;min-width:110px}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.msg{margin-top:10px;padding:9px 12px;border-radius:10px;font-size:14px;line-height:1.5}
+.msg.good{background:var(--good-bg);border-left:4px solid var(--good)}
+.msg.bad{background:var(--bad-bg);border-left:4px solid var(--bad)}
+.msg.warn{background:var(--warn-bg);border-left:4px solid var(--warn)}
+.msg ul{margin:4px 0 0;padding-left:1.2em}
+.netq{display:flex;flex-wrap:wrap;gap:6px}
+.score{font:600 12.5px "IBM Plex Mono",monospace;color:var(--muted);float:right}
+details.help{margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 13px}
+details.help summary{cursor:pointer;font-weight:600}
+details.help li{margin:4px 0}
+footer{margin-top:22px;font-size:12px;color:var(--muted);text-align:center}
+svg text{font-family:"IBM Plex Sans",Arial,sans-serif}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../">← All study tools</a>
+<h1>Free-Body Diagram Builder</h1>
+<p class="sub">Pick a force, then pick its direction. Add every force acting <b>on</b> the object, and nothing else. Then press <b>Check</b>.</p>
+<noscript><p class="msg bad">This builder needs JavaScript. Open the link in Chrome or Safari, not inside a chat app's file preview.</p></noscript>
+
+<p class="lab" style="margin:0 0 6px">Situations (green = done)</p>
+<div class="chips" id="chips"></div>
+
+<div class="card">
+  <div class="head"><span class="score" id="score"></span><span class="n" id="num"></span><h2 id="title"></h2><p id="desc"></p></div>
+  <div class="stage"><svg id="svg" viewBox="0 0 360 250" role="img" aria-label="scene"></svg></div>
+  <div class="panel" id="buildPanel">
+    <p class="lab">1 · Choose a force</p>
+    <div class="palette" id="palette"></div>
+    <div id="dirWrap" hidden>
+      <p class="lab" style="margin-top:12px">2 · Which way does it point?</p>
+      <div class="dirs" id="dirs"></div>
+    </div>
+    <p class="lab" style="margin-top:14px">Forces on your diagram (tap to remove)</p>
+    <div class="added" id="added"></div>
+    <div class="acts">
+      <button class="btn" id="check">Check</button>
+      <button class="btn ghost" id="hint">Hint</button>
+      <button class="btn ghost" id="clear">Clear</button>
+    </div>
+    <div id="msg"></div>
+  </div>
+  <div class="panel" id="netPanel" hidden>
+    <p class="lab">3 · What is the direction of the NET force?</p>
+    <div class="netq" id="netq"></div>
+    <div id="netMsg"></div>
+    <div class="acts" id="nextWrap" hidden><button class="btn" id="next">Next situation →</button></div>
+  </div>
+</div>
+
+<details class="help">
+  <summary>Rules for every free-body diagram</summary>
+  <ul>
+    <li><b>Weight (mg)</b> always points straight down. Everything near Earth has it.</li>
+    <li><b>Normal force (N)</b> comes from a surface the object touches. It is perpendicular to the surface, pushing away.</li>
+    <li><b>Tension (T)</b> comes from a rope or string. It pulls along the rope, away from the object.</li>
+    <li><b>Friction (f)</b> comes from a rough surface. It is parallel to the surface and opposes sliding (or the tendency to slide).</li>
+    <li><b>Air resistance (D)</b> opposes the velocity. <b>Applied force (F)</b> is a push or pull by a person or thing.</li>
+    <li>No agent means no force. There is no "force of motion". A moving object keeps moving by inertia (First Law).</li>
+  </ul>
+</details>
+<footer>Follows Physics Session 6 (Glencoe Ch4 §4.3, Ch5 §5.2–5.3; Hewitt Ch4–5). Progress is saved on this device only.</footer>
+</div>
+
+<script>
+(function(){
+var TYPES={
+ W:{name:'Weight',sym:'mg',col:'--W'},
+ N:{name:'Normal force',sym:'N',col:'--N'},
+ T:{name:'Tension',sym:'T',col:'--T'},
+ f:{name:'Friction',sym:'f',col:'--f'},
+ F:{name:'Applied force',sym:'F',col:'--F'},
+ D:{name:'Air resistance',sym:'D',col:'--D'},
+ X:{name:'"Force of motion"',sym:'Fₘ',col:'--X'}
+};
+var RULE={
+ W:'Weight always points straight down, toward Earth\'s center.',
+ N:'The normal force is perpendicular to the surface, pushing away from it.',
+ T:'Tension pulls along the rope, away from the object.',
+ f:'Friction is parallel to the surface and opposes sliding (or the tendency to slide).',
+ F:'Check the description: which way is the push or pull?',
+ D:'Air resistance points opposite to the velocity.'
+};
+var MISSING={
+ W:'Everything near Earth has weight. Did you include it?',
+ N:'The object touches a surface. A surface pushes back on anything resting against it.',
+ T:'A rope or string is attached. Ropes pull.',
+ f:'The surface here is rough. Think about which way the object slides, or tends to slide.',
+ F:'Someone or something is pushing or pulling it. Read the description again.',
+ D:'It is moving through the air fast enough for air resistance to matter.'
+};
+var S30=0.5,C30=0.866;
+var DIRV={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0],upslope:[-C30,-S30],downslope:[C30,S30],perp:[S30,-C30],into:[-S30,C30]};
+var DIRL={up:['↑','up'],down:['↓','down'],left:['←','left'],right:['→','right'],upslope:['↖','up the slope'],downslope:['↘','down the slope'],perp:['↗','out of the slope'],into:['↙','into the slope']};
+var LEVEL=['up','down','left','right'], SLOPE=['up','down','left','right','upslope','downslope','perp','into'];
+var SC=[
+ {t:'Book resting on a table',d:'A book sits still on a level table.',scene:'table',ans:{W:'down',N:'up'},net:'zero',
+  ex:'Two forces: weight down and the table\'s normal force up. The book isn\'t accelerating, so N = mg and F_net = 0 (First Law). N and W are NOT a third-law pair: both act on the book.'},
+ {t:'Puck gliding on ice',d:'A hockey puck slides to the right across frictionless ice at constant speed.',scene:'ice',ans:{W:'down',N:'up'},net:'zero',
+  no:{X:'Nothing pushes the puck forward once it leaves the stick. It keeps moving by inertia (First Law). A "force of motion" has no agent, so it doesn\'t exist.',f:'The ice is frictionless here.',F:'The stick is no longer touching the puck.'},
+  ex:'Only weight and the normal force. It moves right with NO force to the right: constant velocity needs F_net = 0, not a forward force.'},
+ {t:'Ball thrown upward',d:'A ball has left your hand and is still rising. Ignore air resistance.',scene:'ball',ans:{W:'down'},net:'down',
+  no:{F:'Your hand stopped pushing the moment the ball left it. Nothing is pushing it up now.',X:'It rises because of the velocity it already has (inertia), not because of a force.',D:'We\'re ignoring air resistance here.'},
+  ex:'Only weight, straight down, even while it is rising. The net force (and the acceleration g) points down, which is why the ball is slowing.'},
+ {t:'Box pushed and speeding up',d:'You push a box to the right across a rough floor. It speeds up.',scene:'push',ans:{W:'down',N:'up',F:'right',f:'left'},net:'right',
+  ex:'Weight, normal force, your push (right) and kinetic friction (left, opposing the sliding). It speeds up, so the push beats friction: F_net points right.'},
+ {t:'Crate dragged at constant velocity',d:'A horizontal rope pulls a crate to the right across a rough floor at constant velocity.',scene:'drag',ans:{W:'down',N:'up',T:'right',f:'left'},net:'zero',
+  no:{F:'The pull comes from the rope, so it\'s a tension force.'},
+  ex:'Tension right, friction left, weight and normal force. Constant velocity means F_net = 0, so T = f and N = mg.'},
+ {t:'Hanging lamp',d:'A lamp hangs at rest from a single vertical cord.',scene:'hang',ans:{W:'down',T:'up'},net:'zero',
+  no:{N:'No surface touches the lamp. The cord holds it up, so that force is tension.'},
+  ex:'Tension up and weight down. At rest, so T = mg.'},
+ {t:'Skydiver at terminal velocity',d:'A skydiver falls straight down at a constant speed (terminal velocity).',scene:'sky',ans:{W:'down',D:'up'},net:'zero',
+  ex:'Weight down and air resistance up. At terminal velocity the speed is constant, so D = mg and F_net = 0.'},
+ {t:'Elevator speeding up, going up',d:'A person stands on the floor of an elevator that is accelerating upward.',scene:'elev',ans:{W:'down',N:'up'},net:'up',
+  no:{T:'The cable pulls the ELEVATOR, not the person. Only forces on the person go in this diagram.'},
+  ex:'Weight and the floor\'s normal force. The person accelerates up, so N > mg: N = m(g + a). That is why you feel heavier.'},
+ {t:'Block resting on a slope',d:'A block sits still on a rough incline.',scene:'slopeRest',dirs:'slope',ans:{W:'down',N:'perp',f:'upslope'},net:'zero',
+  ex:'Weight straight down, the normal force perpendicular out of the slope, and static friction UP the slope (it stops the block sliding down). The three balance: F_net = 0.'},
+ {t:'Block sliding down a smooth slope',d:'A block slides down a frictionless incline.',scene:'slopeSmooth',dirs:'slope',ans:{W:'down',N:'perp'},net:'downslope',
+  no:{f:'The incline is frictionless.',X:'Nothing pushes it down the slope. The downhill pull is just the component mg sinθ of its weight.',F:'Nobody is pushing it.'},
+  ex:'Only weight and the normal force. They don\'t balance: their sum, mg sinθ, points down the slope, so a = g sinθ.'},
+ {t:'Block sliding down a rough slope',d:'A block slides down a rough incline, speeding up.',scene:'slopeRough',dirs:'slope',ans:{W:'down',N:'perp',f:'upslope'},net:'downslope',
+  ex:'Weight, normal force, and kinetic friction up the slope (opposing the sliding). Speeding up, so the net force points down the slope: a = g(sinθ − μk cosθ).'},
+ {t:'Car speeding up',d:'A car accelerates to the right on a level road. Ignore air resistance.',scene:'car',ans:{W:'down',N:'up',f:'right'},net:'right',
+  no:{F:'The engine is inside the car, so it can\'t push the car directly. The tires push back on the road, and the road pushes the car forward.',D:'We\'re ignoring air resistance here.',X:'There\'s no "force of motion". Something outside the car must push it forward.'},
+  wrong:{f:'Surprise! Here friction points FORWARD. The tires push backward on the road, so (Third Law) the road\'s static friction pushes the car forward.'},
+  ex:'Weight, normal force, and static friction from the road pointing FORWARD. That friction is the only horizontal force, so it is what accelerates the car.'},
+ {t:'Mass falling in an Atwood machine',d:'The heavier mass of an Atwood machine hangs from a string and is accelerating downward.',scene:'atwood',ans:{W:'down',T:'up'},net:'down',
+  ex:'Tension up and weight down. It accelerates downward, so mg > T: the tension is LESS than the hanging weight.'},
+ {t:'Block held against a wall',d:'You push a block horizontally against a rough wall (the wall is on the right). It doesn\'t slip.',scene:'wall',ans:{W:'down',F:'right',N:'left',f:'up'},net:'zero',
+  ex:'Your push (right), the wall\'s normal force (left, perpendicular to the wall), weight (down) and static friction from the wall (up, stopping it sliding down). F = N and f = mg.'}
+];
+var idx=0, sel=null, placed={}, tries=0, netDone=false, done={};
+try{done=JSON.parse(localStorage.getItem('fbd-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem('fbd-done',JSON.stringify(done));}catch(e){}}
+function $(i){return document.getElementById(i);}
+function cssv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||'#888';}
+function svgEl(tag,attrs,parent){var e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+var CX=180,CY=125;
+function drawScene(){
+ var s=$('svg'); while(s.firstChild) s.removeChild(s.firstChild);
+ var sc=SC[idx].scene, g=svgEl('g',{},s), sceneC=cssv('--scene'), sceneC2=cssv('--scene2'), obj=cssv('--obj'), ol=cssv('--objline'), mut=cssv('--muted');
+ function box(x,y,w,h,rot){var r=svgEl('rect',{x:x-w/2,y:y-h/2,width:w,height:h,rx:3,fill:obj,stroke:ol,'stroke-width':1.6},g);if(rot)r.setAttribute('transform','rotate('+rot+' '+x+' '+y+')');return r;}
+ function note(x,y,t,anchor){var e=svgEl('text',{x:x,y:y,'font-size':12,fill:mut,'text-anchor':anchor||'middle'},g);e.textContent=t;}
+ function floor(y,col){svgEl('rect',{x:10,y:y,width:340,height:14,fill:col||sceneC},g);}
+ if(sc==='table'){svgEl('rect',{x:60,y:147,width:240,height:9,fill:sceneC2},g);svgEl('rect',{x:78,y:156,width:7,height:80,fill:sceneC2},g);svgEl('rect',{x:275,y:156,width:7,height:80,fill:sceneC2},g);box(CX,CY+4,70,36);}
+ else if(sc==='ice'){floor(147,'#bfe0f2');box(CX,CY+4,56,36);note(CX,95,'v → (constant)');}
+ else if(sc==='ball'){svgEl('circle',{cx:CX,cy:CY,r:17,fill:obj,stroke:ol,'stroke-width':1.6},g);note(CX-58,CY+4,'v ↑ (slowing)');floor(230);}
+ else if(sc==='push'){floor(147);box(CX,CY+4,60,40);note(CX,95,'v → (speeding up)');note(80,CY+8,'✋ push');}
+ else if(sc==='drag'){floor(147);box(CX,CY+4,60,40);svgEl('line',{x1:CX+30,y1:CY+4,x2:340,y2:CY+4,stroke:ol,'stroke-width':2},g);note(CX,95,'v → (constant)');}
+ else if(sc==='hang'){svgEl('rect',{x:110,y:8,width:140,height:8,fill:sceneC2},g);svgEl('line',{x1:CX,y1:16,x2:CX,y2:CY-18,stroke:ol,'stroke-width':2},g);svgEl('path',{d:'M'+(CX-28)+' '+(CY+14)+' L'+(CX-14)+' '+(CY-18)+' L'+(CX+14)+' '+(CY-18)+' L'+(CX+28)+' '+(CY+14)+' Z',fill:obj,stroke:ol,'stroke-width':1.6},g);}
+ else if(sc==='sky'){svgEl('circle',{cx:CX,cy:CY-14,r:9,fill:obj,stroke:ol,'stroke-width':1.6},g);svgEl('rect',{x:CX-9,y:CY-4,width:18,height:28,rx:5,fill:obj,stroke:ol,'stroke-width':1.6},g);note(CX+62,CY,'v ↓ (constant)');}
+ else if(sc==='elev'){svgEl('rect',{x:120,y:20,width:120,height:150,fill:'none',stroke:sceneC2,'stroke-width':3},g);svgEl('line',{x1:CX,y1:0,x2:CX,y2:20,stroke:sceneC2,'stroke-width':2},g);svgEl('rect',{x:120,y:163,width:120,height:7,fill:sceneC2},g);svgEl('circle',{cx:CX,cy:CY-2,r:10,fill:obj,stroke:ol,'stroke-width':1.6},g);svgEl('rect',{x:CX-10,y:CY+8,width:20,height:55,rx:5,fill:obj,stroke:ol,'stroke-width':1.6},g);note(290,95,'a ↑');}
+ else if(sc.indexOf('slope')===0){
+   var bx=CX-S30*20, by=CY+C30*20, dx=C30, dy=S30, L=220;
+   svgEl('path',{d:'M'+(bx-dx*L)+' '+(by-dy*L)+' L'+(bx+dx*L)+' '+(by+dy*L)+' L'+(bx+dx*L)+' 250 L'+(bx-dx*L)+' 250 Z',fill:sceneC,stroke:sceneC2,'stroke-width':2},g);
+   box(CX,CY,52,40,30);
+   if(sc==='slopeSmooth') note(70,230,'frictionless','start'); if(sc==='slopeRough') note(70,230,'rough · v ↘ (speeding up)','start'); if(sc==='slopeRest') note(70,230,'rough · at rest','start');
+ }
+ else if(sc==='car'){floor(152);svgEl('rect',{x:CX-48,y:CY-8,width:96,height:28,rx:6,fill:obj,stroke:ol,'stroke-width':1.6},g);svgEl('rect',{x:CX-26,y:CY-24,width:50,height:18,rx:5,fill:obj,stroke:ol,'stroke-width':1.6},g);svgEl('circle',{cx:CX-28,cy:CY+22,r:9,fill:ol},g);svgEl('circle',{cx:CX+28,cy:CY+22,r:9,fill:ol},g);note(300,60,'a → (speeding up)');}
+ else if(sc==='atwood'){svgEl('circle',{cx:CX+20,cy:30,r:18,fill:'none',stroke:ol,'stroke-width':2},g);svgEl('line',{x1:CX,y1:30,x2:CX,y2:CY-20,stroke:ol,'stroke-width':2},g);svgEl('line',{x1:CX+38,y1:30,x2:CX+38,y2:70,stroke:ol,'stroke-width':2},g);svgEl('rect',{x:CX+28,y:70,width:20,height:18,fill:obj,stroke:ol},g);box(CX,CY,44,40);note(CX-70,CY+50,'a ↓');}
+ else if(sc==='wall'){svgEl('rect',{x:CX+26,y:10,width:22,height:230,fill:sceneC2},g);box(CX,CY,52,52);note(60,40,'✋ push →');}
+ drawArrows(g);
+}
+function drawArrows(g){
+ var sc=SC[idx].scene;
+ for(var k in placed){
+  var v=DIRV[placed[k]], col=cssv(TYPES[k].col), len=72;
+  var ox=CX, oy=CY;
+  var x2=ox+v[0]*len, y2=oy+v[1]*len;
+  var id='ah'+k;
+  var defs=svgEl('defs',{},g), m=svgEl('marker',{id:id,markerWidth:8,markerHeight:8,refX:6,refY:4,orient:'auto'},defs);
+  svgEl('path',{d:'M0,0 L8,4 L0,8 Z',fill:col},m);
+  svgEl('line',{x1:ox,y1:oy,x2:x2,y2:y2,stroke:col,'stroke-width':3.4,'marker-end':'url(#'+id+')','stroke-linecap':'round'},g);
+  var t=svgEl('text',{x:x2+v[0]*16,y:y2+v[1]*16+4,'font-size':14,'font-weight':700,fill:col,'text-anchor':'middle'},g);
+  t.textContent=TYPES[k].sym;
+ }
+ svgEl('circle',{cx:CX,cy:CY,r:3.5,fill:cssv('--text')},g);
+}
+function dirList(){return SC[idx].dirs==='slope'?SLOPE:LEVEL;}
+function renderPalette(){
+ var p=$('palette'); p.innerHTML='';
+ Object.keys(TYPES).forEach(function(k){
+  var b=document.createElement('button'); b.className='fbtn'; b.type='button';
+  b.innerHTML='<i style="background:var('+TYPES[k].col+')"></i>'+TYPES[k].name;
+  b.setAttribute('aria-pressed',sel===k?'true':'false');
+  b.onclick=function(){sel=(sel===k?null:k); renderPalette(); renderDirs();};
+  p.appendChild(b);
+ });
+}
+function renderDirs(){
+ $('dirWrap').hidden=!sel; var d=$('dirs'); d.innerHTML='';
+ if(!sel) return;
+ dirList().forEach(function(dir){
+  var b=document.createElement('button'); b.className='dbtn'; b.type='button';
+  b.innerHTML='<b>'+DIRL[dir][0]+'</b>'+DIRL[dir][1];
+  b.onclick=function(){placed[sel]=dir; sel=null; renderAll(); $('msg').innerHTML='';};
+  d.appendChild(b);
+ });
+}
+function renderAdded(){
+ var a=$('added'); a.innerHTML='';
+ var ks=Object.keys(placed);
+ if(!ks.length){a.innerHTML='<span class="empty">No forces yet.</span>';return;}
+ ks.forEach(function(k){
+  var b=document.createElement('button'); b.className='tag'; b.type='button'; b.style.color='var('+TYPES[k].col+')';
+  b.textContent=TYPES[k].sym+' '+DIRL[placed[k]][0]+' '+TYPES[k].name.replace(/"/g,'');
+  b.title='Remove'; b.onclick=function(){delete placed[k]; renderAll();};
+  a.appendChild(b);
+ });
+}
+function renderChips(){
+ var c=$('chips'); c.innerHTML='';
+ SC.forEach(function(s,i){var b=document.createElement('button');b.className='chip'+(i===idx?' cur':'')+(done[i]?' done':'');b.type='button';b.textContent=(i+1);b.title=s.t;b.setAttribute('aria-label',(i+1)+'. '+s.t);b.onclick=function(){go(i);};c.appendChild(b);});
+ var n=Object.keys(done).length; $('score').textContent=n+' / '+SC.length+' done';
+}
+function renderAll(){drawScene();renderPalette();renderDirs();renderAdded();renderChips();}
+function go(i){idx=i;sel=null;placed={};tries=0;netDone=false;
+ $('num').textContent='Situation '+(i+1)+' of '+SC.length; $('title').textContent=SC[i].t; $('desc').textContent=SC[i].d;
+ $('msg').innerHTML=''; $('netMsg').innerHTML=''; $('netPanel').hidden=true; $('buildPanel').hidden=false; $('nextWrap').hidden=true;
+ renderAll(); }
+function evaluate(){
+ var s=SC[idx], ans=s.ans, missing=[], extra=[], wrong=[];
+ for(var k in ans){ if(!(k in placed)) missing.push(k); else if(placed[k]!==ans[k]) wrong.push(k); }
+ for(var k2 in placed){ if(!(k2 in ans)) extra.push(k2); }
+ return {missing:missing,extra:extra,wrong:wrong};
+}
+function extraMsg(k){var s=SC[idx]; if(s.no&&s.no[k]) return s.no[k];
+ if(k==='X') return 'There is no "force of motion". Every force needs an agent: something touching the object, or Earth for weight.';
+ return 'Which object exerts this '+TYPES[k].name.toLowerCase()+'? If you can\'t name something touching the object that could exert it, remove it.';}
+$('check').onclick=function(){
+ var r=evaluate(), m=$('msg');
+ if(!r.missing.length&&!r.extra.length&&!r.wrong.length){
+  m.innerHTML='<div class="msg good"><b>Correct diagram!</b> Now decide the net force.</div>';
+  $('netPanel').hidden=false; renderNet(); return;
+ }
+ tries++;
+ var items=[];
+ r.extra.forEach(function(k){items.push('<li><b>'+TYPES[k].name+'</b> shouldn\'t be here. '+extraMsg(k)+'</li>');});
+ r.wrong.forEach(function(k){var s=SC[idx]; items.push('<li><b>'+TYPES[k].name+'</b> points the wrong way. '+((s.wrong&&s.wrong[k])?s.wrong[k]:RULE[k])+'</li>');});
+ if(r.missing.length){ if(tries>=2) r.missing.forEach(function(k){items.push('<li>Missing: <b>'+TYPES[k].name+'</b>. '+MISSING[k]+'</li>');});
+   else items.push('<li>'+(r.missing.length===1?'One force is':r.missing.length+' forces are')+' missing. Press <b>Hint</b> or check again for more help.</li>'); }
+ m.innerHTML='<div class="msg bad"><b>Not yet.</b><ul>'+items.join('')+'</ul>'+(tries>=3?'<p style="margin:6px 0 0"><button class="btn ghost" id="show" type="button">Show the answer</button></p>':'')+'</div>';
+ var sh=$('show'); if(sh) sh.onclick=function(){placed=JSON.parse(JSON.stringify(SC[idx].ans)); renderAll(); $('check').onclick();};
+};
+$('hint').onclick=function(){
+ var r=evaluate(), m=$('msg'), t;
+ if(r.extra.length) t='Look again at <b>'+TYPES[r.extra[0]].name+'</b>: '+extraMsg(r.extra[0]);
+ else if(r.wrong.length) t=RULE[r.wrong[0]];
+ else if(r.missing.length) t=MISSING[r.missing[0]];
+ else t='Everything looks right. Press <b>Check</b>.';
+ m.innerHTML='<div class="msg warn">💡 '+t+'</div>';
+};
+$('clear').onclick=function(){placed={};sel=null;renderAll();$('msg').innerHTML='';};
+function renderNet(){
+ var opts=SC[idx].dirs==='slope'?['zero','downslope','upslope','down']:['zero','up','down','left','right'];
+ var q=$('netq'); q.innerHTML='';
+ opts.forEach(function(o){var b=document.createElement('button');b.className='dbtn';b.type='button';b.style.flex='1';
+  b.innerHTML=o==='zero'?'<b>0</b>zero':'<b>'+DIRL[o][0]+'</b>'+DIRL[o][1];
+  b.onclick=function(){
+   var s=SC[idx];
+   if(o===s.net){$('netMsg').innerHTML='<div class="msg good"><b>Yes!</b> '+s.ex+'</div>';done[idx]=1;save();renderChips();$('nextWrap').hidden=false;}
+   else $('netMsg').innerHTML='<div class="msg bad">Not quite. '+(s.net==='zero'?'Is the velocity changing? Constant velocity, or at rest, means a = 0.':'Is the object speeding up, slowing down or turning? F_net points the same way as the acceleration, not necessarily the velocity.')+'</div>';
+  };q.appendChild(b);});
+}
+$('next').onclick=function(){go((idx+1)%SC.length);window.scrollTo({top:0,behavior:'smooth'});};
+if(window.matchMedia){var mq=window.matchMedia('(prefers-color-scheme: dark)');if(mq.addEventListener)mq.addEventListener('change',drawScene);}
+var first=0; for(var i=0;i<SC.length;i++){if(!done[i]){first=i;break;}}
+go(first);
+})();
+</script>
+</body>
+</html>

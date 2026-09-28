@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>F = ma Force Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f1e7;--surface:#fff;--surface2:#faf7f0;--text:#201c15;--muted:#6f6858;--border:#ddd3ba;--ink:#201c15;--ink-text:#f5f1e7;
+--accent:#a8641f;--accent-bg:#f3e4ce;--good:#157a45;--good-bg:#dbeee0;--warn:#b7791f;--warn-bg:#fbefd5;--bad:#b4371f;--bad-bg:#f8ded6;
+--F:#2e8b57;--f:#d97a1c;--net:#201c15;--v:#1f5fa8;--a:#b4371f;--track:#d8ccb2;--cart:#e9eef6;--grid:rgba(0,0,0,.08);--shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07)}
+@media (prefers-color-scheme:dark){:root{--bg:#14161c;--surface:#1d2027;--surface2:#181b21;--text:#ece7db;--muted:#9a9385;--border:#333844;--ink:#ece7db;--ink-text:#14161c;
+--accent:#d99a52;--accent-bg:#3a2c19;--good:#6bce93;--good-bg:#16321f;--warn:#f0b75a;--warn-bg:#3a2c12;--bad:#f08a70;--bad-bg:#3d1d16;
+--F:#6bce93;--f:#f0a55a;--net:#ece7db;--v:#7fb0f0;--a:#f08a70;--track:#3a3f4a;--cart:#2a3445;--grid:rgba(255,255,255,.08);--shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3)}}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "IBM Plex Sans",Arial,sans-serif;padding:16px 14px 40px;-webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto}
+a.back{font-size:12.5px;color:var(--muted);text-decoration:none}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(24px,6vw,31px);margin:6px 0 2px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 12px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px}
+canvas{display:block;width:100%}
+#track{height:190px;background:var(--surface2);border-bottom:1px solid var(--border)}
+.ctrl{padding:12px 15px;display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:620px){.ctrl{grid-template-columns:1fr 1fr}}
+.sl label{display:flex;justify-content:space-between;font-weight:600;font-size:14px}
+.sl label b{font-family:"IBM Plex Mono",monospace}
+.sl input{width:100%;accent-color:var(--accent)}
+select{width:100%;font:500 14px "IBM Plex Sans",sans-serif;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;padding:0 15px 14px}
+.btn{border:0;border-radius:11px;font:600 14.5px "IBM Plex Sans",sans-serif;padding:10px 14px;cursor:pointer;background:var(--ink);color:var(--ink-text);flex:1;min-width:100px}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn[aria-pressed="true"]{background:var(--F);color:#fff}
+.read{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border)}
+@media (min-width:620px){.read{grid-template-columns:repeat(6,1fr)}}
+.read div{background:var(--surface);padding:8px 10px}
+.read span{display:block;font:600 11px "IBM Plex Mono",monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.read b{font:600 17px "IBM Plex Mono",monospace}
+.eq{padding:10px 15px;font:500 14px "IBM Plex Mono",monospace;border-top:1px solid var(--border);background:var(--surface2)}
+.eq .st{font-family:"IBM Plex Sans",sans-serif;color:var(--muted);font-size:13px;white-space:normal;display:block;margin-top:2px}
+.graphs{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border)}
+@media (min-width:620px){.graphs{grid-template-columns:1fr 1fr}}
+.graphs div{background:var(--surface);padding:8px 10px 6px}
+.graphs h3{margin:0 0 4px;font:600 12px "IBM Plex Mono",monospace;color:var(--muted)}
+.graphs canvas{height:150px}
+.tasks{padding:12px 15px}
+.tasks h2{font-family:"Fraunces",Georgia,serif;font-size:19px;margin:0 0 8px}
+.task{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--border);font-size:14px}
+.task .ck{flex:0 0 22px;height:22px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;font-size:13px;color:#fff}
+.task.ok .ck{background:var(--good);border-color:var(--good)}
+.task.ok .tx{color:var(--muted)}
+.msg{margin:0 15px 12px;padding:9px 12px;border-radius:10px;font-size:14px;background:var(--good-bg);border-left:4px solid var(--good)}
+footer{margin-top:22px;font-size:12px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../">← All study tools</a>
+<h1>F = ma Force Lab</h1>
+<p class="sub">Push a cart along a track. Change the push, the mass and the surface, then watch the forces, the acceleration and the motion graphs. Then try the challenges.</p>
+<noscript><p class="msg" style="background:var(--bad-bg);border-color:var(--bad)">This lab needs JavaScript. Open the link in Chrome or Safari, not inside a chat app's file preview.</p></noscript>
+
+<div class="card">
+  <canvas id="track" aria-label="cart on a track"></canvas>
+  <div class="ctrl">
+    <div class="sl"><label for="F">Applied push F <b id="Fv"></b></label><input id="F" type="range" min="0" max="100" step="0.5" value="20"></div>
+    <div class="sl"><label for="m">Mass m <b id="mv"></b></label><input id="m" type="range" min="1" max="20" step="0.5" value="5"></div>
+    <div class="sl"><label for="surf">Surface</label>
+      <select id="surf">
+        <option value="0,0">Frictionless air track (μs = 0, μk = 0)</option>
+        <option value="0.10,0.05">Ice (μs = 0.10, μk = 0.05)</option>
+        <option value="0.50,0.20" selected>Wood on wood (μs = 0.50, μk = 0.20)</option>
+        <option value="0.80,0.65">Rubber on dry concrete (μs = 0.80, μk = 0.65)</option>
+      </select></div>
+    <div class="sl"><label>Weight and normal force <b id="Nv"></b></label><span style="font-size:13px;color:var(--muted)">Level track: N = mg (g = 9.81 m/s²)</span></div>
+  </div>
+  <div class="acts">
+    <button class="btn" id="run">▶ Start</button>
+    <button class="btn" id="push" aria-pressed="true">Push: ON</button>
+    <button class="btn ghost" id="reset">↺ Reset</button>
+  </div>
+  <div class="read">
+    <div><span>friction</span><b id="rf">0</b></div>
+    <div><span>F_net</span><b id="rn">0</b></div>
+    <div><span>a (m/s²)</span><b id="ra">0</b></div>
+    <div><span>v (m/s)</span><b id="rv">0</b></div>
+    <div><span>x (m)</span><b id="rx">0</b></div>
+    <div><span>t (s)</span><b id="rt">0</b></div>
+  </div>
+  <div class="eq" id="eq"></div>
+  <div class="graphs">
+    <div><h3>velocity v (m/s) vs time</h3><canvas id="gv"></canvas></div>
+    <div><h3>acceleration a (m/s²) vs time</h3><canvas id="ga"></canvas></div>
+  </div>
+</div>
+
+<div class="card tasks">
+  <h2>Challenges</h2>
+  <div id="tasklist"></div>
+</div>
+<div id="done" class="msg" hidden>All challenges done! You've seen the First Law (C4), the Second Law (C1, C5) and static vs kinetic friction (C2, C3).</div>
+<footer>Follows Physics Sessions 5–6 (Glencoe Ch4 §4.1, Ch5 §5.2; Hewitt Ch4). Friction model: static up to μs·N, then kinetic μk·N. Progress is saved on this device only.</footer>
+</div>
+<script>
+(function(){
+var g=9.81, $=function(i){return document.getElementById(i);};
+var st={x:0,v:0,t:0,a:0,f:0,fnet:0,moving:false,running:false,push:true,hist:[],trackLen:30,stillT:0,constT:0};
+var done={}; try{done=JSON.parse(localStorage.getItem('forcelab-done')||'{}')||{};}catch(e){done={};}
+function save(){try{localStorage.setItem('forcelab-done',JSON.stringify(done));}catch(e){}}
+function P(){var s=$('surf').value.split(',');return {F:+$('F').value,m:+$('m').value,us:+s[0],uk:+s[1],surf:$('surf').selectedIndex};}
+function cssv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+var TASKS=[
+ {id:'c1',t:'<b>C1 · Second Law.</b> On the frictionless air track, make a <b>4.0 kg</b> cart accelerate at <b>2.5 m/s²</b>. (What push do you need? F = ma.)'},
+ {id:'c2',t:'<b>C2 · Static friction.</b> On wood, with a <b>10 kg</b> cart at rest, find the <b>smallest push that starts it moving</b> (within 1 N). Hint: μs·N.'},
+ {id:'c3',t:'<b>C3 · Constant velocity.</b> On wood with a <b>10 kg</b> cart, get it moving, then adjust the push so it moves at <b>constant velocity</b> (a ≈ 0). Which push is it, and why is it smaller than in C2?'},
+ {id:'c4',t:'<b>C4 · First Law.</b> On the frictionless track, get the cart moving, then turn the <b>push OFF</b>. Watch it keep going at constant velocity for 1 s.'},
+ {id:'c5',t:'<b>C5 · Mass resists acceleration.</b> On the frictionless track with <b>F = 20 N</b>, run it with <b>m = 5 kg</b> and then with <b>m = 10 kg</b>. The acceleration halves.'}
+];
+var c5seen={};
+function renderTasks(){var h='';TASKS.forEach(function(t){h+='<div class="task'+(done[t.id]?' ok':'')+'"><span class="ck">'+(done[t.id]?'✓':'')+'</span><span class="tx">'+t.t+'</span></div>';});$('tasklist').innerHTML=h;
+ $('done').hidden=Object.keys(done).length<TASKS.length;}
+function mark(id){if(!done[id]){done[id]=1;save();renderTasks();}}
+function fmt(x,d){return (Math.abs(x)<1e-9?0:x).toFixed(d===undefined?2:d);}
+function physics(dt){
+ var p=P(), N=p.m*g, Fa=st.push?p.F:0, fsmax=p.us*N, fk=p.uk*N;
+ if(!st.moving){
+  if(Fa>fsmax+1e-9){st.moving=true;st.justStarted=true;}
+  else{st.f=-Fa;st.fnet=0;st.a=0;st.v=0;return;}
+ }
+ var fr=(st.v>1e-9||Fa>0)?-fk:0;
+ var anet=(Fa+fr)/p.m;
+ if(st.v<=1e-9&&Fa<=fsmax&&Fa<=fk){st.moving=false;st.v=0;st.f=-Fa;st.fnet=0;st.a=0;return;}
+ var vn=st.v+anet*dt;
+ if(vn<0){ // stops within the step
+  st.x+=st.v*st.v/(2*Math.abs(anet)); st.v=0; st.moving=Fa>fsmax; st.f=-Fa; st.fnet=0; st.a=0; return;}
+ st.x+=(st.v+vn)/2*dt; st.v=vn; st.f=fr; st.fnet=Fa+fr; st.a=anet;
+}
+function checkTasks(){
+ var p=P(), Fa=st.push?p.F:0;
+ if(p.surf===0&&Math.abs(p.m-4)<1e-6&&st.push&&st.moving&&Math.abs(st.a-2.5)<0.03) mark('c1');
+ if(st.justStarted){st.justStarted=false; if(p.surf===2&&Math.abs(p.m-10)<1e-6&&st.push&&p.F<=p.us*p.m*g+1.0) mark('c2');}
+ if(p.surf===2&&Math.abs(p.m-10)<1e-6&&st.push&&st.moving&&st.v>0.2&&Math.abs(st.a)<0.06){st.constT+=1/60;if(st.constT>0.8)mark('c3');}else st.constT=0;
+ if(p.surf===0&&!st.push&&st.v>0.3){st.stillT+=1/60;if(st.stillT>1)mark('c4');}else st.stillT=0;
+ if(p.surf===0&&Math.abs(p.F-20)<1e-6&&st.push&&st.moving){ if(Math.abs(p.m-5)<1e-6&&Math.abs(st.a-4)<0.02)c5seen.a=1; if(Math.abs(p.m-10)<1e-6&&Math.abs(st.a-2)<0.02)c5seen.b=1; if(c5seen.a&&c5seen.b)mark('c5');}
+}
+function readouts(){
+ var p=P(), N=p.m*g, Fa=st.push?p.F:0;
+ $('Fv').textContent=fmt(p.F,1)+' N'; $('mv').textContent=fmt(p.m,1)+' kg'; $('Nv').textContent='mg = N = '+fmt(N,1)+' N';
+ $('rf').textContent=fmt(Math.abs(st.f),1)+' N'; $('rn').textContent=fmt(st.fnet,1)+' N'; $('ra').textContent=fmt(st.a); $('rv').textContent=fmt(st.v); $('rx').textContent=fmt(st.x,1); $('rt').textContent=fmt(st.t,1);
+ var fsmax=p.us*N, fk=p.uk*N, e, s;
+ if(!st.moving){
+  if(st.running||st.t===0){
+   e='At rest: static friction f = F = '+fmt(Fa,1)+' N  →  F_net = 0, a = 0';
+   s='Static friction matches the push up to its maximum μs·N = '+fmt(p.us,2)+' × '+fmt(N,1)+' = '+fmt(fsmax,1)+' N. '+(Fa<=fsmax?'Push harder than that to start it moving.':'');
+  } else {e='At rest';s='';}
+ } else {
+  var fr=Math.abs(st.f);
+  e='a = (F − f_k)/m = ('+fmt(Fa,1)+' − '+fmt(fr,1)+') / '+fmt(p.m,1)+' = '+fmt(st.a)+' m/s²';
+  s=(p.uk>0?'Sliding: kinetic friction f_k = μk·N = '+fmt(p.uk,2)+' × '+fmt(N,1)+' = '+fmt(fk,1)+' N. ':'No friction. ')+(Math.abs(st.a)<0.005?'F_net = 0, so the velocity stays constant (First Law).':(st.a>0?'F_net points forward, so the cart speeds up.':'F_net points backward, so the cart slows down.'));
+ }
+ $('eq').innerHTML=e+'<span class="st">'+s+'</span>';
+}
+var tc=$('track'), gv=$('gv'), ga=$('ga');
+function sizeCanvas(c){var r=c.getBoundingClientRect(), d=window.devicePixelRatio||1; c.width=Math.round(r.width*d); c.height=Math.round(r.height*d); var x=c.getContext('2d'); x.setTransform(d,0,0,d,0,0); return {x:x,w:r.width,h:r.height};}
+function arrow(x,x0,y,dx,col,lab){ if(Math.abs(dx)<2)return; x.strokeStyle=col;x.fillStyle=col;x.lineWidth=4;x.beginPath();x.moveTo(x0,y);x.lineTo(x0+dx,y);x.stroke();var s=dx>0?1:-1;x.beginPath();x.moveTo(x0+dx+s*8,y);x.lineTo(x0+dx-s*2,y-7);x.lineTo(x0+dx-s*2,y+7);x.closePath();x.fill();x.font='600 12px IBM Plex Sans, Arial';x.textAlign=s>0?'left':'right';x.textBaseline='middle';x.fillText(lab,x0+dx+s*12,y);x.textBaseline='alphabetic';}
+var x;
+function drawTrack(){
+ var c=sizeCanvas(tc); x=c.x; var w=c.w,h=c.h, p=P();
+ x.clearRect(0,0,w,h);
+ var y0=h-40, L=st.trackLen, padL=90, padR=24, sc=(w-padL-padR)/L;
+ x.fillStyle=cssv('--track'); x.fillRect(0,y0,w,10);
+ x.fillStyle=cssv('--muted'); x.font='11px IBM Plex Mono, monospace'; x.textAlign='center';
+ for(var i=0;i<=L;i+=5){var px=padL+i*sc; x.fillRect(px,y0+10,1,6); x.fillText(i+' m',px,y0+28);}
+ var cx=padL+Math.min(st.x,L)*sc, cw=Math.min(80,38+p.m*2), ch=Math.min(44,22+p.m*1.1);
+ x.fillStyle=cssv('--cart'); x.strokeStyle=cssv('--text'); x.lineWidth=1.5;
+ x.fillRect(cx-cw/2,y0-ch-8,cw,ch); x.strokeRect(cx-cw/2,y0-ch-8,cw,ch);
+ x.fillStyle=cssv('--text'); x.beginPath(); x.arc(cx-cw/3,y0-4,5,0,7); x.arc(cx+cw/3,y0-4,5,0,7); x.fill();
+ x.textAlign='center'; x.font='600 11px IBM Plex Mono, monospace'; x.fillText(fmt(p.m,1)+' kg',cx,y0-ch/2-4);
+ var Fa=st.push?p.F:0, k=0.8, top=y0-ch-8;
+ arrow(x,cx-cw/2-Fa*k-2,y0-ch/2-8,Fa*k,cssv('--F'),'');
+ if(Fa>0){x.fillStyle=cssv('--F');x.font='600 12px IBM Plex Sans, Arial';x.textAlign='center';x.fillText('F = '+fmt(Fa,1)+' N',Math.max(34,cx-cw/2-Fa*k/2),y0-ch/2-18);}
+ if(Math.abs(st.f)>0.01) arrow(x,cx,top-16,-Math.abs(st.f)*k,cssv('--f'),'f = '+fmt(Math.abs(st.f),1)+' N');
+ if(Math.abs(st.fnet)>0.01) arrow(x,cx,top-40,st.fnet*k,cssv('--net'),'F_net = '+fmt(st.fnet,1)+' N');
+}
+function drawGraph(cv,key,col,unit){
+ var c=sizeCanvas(cv), xx=c.x, w=c.w, h=c.h, H=st.hist, pad=28;
+ xx.clearRect(0,0,w,h);
+ var tmax=Math.max(5,st.t), vals=H.map(function(r){return r[key];}), vmax=Math.max(1,Math.max.apply(null,vals.concat([0]))), vmin=Math.min(0,Math.min.apply(null,vals.concat([0])));
+ var raw=(vmax-vmin)/4, mag=Math.pow(10,Math.floor(Math.log10(raw))), step=mag; [1,2,2.5,5,10].some(function(m){step=m*mag;return step>=raw;});
+ vmin=Math.floor(vmin/step)*step; vmax=Math.ceil(vmax/step)*step; if(vmax<=vmin)vmax=vmin+step;
+ function X(t){return pad+(w-pad-10)*t/tmax;} function Y(v){return 6+(h-pad)*(vmax-v)/(vmax-vmin);}
+ xx.strokeStyle=cssv('--grid'); xx.lineWidth=1; xx.fillStyle=cssv('--muted'); xx.font='10px IBM Plex Mono, monospace'; xx.textAlign='right';
+ for(var v=vmin;v<=vmax+1e-9;v+=step){var yy=Y(v); xx.beginPath(); xx.moveTo(pad,yy); xx.lineTo(w-6,yy); xx.stroke(); xx.fillText((+v.toFixed(2)).toString(),pad-3,yy+3);}
+ for(var j=0;j<=5;j++){var tt=tmax*j/5; xx.textAlign=j===5?'right':'center'; xx.fillText(tt.toFixed(1),j===5?w-4:X(tt),h-8);}
+ xx.strokeStyle=cssv('--muted'); xx.beginPath(); xx.moveTo(pad,Y(0)); xx.lineTo(w-6,Y(0)); xx.stroke();
+ if(H.length>1){xx.strokeStyle=col; xx.lineWidth=2.4; xx.beginPath(); H.forEach(function(r,i){var px=X(r.t),py=Y(r[key]); if(i)xx.lineTo(px,py); else xx.moveTo(px,py);}); xx.stroke();}
+}
+function draw(){drawTrack(); drawGraph(gv,'v',cssv('--v')); drawGraph(ga,'a',cssv('--a')); readouts();}
+var last=null;
+function loop(ts){
+ if(!st.running){last=null;return;}
+ if(last===null) last=ts;
+ var dt=Math.min(0.05,(ts-last)/1000); last=ts;
+ var n=4; for(var i=0;i<n;i++){physics(dt/n);} st.t+=dt;
+ if(st.hist.length===0||st.t-st.hist[st.hist.length-1].t>0.05) st.hist.push({t:st.t,v:st.v,a:st.a});
+ checkTasks();
+ if(st.x>=st.trackLen){st.x=st.trackLen;st.running=false;$('run').textContent='▶ Start';$('eq').innerHTML+='<span class="st">End of the track. Press Reset to go again.</span>';draw();return;}
+ draw(); requestAnimationFrame(loop);
+}
+$('run').onclick=function(){ if(st.x>=st.trackLen) reset(); st.running=!st.running; $('run').textContent=st.running?'❚❚ Pause':'▶ Start'; if(st.running) requestAnimationFrame(loop); };
+$('push').onclick=function(){st.push=!st.push; this.setAttribute('aria-pressed',st.push?'true':'false'); this.textContent='Push: '+(st.push?'ON':'OFF'); draw();};
+function reset(){st.x=0;st.v=0;st.t=0;st.a=0;st.f=0;st.fnet=0;st.moving=false;st.hist=[];st.running=false;st.stillT=0;st.constT=0;$('run').textContent='▶ Start';draw();}
+$('reset').onclick=reset;
+['F','m','surf'].forEach(function(id){$(id).addEventListener('input',function(){ if(!st.running&&st.t>0&&id!=='F') {} draw();});});
+$('m').addEventListener('change',function(){ if(!st.moving) reset(); });
+$('surf').addEventListener('change',function(){ reset(); });
+window.addEventListener('resize',draw);
+if(window.matchMedia){var mq=window.matchMedia('(prefers-color-scheme: dark)');if(mq.addEventListener)mq.addEventListener('change',draw);}
+renderTasks(); draw();
+window.__lab={st:st,P:P,physics:physics};
+})();
+</script>
+</body>
+</html>
