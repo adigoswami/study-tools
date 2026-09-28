@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Lewis Structures — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f1e7; --surface:#ffffff; --text:#201c15; --text-muted:#6f6858; --border:#ddd3ba;
+    --accent:#201c15; --accent-text:#f5f1e7;
+    --good:#157a45; --again:#b4371f;
+    --shadow:0 1px 2px rgba(32,28,21,.06), 0 6px 18px rgba(32,28,21,.07);
+    --c-ve:#0f766e; --c-ve-bg:#d5efeb;
+    --c-bond:#a8641f; --c-bond-bg:#f3e4ce;
+    --c-steps:#2f5d9e; --c-steps-bg:#dde7f6;
+    --c-count:#4a4f9c; --c-count-bg:#e1e2f5;
+    --c-ions:#7c3aed; --c-ions-bg:#e9e0fc;
+    --c-fc:#b4371f; --c-fc-bg:#f8ded6;
+    --c-exc:#157a45; --c-exc-bg:#dbeee0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#14161c; --surface:#1d2027; --text:#ece7db; --text-muted:#9a9385; --border:#333844;
+      --accent:#ece7db; --accent-text:#14161c;
+      --good:#6bce93; --again:#f08a70;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.3);
+      --c-ve:#5fd0c2; --c-ve-bg:#123330;
+      --c-bond:#d99a52; --c-bond-bg:#3a2c19;
+      --c-steps:#7fa8ea; --c-steps-bg:#1e2c46;
+      --c-count:#9ea3f0; --c-count-bg:#23254a;
+      --c-ions:#b294f6; --c-ions-bg:#2c2246;
+      --c-fc:#f08a70; --c-fc-bg:#3d1d16;
+      --c-exc:#6bce93; --c-exc-bg:#16321f;
+    }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--text-muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; }
+  .subtitle { color:var(--text-muted); font-size:13.5px; margin:0 0 6px; line-height:1.5; }
+  .howto { font-size:12.5px; color:var(--text-muted); background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; margin:14px 0 16px; line-height:1.5; }
+
+  /* mode switch (only with JS) */
+  .modes { display:none; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:5px; margin:14px 0 16px; }
+  .js .modes { display:flex; }
+  .modes button { flex:1; border:0; background:transparent; color:var(--text-muted); font:600 14px "IBM Plex Sans",sans-serif; padding:10px; border-radius:10px; cursor:pointer; }
+  .modes button[aria-pressed="true"] { background:var(--accent); color:var(--accent-text); }
+  .js .howto.nojs { display:none; }
+  .howto.jsonly { display:none; }
+  .js .howto.jsonly { display:block; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 20px; }
+  .chip { font:600 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; text-decoration:none; border:1.5px solid transparent; cursor:pointer; }
+  .chip b { font-family:"IBM Plex Mono",monospace; font-weight:600; opacity:.75; margin-left:2px; }
+
+  .tools { display:none; justify-content:flex-end; gap:8px; margin:-8px 0 14px; }
+  .js .tools { display:flex; }
+  .btn-sm { border:1px solid var(--border); background:var(--surface); color:var(--text-muted); font:500 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; cursor:pointer; }
+
+  section { margin-bottom:26px; scroll-margin-top:12px; }
+  .sec-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .sec-badge { font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.03em; padding:4px 10px; border-radius:99px; }
+  .sec-count { font-size:12px; color:var(--text-muted); }
+
+  details.qa { background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); margin-bottom:8px; overflow:hidden; }
+  details.qa summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 16px; }
+  details.qa summary::-webkit-details-marker { display:none; }
+  details.qa summary::marker { content:""; }
+  .dot { flex:none; width:9px; height:9px; border-radius:50%; }
+  .q-text { flex:1; font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:15.5px; line-height:1.4; }
+  .chev { flex:none; color:var(--text-muted); font-size:20px; transition:transform .15s; }
+  details[open] .chev { transform:rotate(90deg); }
+  .a-text { margin:0; padding:0 16px 15px 37px; font-size:14.5px; line-height:1.55; }
+  .sup { display:inline-block; font:600 10px "IBM Plex Mono",monospace; letter-spacing:.02em; color:var(--text-muted); border:1px dashed var(--border); border-radius:6px; padding:1px 6px; margin-left:4px; vertical-align:1px; white-space:nowrap; }
+
+  /* study mode */
+  #study { display:none; }
+  .studying #study { display:block; }
+  .studying #browse { display:none; }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; }
+  .label { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); margin:0 0 8px; }
+  #pick .chip { border-color:transparent; opacity:.45; }
+  #pick .chip[aria-pressed="true"] { opacity:1; border-color:currentColor; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .btn { border:0; border-radius:12px; font:600 15px "IBM Plex Sans",sans-serif; padding:13px 18px; cursor:pointer; }
+  .btn-primary { background:var(--accent); color:var(--accent-text); flex:1; }
+  .btn-primary:disabled { opacity:.35; cursor:default; }
+  .btn-again { background:var(--c-fc-bg); color:var(--again); flex:1; }
+  .btn-good { background:var(--c-exc-bg); color:var(--good); flex:1; }
+  .btn-ghost { background:transparent; color:var(--text-muted); border:1px solid var(--border); }
+  label.opt { font-size:13px; color:var(--text-muted); display:flex; gap:6px; align-items:center; }
+
+  .bar { height:6px; background:var(--border); border-radius:99px; overflow:hidden; margin:2px 0 6px; }
+  .bar i { display:block; height:100%; width:0; background:var(--good); transition:width .25s; }
+  .meta { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:12px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); min-height:260px; padding:20px; display:flex; flex-direction:column; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; }
+  .card .sec-badge { align-self:flex-start; }
+  .card .cq { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(19px,5vw,23px); line-height:1.35; margin:18px 0 0; }
+  .card .ca { display:none; border-top:1px dashed var(--border); margin-top:18px; padding-top:16px; font-size:16px; line-height:1.55; }
+  .card.revealed .ca { display:block; animation:fade .18s ease-out; }
+  .card .hint { margin-top:auto; padding-top:18px; font-size:12px; color:var(--text-muted); text-align:center; }
+  .card.revealed .hint { display:none; }
+  @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  .actions { margin-top:12px; }
+  .done h2 { font-family:"Fraunces",Georgia,serif; margin:0 0 6px; }
+  .done p { color:var(--text-muted); margin:0 0 16px; line-height:1.5; }
+  .kbd { font-size:11.5px; color:var(--text-muted); text-align:center; margin-top:10px; }
+  @media (hover:none) { .kbd { display:none; } }
+
+  footer { font-size:12px; color:var(--text-muted); text-align:center; margin-top:30px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>Lewis Structures &amp; Polyatomic Ions</h1>
+  <p class="subtitle">Valence electrons · Bonds &amp; bond order · The 4-step method · Counting electrons · Polyatomic ions · Formal charge &amp; resonance · Octet exceptions — 75 cards</p>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button type="button" id="m-browse" aria-pressed="true">Browse all</button>
+    <button type="button" id="m-study" aria-pressed="false">Study mode</button>
+  </div>
+
+  <div id="browse">
+    <p class="howto nojs">Tap any question to reveal the answer; tap again to close it. Cards tagged <span class="sup">beyond NCERT</span> are standard chemistry that isn't in the NCERT chapters.</p>
+    <p class="howto jsonly">Tap a question to see its answer. Want to test yourself? Switch to <b>Study mode</b> for one shuffled card at a time, with “Again” cards coming back until you get them. Cards tagged <span class="sup">beyond NCERT</span> are standard chemistry that isn't in the NCERT chapters.</p>
+    <nav class="chips">
+    <a class="chip" href="#ve" style="color:var(--c-ve);background:var(--c-ve-bg)">Valence electrons &amp; dot symbols <b>10</b></a>
+    <a class="chip" href="#bond" style="color:var(--c-bond);background:var(--c-bond-bg)">Bonds, bond order &amp; bond length <b>11</b></a>
+    <a class="chip" href="#steps" style="color:var(--c-steps);background:var(--c-steps-bg)">The 4-step method <b>10</b></a>
+    <a class="chip" href="#count" style="color:var(--c-count);background:var(--c-count-bg)">Count the electrons <b>10</b></a>
+    <a class="chip" href="#ions" style="color:var(--c-ions);background:var(--c-ions-bg)">Polyatomic ions <b>18</b></a>
+    <a class="chip" href="#fc" style="color:var(--c-fc);background:var(--c-fc-bg)">Formal charge &amp; resonance <b>12</b></a>
+    <a class="chip" href="#exc" style="color:var(--c-exc);background:var(--c-exc-bg)">Exceptions to the octet rule <b>4</b></a>
+    </nav>
+    <div class="tools"><button class="btn-sm" id="expand">Expand all</button><button class="btn-sm" id="collapse">Collapse all</button></div>
+  <section id="ve" data-topic="ve" data-title="Valence electrons &amp; dot symbols">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-ve);background:var(--c-ve-bg)">Valence electrons &amp; dot symbols</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">What are valence electrons?</span><span class="chev">›</span></summary><p class="a-text">The electrons in an atom's outermost shell. They are the only electrons that take part in bonding.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">How do you find the number of valence electrons for a main-group element?</span><span class="chev">›</span></summary><p class="a-text">Use the last digit of its group number: group 1 → 1, group 2 → 2, groups 13–18 → 3 to 8.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">Valence electrons of H, C, N, O?</span><span class="chev">›</span></summary><p class="a-text">H 1 · C 4 · N 5 · O 6</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">Valence electrons of F, Cl, S, P?</span><span class="chev">›</span></summary><p class="a-text">F 7 · Cl 7 · S 6 · P 5</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">What is a Lewis dot symbol?</span><span class="chev">›</span></summary><p class="a-text">The element symbol with its valence electrons drawn as dots around it. Place one dot on each of the 4 sides first, then pair them up.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">State the octet rule.</span><span class="chev">›</span></summary><p class="a-text">Atoms bond so that each ends up with <strong>8 electrons</strong> around it, like a noble gas.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">How many electrons does hydrogen need? What is this called?</span><span class="chev">›</span></summary><p class="a-text"><strong>2</strong>, called a <strong>duet</strong> (like helium).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">How many bonds does C usually form? N? O? a halogen (F, Cl)?</span><span class="chev">›</span></summary><p class="a-text">C <strong>4</strong> · N <strong>3</strong> · O <strong>2</strong> · halogen <strong>1</strong>. That is the number of electrons each is missing from an octet.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">In a neutral molecule, what does N usually have around it?</span><span class="chev">›</span></summary><p class="a-text">3 bonds + 1 lone pair.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ve)"></span><span class="q-text">In a neutral molecule, what does O usually have around it?</span><span class="chev">›</span></summary><p class="a-text">2 bonds + 2 lone pairs.</p></details>
+  </section>
+  <section id="bond" data-topic="bond" data-title="Bonds, bond order &amp; bond length">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-bond);background:var(--c-bond-bg)">Bonds, bond order &amp; bond length</span>
+      <span class="sec-count">11 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is a Lewis structure?</span><span class="chev">›</span></summary><p class="a-text">A drawing of a molecule or ion that shows how the atoms share valence electrons so that each gets an octet (a duet for H).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is a bonding pair?</span><span class="chev">›</span></summary><p class="a-text">A <strong>shared</strong> pair of electrons between two atoms. It counts toward the octet of <strong>both</strong> atoms.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is a lone pair?</span><span class="chev">›</span></summary><p class="a-text">A pair of electrons that belongs to only one atom and is <strong>not involved in bonding</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">How many electrons does one dash (–) represent?</span><span class="chev">›</span></summary><p class="a-text"><strong>2</strong> electrons (one shared pair).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">How many electrons are shared in a double bond? A triple bond?</span><span class="chev">›</span></summary><p class="a-text">Double: 4 (2 pairs). Triple: 6 (3 pairs).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is bond order?</span><span class="chev">›</span></summary><p class="a-text">The number of bonds between two atoms: single = 1, double = 2, triple = 3.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">As bond order increases, what happens to bond length and bond strength?</span><span class="chev">›</span></summary><p class="a-text">Length gets <strong>shorter</strong>; strength (the energy needed to break it) gets <strong>higher</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Rank C–C, C=C, C≡C from shortest to longest.</span><span class="chev">›</span></summary><p class="a-text">C≡C (1.203 Å) &lt; C=C (1.339 Å) &lt; C–C (1.535 Å).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Rank C–C, C=C, C≡C from weakest to strongest.</span><span class="chev">›</span></summary><p class="a-text">C–C (365 kJ/mol) &lt; C=C (598 kJ/mol) &lt; C≡C (962 kJ/mol).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the bond order in N₂? In O₂? In F₂?</span><span class="chev">›</span></summary><p class="a-text">N≡N: 3 · O=O: 2 · F–F: 1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which is shorter: the C–O bond in CH₃OH or the C=O bond in CH₂O?</span><span class="chev">›</span></summary><p class="a-text">The <strong>C=O</strong> bond. A higher bond order means a shorter bond.</p></details>
+  </section>
+  <section id="steps" data-topic="steps" data-title="The 4-step method">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-steps);background:var(--c-steps-bg)">The 4-step method</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Step 1 of drawing a Lewis structure?</span><span class="chev">›</span></summary><p class="a-text"><strong>Count</strong> the total valence electrons of all the atoms (adjusted for the charge if it's an ion).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Step 2?</span><span class="chev">›</span></summary><p class="a-text">Connect the atoms with <strong>single bonds</strong> to make the skeleton, with the central atom in the middle.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Step 3?</span><span class="chev">›</span></summary><p class="a-text">Add <strong>lone pairs to the outer atoms</strong> to complete their octets. Put any leftover electrons on the central atom.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Step 4?</span><span class="chev">›</span></summary><p class="a-text">If the central atom still lacks an octet, <strong>move lone pairs</strong> from outer atoms into double or triple bonds.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">How do you choose the central atom?</span><span class="chev">›</span></summary><p class="a-text">The <strong>least electronegative</strong> atom, which usually forms the most bonds.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Which two atoms can never be the central atom? Why?</span><span class="chev">›</span></summary><p class="a-text"><strong>H and F</strong>. Each can form only one bond.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Does step 4 add new electrons?</span><span class="chev">›</span></summary><p class="a-text">No. It only <strong>moves</strong> an existing lone pair so that it becomes shared.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">What two checks should you do at the end?</span><span class="chev">›</span></summary><p class="a-text">(1) Electrons drawn = electrons counted. (2) Every atom has 8 electrons around it (H: 2).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Why does CO₂ need double bonds?</span><span class="chev">›</span></summary><p class="a-text">After step 3, both O atoms are full but C has only 4 electrons. Moving one lone pair from each O gives O=C=O.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-steps)"></span><span class="q-text">Why does HCN need a triple bond?</span><span class="chev">›</span></summary><p class="a-text">After step 3, C has only 4 electrons. Moving two lone pairs from N gives C≡N, so C and N both have 8.</p></details>
+  </section>
+  <section id="count" data-topic="count" data-title="Count the electrons">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-count);background:var(--c-count-bg)">Count the electrons</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in H₂O?</span><span class="chev">›</span></summary><p class="a-text">2(1) + 6 = <strong>8</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in NH₃?</span><span class="chev">›</span></summary><p class="a-text">5 + 3(1) = <strong>8</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in CH₄?</span><span class="chev">›</span></summary><p class="a-text">4 + 4(1) = <strong>8</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in CO₂?</span><span class="chev">›</span></summary><p class="a-text">4 + 2(6) = <strong>16</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in CH₃OH?</span><span class="chev">›</span></summary><p class="a-text">4 + 4(1) + 6 = <strong>14</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in HCN?</span><span class="chev">›</span></summary><p class="a-text">1 + 4 + 5 = <strong>10</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in CH₂O?</span><span class="chev">›</span></summary><p class="a-text">4 + 2(1) + 6 = <strong>12</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in PCl₃?</span><span class="chev">›</span></summary><p class="a-text">5 + 3(7) = <strong>26</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in C₂H₄?</span><span class="chev">›</span></summary><p class="a-text">2(4) + 4(1) = <strong>12</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-count)"></span><span class="q-text">Total valence electrons in N₂?</span><span class="chev">›</span></summary><p class="a-text">2(5) = <strong>10</strong></p></details>
+  </section>
+  <section id="ions" data-topic="ions" data-title="Polyatomic ions">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-ions);background:var(--c-ions-bg)">Polyatomic ions</span>
+      <span class="sec-count">18 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">How does a charge change step 1 for an ion?</span><span class="chev">›</span></summary><p class="a-text">A <strong>negative</strong> charge: <strong>add</strong> 1 electron per − charge. A <strong>positive</strong> charge: <strong>subtract</strong> 1 per + charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">How do you show the charge on a Lewis structure of an ion?</span><span class="chev">›</span></summary><p class="a-text">Put <strong>square brackets</strong> around the whole structure and write the charge <strong>outside, top right</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">What holds the atoms inside a polyatomic ion together?</span><span class="chev">›</span></summary><p class="a-text"><strong>Covalent</strong> bonds (shared pairs). The whole group carries one overall charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in OH⁻?</span><span class="chev">›</span></summary><p class="a-text">6 + 1 + <strong>1</strong> = <strong>8</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in NH₄⁺?</span><span class="chev">›</span></summary><p class="a-text">5 + 4 − <strong>1</strong> = <strong>8</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in H₃O⁺?</span><span class="chev">›</span></summary><p class="a-text">6 + 3 − <strong>1</strong> = <strong>8</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in CN⁻?</span><span class="chev">›</span></summary><p class="a-text">4 + 5 + <strong>1</strong> = <strong>10</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in NO₃⁻?</span><span class="chev">›</span></summary><p class="a-text">5 + 18 + <strong>1</strong> = <strong>24</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in CO₃²⁻?</span><span class="chev">›</span></summary><p class="a-text">4 + 18 + <strong>2</strong> = <strong>24</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in SO₄²⁻?</span><span class="chev">›</span></summary><p class="a-text">6 + 24 + <strong>2</strong> = <strong>32</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in PO₄³⁻?</span><span class="chev">›</span></summary><p class="a-text">5 + 24 + <strong>3</strong> = <strong>32</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Total valence electrons in NO₂⁻?</span><span class="chev">›</span></summary><p class="a-text">5 + 12 + <strong>1</strong> = <strong>18</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Describe the Lewis structure of OH⁻.</span><span class="chev">›</span></summary><p class="a-text">[O–H]⁻ with <strong>3 lone pairs on O</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Describe the Lewis structure of NH₄⁺.</span><span class="chev">›</span></summary><p class="a-text">[N with 4 single bonds to H]⁺, and <strong>no lone pairs</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Describe the Lewis structure of CN⁻.</span><span class="chev">›</span></summary><p class="a-text">[:C≡N:]⁻, a triple bond with one lone pair on each atom.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Describe the Lewis structure of NO₃⁻.</span><span class="chev">›</span></summary><p class="a-text">N in the centre; <strong>one N=O</strong> (O has 2 lone pairs) and <strong>two N–O</strong> (each O has 3 lone pairs); brackets, − charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Describe the Lewis structure of CO₃²⁻.</span><span class="chev">›</span></summary><p class="a-text">C in the centre; one C=O and two C–O. Same pattern as nitrate, with a 2− charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ions)"></span><span class="q-text">Describe the octet form of SO₄²⁻.</span><span class="chev">›</span></summary><p class="a-text">S in the centre with <strong>4 single bonds</strong> to O; each O has 3 lone pairs; S has none; brackets, 2− charge.</p></details>
+  </section>
+  <section id="fc" data-topic="fc" data-title="Formal charge &amp; resonance">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-fc);background:var(--c-fc-bg)">Formal charge &amp; resonance</span>
+      <span class="sec-count">12 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">Formula for formal charge?</span><span class="chev">›</span></summary><p class="a-text"><strong>FC = V − L − ½B</strong>, where V = valence electrons of the free atom, L = electrons in its lone pairs, and B = electrons in its bonds. So ½B is simply the <strong>number of bonds</strong>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">What must the formal charges in a structure add up to?</span><span class="chev">›</span></summary><p class="a-text">The <strong>overall charge</strong> of the molecule or ion (0 for a neutral molecule).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">How does formal charge help you pick the best structure?</span><span class="chev">›</span></summary><p class="a-text">The best structure has formal charges <strong>closest to zero</strong>, with any negative charge on the <strong>more electronegative</strong> atom.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">Formal charge on O in OH⁻?</span><span class="chev">›</span></summary><p class="a-text">6 − 6 − 1 = <strong>−1</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">Formal charge on N in NH₄⁺?</span><span class="chev">›</span></summary><p class="a-text">5 − 0 − 4 = <strong>+1</strong></p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">Formal charges in NO₃⁻?</span><span class="chev">›</span></summary><p class="a-text">N <strong>+1</strong>; O in N=O <strong>0</strong>; each O in N–O <strong>−1</strong>. Sum = −1 ✓</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">Formal charges in the octet form of SO₄²⁻?</span><span class="chev">›</span></summary><p class="a-text">S <strong>+2</strong>; each O <strong>−1</strong>. Sum = +2 − 4 = −2 ✓</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">Why is O=C=O better than O≡C–O?</span><span class="chev">›</span></summary><p class="a-text">Both give octets, but O=C=O has all formal charges 0; O≡C–O has +1 and −1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">What are resonance structures?</span><span class="chev">›</span></summary><p class="a-text">Two or more valid Lewis structures that differ <strong>only in where the electrons (double bonds) are placed</strong>. They are joined with ↔.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">How many resonance structures do NO₃⁻ and CO₃²⁻ each have?</span><span class="chev">›</span></summary><p class="a-text"><strong>3</strong>. The double bond can go to any of the 3 O atoms.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">What does resonance tell us about the real nitrate ion?</span><span class="chev">›</span></summary><p class="a-text">It is a <strong>blend</strong>: all three N–O bonds are identical, somewhere between a single and a double bond (bond order 1⅓).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fc)"></span><span class="q-text">How many resonance structures does NO₂⁻ have?</span><span class="chev">›</span></summary><p class="a-text"><strong>2</strong></p></details>
+  </section>
+  <section id="exc" data-topic="exc" data-title="Exceptions to the octet rule">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-exc);background:var(--c-exc-bg)">Exceptions to the octet rule</span>
+      <span class="sec-count">4 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-exc)"></span><span class="q-text">Name the three types of exception to the octet rule.</span><span class="chev">›</span></summary><p class="a-text">Incomplete octet · odd number of electrons · expanded octet.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-exc)"></span><span class="q-text">Give an example of an incomplete octet.</span><span class="chev">›</span></summary><p class="a-text">BF₃: B has only 6 electrons. BeCl₂: Be has only 4.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-exc)"></span><span class="q-text">Give an example of an odd-electron molecule.</span><span class="chev">›</span></summary><p class="a-text">NO or NO₂. The total is odd, so one atom must have 7 electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-exc)"></span><span class="q-text">Which atoms can have an expanded octet? Give an example.</span><span class="chev">›</span></summary><p class="a-text">Atoms in <strong>period 3 or below</strong> (P, S, Cl…), e.g. PCl₅ (10 e⁻ on P) and SF₆ (12 e⁻ on S). <span class="sup">beyond NCERT</span></p></details>
+  </section>
+  </div>
+
+  <div id="study">
+    <div id="setup" class="panel">
+      <p class="label">Topics to study</p>
+      <div class="chips" id="pick"></div>
+      <div class="row" style="margin-bottom:14px">
+        <button class="btn-sm" id="all">Select all</button><button class="btn-sm" id="none">Clear</button>
+        <label class="opt" style="margin-left:auto"><input type="checkbox" id="shuffle" checked> Shuffle</label>
+      </div>
+      <button class="btn btn-primary" id="start" style="width:100%">Start</button>
+    </div>
+
+    <div id="run" hidden>
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="meta"><span id="m-left"></span><span id="m-again"></span></div>
+      <div class="card" id="card" tabindex="0" role="button" aria-label="Flashcard. Tap to reveal the answer.">
+        <span class="sec-badge" id="c-topic"></span>
+        <div class="cq" id="c-q"></div>
+        <div class="ca" id="c-a"></div>
+        <div class="hint">Tap to reveal the answer</div>
+      </div>
+      <div class="actions row" id="rate" hidden>
+        <button class="btn btn-again" id="again">↺ Again</button>
+        <button class="btn btn-good" id="good">✓ Got it</button>
+      </div>
+      <div class="actions row" id="revealrow">
+        <button class="btn btn-primary" id="reveal">Show answer</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn-sm" id="quit">End session</button></div>
+      <p class="kbd">Keyboard: Space = show answer · 1 = Again · 2 = Got it</p>
+    </div>
+
+    <div id="done" class="panel done" hidden>
+      <h2 id="d-title"></h2>
+      <p id="d-text"></p>
+      <div class="row">
+        <button class="btn btn-primary" id="d-missed">Review the tricky ones</button>
+        <button class="btn btn-ghost" id="d-restart">New session</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Follows the Session C2 notes, the class <i>Gen Chem Lewis</i> slides and NCERT Class 11 Ch4 (§4.1 Lewis structures, formal charge, octet exceptions; §4.3 bond order and resonance).<br>Cards tagged “beyond NCERT” go past what the test is likely to ask.</footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- deck from the page itself (single source of truth) ----
+  var topics = [], deck = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[data-topic]'), function (sec) {
+    var t = { id: sec.dataset.topic, title: sec.dataset.title, n: 0 };
+    topics.push(t);
+    Array.prototype.forEach.call(sec.querySelectorAll('details.qa'), function (d) {
+      deck.push({ t: t, q: d.querySelector('.q-text').innerHTML, a: d.querySelector('.a-text').innerHTML });
+      t.n++;
+    });
+  });
+
+  // ---- browse tools ----
+  function setAll(open) { Array.prototype.forEach.call(document.querySelectorAll('details.qa'), function (d) { d.open = open; }); }
+  $('expand').onclick = function () { setAll(true); };
+  $('collapse').onclick = function () { setAll(false); };
+
+  // ---- mode switch ----
+  function mode(study) {
+    document.body.classList.toggle('studying', study);
+    $('m-browse').setAttribute('aria-pressed', !study);
+    $('m-study').setAttribute('aria-pressed', study);
+    window.scrollTo(0, 0);
+  }
+  $('m-browse').onclick = function () { mode(false); };
+  $('m-study').onclick = function () { mode(true); };
+
+  // ---- topic picker ----
+  var pick = $('pick'), chosen = {};
+  topics.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    b.style.color = 'var(--c-' + t.id + ')'; b.style.background = 'var(--c-' + t.id + '-bg)';
+    b.innerHTML = t.title + ' <b>' + t.n + '</b>';
+    b.setAttribute('aria-pressed', 'true'); chosen[t.id] = true;
+    b.onclick = function () { chosen[t.id] = !chosen[t.id]; b.setAttribute('aria-pressed', chosen[t.id]); updStart(); };
+    t.btn = b; pick.appendChild(b);
+  });
+  function selected() { return deck.filter(function (c) { return chosen[c.t.id]; }); }
+  function updStart() {
+    var n = selected().length;
+    $('start').disabled = !n;
+    $('start').textContent = n ? 'Start · ' + n + ' cards' : 'Pick at least one topic';
+  }
+  function setChosen(v) { topics.forEach(function (t) { chosen[t.id] = v; t.btn.setAttribute('aria-pressed', v); }); updStart(); }
+  $('all').onclick = function () { setChosen(true); };
+  $('none').onclick = function () { setChosen(false); };
+  updStart();
+
+  // ---- session ----
+  var queue, cur, total, learned, missed, revealed;
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function begin(cards) {
+    queue = $('shuffle').checked ? shuffle(cards.slice()) : cards.slice();
+    total = queue.length; learned = 0; missed = [];
+    $('setup').hidden = true; $('done').hidden = true; $('run').hidden = false;
+    next();
+  }
+  function next() {
+    if (!queue.length) return finish();
+    cur = queue.shift(); revealed = false;
+    var c = $('card'); c.classList.remove('revealed');
+    var tp = $('c-topic');
+    tp.innerHTML = cur.t.title;
+    tp.style.color = 'var(--c-' + cur.t.id + ')'; tp.style.background = 'var(--c-' + cur.t.id + '-bg)';
+    $('c-q').innerHTML = cur.q; $('c-a').innerHTML = cur.a;
+    $('rate').hidden = true; $('revealrow').hidden = false;
+    $('barfill').style.width = (100 * learned / total) + '%';
+    $('m-left').textContent = learned + ' / ' + total + ' learned';
+    $('m-again').textContent = missed.length ? missed.length + ' marked “Again”' : '';
+  }
+  function reveal() {
+    if (revealed) return;
+    revealed = true; $('card').classList.add('revealed');
+    $('rate').hidden = false; $('revealrow').hidden = true;
+  }
+  function rate(ok) {
+    if (!revealed) return;
+    if (ok) { learned++; }
+    else {
+      if (missed.indexOf(cur) < 0) missed.push(cur);
+      queue.splice(Math.min(3, queue.length), 0, cur);  // comes back a few cards later
+    }
+    next();
+  }
+  function finish() {
+    $('run').hidden = true; $('done').hidden = false;
+    $('barfill').style.width = '100%';
+    $('d-title').textContent = 'All ' + total + ' cards done';
+    $('d-text').textContent = missed.length
+      ? missed.length + ' card' + (missed.length > 1 ? 's' : '') + ' needed another go. Run them again until they stick.'
+      : 'Every card was right first time.';
+    $('d-missed').hidden = !missed.length;
+  }
+  $('start').onclick = function () { begin(selected()); };
+  $('card').onclick = reveal;
+  $('reveal').onclick = reveal;
+  $('again').onclick = function () { rate(false); };
+  $('good').onclick = function () { rate(true); };
+  $('quit').onclick = function () { $('run').hidden = true; $('setup').hidden = false; };
+  $('d-missed').onclick = function () { begin(missed); };
+  $('d-restart').onclick = function () { $('done').hidden = true; $('setup').hidden = false; };
+  document.addEventListener('keydown', function (e) {
+    if (!document.body.classList.contains('studying') || $('run').hidden) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
+    else if (e.key === '1') rate(false);
+    else if (e.key === '2') rate(true);
+  });
+})();
+</script>
+</body>
+</html>
