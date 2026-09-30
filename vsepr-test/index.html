@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>VSEPR &amp; Polarity — Practice Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f1e7; --surface:#fff; --text:#201c15; --muted:#6f6858; --border:#ddd3ba;
+    --accent:#a8641f; --accent-bg:#f3e4ce; --ink:#201c15; --ink-text:#f5f1e7;
+    --good:#157a45; --good-bg:#dbeee0; --bad:#b4371f; --bad-bg:#f8ded6;
+    --shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07); }
+  @media (prefers-color-scheme: dark) { :root { --bg:#14161c; --surface:#1d2027; --text:#ece7db; --muted:#9a9385; --border:#333844;
+    --accent:#d99a52; --accent-bg:#3a2c19; --ink:#ece7db; --ink-text:#14161c;
+    --good:#6bce93; --good-bg:#16321f; --bad:#f08a70; --bad-bg:#3d1d16; --shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3); }
+    img.graph { filter: invert(.88) hue-rotate(180deg); } }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 90px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:680px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-size:clamp(24px,6vw,30px); margin:6px 0 4px; letter-spacing:-.01em; }
+  .sub { color:var(--muted); font-size:13.5px; line-height:1.55; margin:0 0 14px; }
+  .rules { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 14px; font-size:13px; color:var(--muted); line-height:1.55; margin-bottom:18px; }
+  h2 { font:600 11.5px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:26px 0 10px; }
+  .q { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; margin-bottom:12px; scroll-margin-top:70px; }
+  .qh { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .num { font:600 13px "IBM Plex Mono",monospace; background:var(--ink); color:var(--ink-text); border-radius:8px; min-width:28px; height:24px; display:inline-flex; align-items:center; justify-content:center; padding:0 6px; }
+  .tag { font:600 10.5px "IBM Plex Mono",monospace; color:var(--accent); background:var(--accent-bg); padding:3px 9px; border-radius:99px; }
+  .mark { margin-left:auto; font-weight:700; font-size:13px; }
+  .qt { margin:0 0 12px; font-size:15.5px; line-height:1.5; }
+  img.graph { display:block; max-width:100%; width:620px; margin:0 auto 12px; border-radius:8px; }
+  .opts { display:grid; gap:7px; }
+  .opt { display:flex; align-items:center; gap:10px; border:1.5px solid var(--border); border-radius:12px; padding:10px 12px; cursor:pointer; font-size:14.5px; line-height:1.4; }
+  .opt input { position:absolute; opacity:0; pointer-events:none; }
+  .let { flex:none; font:600 12px "IBM Plex Mono",monospace; width:24px; height:24px; border-radius:50%; border:1.5px solid var(--border); display:inline-flex; align-items:center; justify-content:center; color:var(--muted); }
+  .opt:has(input:checked) { border-color:var(--ink); }
+  .opt:has(input:checked) .let { background:var(--ink); color:var(--ink-text); border-color:var(--ink); }
+  .opt:has(input:focus-visible) { outline:2px solid var(--accent); outline-offset:2px; }
+  .graded .opt { cursor:default; }
+  .opt.right { border-color:var(--good); background:var(--good-bg); }
+  .opt.right .let { background:var(--good); color:var(--surface); border-color:var(--good); }
+  .opt.wrong { border-color:var(--bad); background:var(--bad-bg); }
+  .opt.wrong .let { background:var(--bad); color:var(--surface); border-color:var(--bad); }
+  .why { margin:12px 0 0; font-size:14px; line-height:1.55; border-top:1px dashed var(--border); padding-top:11px; }
+  .q.ok .mark { color:var(--good); } .q.no .mark { color:var(--bad); }
+  details.key { margin-top:12px; font-size:14px; line-height:1.55; }
+  details.key summary { cursor:pointer; color:var(--accent); font-weight:600; font-size:13px; }
+  .js details.nojs { display:none; }
+  .js .frkey:not(.unlocked) { display:none; }
+  textarea { width:100%; font:14px "IBM Plex Sans",sans-serif; color:var(--text); background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; resize:vertical; }
+  .bar { display:none; }
+  .js .bar { display:flex; position:fixed; left:0; right:0; bottom:0; background:var(--surface); border-top:1px solid var(--border); padding:10px 16px calc(10px + env(safe-area-inset-bottom)); gap:10px; align-items:center; justify-content:center; z-index:5; }
+  .bar .inner { max-width:680px; width:100%; display:flex; gap:10px; align-items:center; }
+  .count { font-size:13px; color:var(--muted); flex:1; }
+  .count b { color:var(--text); }
+  .btn { border:0; border-radius:12px; font:600 14.5px "IBM Plex Sans",sans-serif; padding:11px 16px; cursor:pointer; background:var(--ink); color:var(--ink-text); }
+  .btn.ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+  #warn { font-size:12.5px; color:var(--bad); }
+  #result { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:18px; margin-bottom:18px; }
+  #result h2 { margin:0 0 4px; font:700 clamp(26px,7vw,34px) "Fraunces",Georgia,serif; color:var(--text); letter-spacing:0; text-transform:none; }
+  #result p { margin:0 0 12px; color:var(--muted); font-size:14px; }
+  .tb { width:100%; border-collapse:collapse; font-size:13.5px; }
+  .tb td { padding:6px 0; border-top:1px solid var(--border); }
+  .tb td:last-child { text-align:right; font-family:"IBM Plex Mono",monospace; }
+  .tb .weak td:first-child::after { content:"  ← review"; color:var(--bad); font-size:12px; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .only-wrong .q.ok { display:none; }
+  .jsonly { display:none; } .js .jsonly { display:inline; }
+  footer { font-size:12px; color:var(--muted); text-align:center; margin-top:26px; line-height:1.6; }
+  .pic { display:block; color:var(--text); }
+  .pic svg { display:block; height:110px; width:auto; max-width:100%; }
+  .opts.pics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  :root { --dip:#b4371f; --net:#1f4e8c; --fcc:#7c3aed; --lobe-bg:#efe9da; --lobe-ln:#a79c80; }
+  @media (prefers-color-scheme: dark) { :root { --dip:#f08a70; --net:#7fa8ea; --fcc:#b294f6; --lobe-bg:#2e2f33; --lobe-ln:#8d8471; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>VSEPR, Shapes &amp; Polarity — Practice Test</h1>
+  <p class="sub">30 multiple-choice + 2 free-response = 32 questions · electron domains · electron &amp; molecular geometry · bond angles · 3-D drawings · bond &amp; molecular polarity</p>
+  <div class="rules">Closed book, but keep the electronegativity values handy: H 2.1 · C 2.5 · N 3.0 · O 3.5 · F 4.0 · P 2.1 · S 2.5 · Cl 3.0 · Br 2.8. Sketch each Lewis structure on scrap paper before you answer. Aim for about 30 minutes. <span class="jsonly">Answer everything, then press <b>Submit</b> at the bottom to see your score, the correct answers and an explanation for each one.</span></div>
+
+  <div id="result" hidden>
+    <h2 id="score"></h2>
+    <p id="scoreline"></p>
+    <table class="tb" id="bytopic"></table>
+    <div class="row">
+      <button class="btn" id="onlywrong">Show only my mistakes</button>
+      <button class="btn ghost" id="retry">Retake the test</button>
+    </div>
+  </div>
+
+  <h2>Part A — Multiple choice</h2>
+<article class="q" id="q1" data-ans="0" data-topic="Valence e⁻ &amp; Lewis">
+  <div class="qh"><span class="num">1</span><span class="tag">Valence e⁻ &amp; Lewis</span><span class="mark"></span></div>
+  <p class="qt">How many valence electrons does NOCl have in total?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q1" value="0"><span class="let">A</span><span class="ot">18</span></label><label class="opt" data-k="1"><input type="radio" name="q1" value="1"><span class="let">B</span><span class="ot">16</span></label><label class="opt" data-k="2"><input type="radio" name="q1" value="2"><span class="let">C</span><span class="ot">17</span></label><label class="opt" data-k="3"><input type="radio" name="q1" value="3"><span class="let">D</span><span class="ot">19</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A) 18.</b> N 5 + O 6 + Cl 7 = 18.</p></details>
+  <p class="why" hidden><b>Answer: A) 18.</b> N 5 + O 6 + Cl 7 = 18.</p>
+</article>
+<article class="q" id="q2" data-ans="3" data-topic="Valence e⁻ &amp; Lewis">
+  <div class="qh"><span class="num">2</span><span class="tag">Valence e⁻ &amp; Lewis</span><span class="mark"></span></div>
+  <p class="qt">How many valence electrons does CF₂Cl₂ have in total?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q2" value="0"><span class="let">A</span><span class="ot">28</span></label><label class="opt" data-k="1"><input type="radio" name="q2" value="1"><span class="let">B</span><span class="ot">30</span></label><label class="opt" data-k="2"><input type="radio" name="q2" value="2"><span class="let">C</span><span class="ot">34</span></label><label class="opt" data-k="3"><input type="radio" name="q2" value="3"><span class="let">D</span><span class="ot">32</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) 32.</b> C 4 + F 2 × 7 + Cl 2 × 7 = 32.</p></details>
+  <p class="why" hidden><b>Answer: D) 32.</b> C 4 + F 2 × 7 + Cl 2 × 7 = 32.</p>
+</article>
+<article class="q" id="q3" data-ans="2" data-topic="Valence e⁻ &amp; Lewis">
+  <div class="qh"><span class="num">3</span><span class="tag">Valence e⁻ &amp; Lewis</span><span class="mark"></span></div>
+  <p class="qt">In the Lewis structure of the nitrite ion, NO₂⁻, how many lone pairs sit on the N atom?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q3" value="0"><span class="let">A</span><span class="ot">0</span></label><label class="opt" data-k="1"><input type="radio" name="q3" value="1"><span class="let">B</span><span class="ot">2</span></label><label class="opt" data-k="2"><input type="radio" name="q3" value="2"><span class="let">C</span><span class="ot">1</span></label><label class="opt" data-k="3"><input type="radio" name="q3" value="3"><span class="let">D</span><span class="ot">3</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>C) 1.</b> 18 e⁻: the skeleton O–N–O uses 4, 12 go on the O atoms, and the last 2 are one lone pair on N. After the N=O double bond forms, N has 2 bonds + 1 lone pair.</p></details>
+  <p class="why" hidden><b>Answer: C) 1.</b> 18 e⁻: the skeleton O–N–O uses 4, 12 go on the O atoms, and the last 2 are one lone pair on N. After the N=O double bond forms, N has 2 bonds + 1 lone pair.</p>
+</article>
+<article class="q" id="q4" data-ans="1" data-topic="Electron Domains">
+  <div class="qh"><span class="num">4</span><span class="tag">Electron Domains</span><span class="mark"></span></div>
+  <p class="qt">How many electron domains are around C in the formate ion, HCO₂⁻?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q4" value="0"><span class="let">A</span><span class="ot">2</span></label><label class="opt" data-k="1"><input type="radio" name="q4" value="1"><span class="let">B</span><span class="ot">3</span></label><label class="opt" data-k="2"><input type="radio" name="q4" value="2"><span class="let">C</span><span class="ot">4</span></label><label class="opt" data-k="3"><input type="radio" name="q4" value="3"><span class="let">D</span><span class="ot">5</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>B) 3.</b> C is bonded to H and two O and has no lone pair. The C=O double bond counts as one domain, so there are 3.</p></details>
+  <p class="why" hidden><b>Answer: B) 3.</b> C is bonded to H and two O and has no lone pair. The C=O double bond counts as one domain, so there are 3.</p>
+</article>
+<article class="q" id="q5" data-ans="0" data-topic="Electron Domains">
+  <div class="qh"><span class="num">5</span><span class="tag">Electron Domains</span><span class="mark"></span></div>
+  <p class="qt">Which of these counts as exactly ONE electron domain on the central atom?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q5" value="0"><span class="let">A</span><span class="ot">A double bond to an outer atom</span></label><label class="opt" data-k="1"><input type="radio" name="q5" value="1"><span class="let">B</span><span class="ot">A lone pair on an outer atom</span></label><label class="opt" data-k="2"><input type="radio" name="q5" value="2"><span class="let">C</span><span class="ot">Each pair of electrons in a triple bond</span></label><label class="opt" data-k="3"><input type="radio" name="q5" value="3"><span class="let">D</span><span class="ot">The negative charge on an ion</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A) A double bond to an outer atom.</b> Any bond (single, double or triple) to one atom is one domain (NCERT: a multiple bond is treated as a single "super pair"). Outer-atom lone pairs and the charge are not domains.</p></details>
+  <p class="why" hidden><b>Answer: A) A double bond to an outer atom.</b> Any bond (single, double or triple) to one atom is one domain (NCERT: a multiple bond is treated as a single "super pair"). Outer-atom lone pairs and the charge are not domains.</p>
+</article>
+<article class="q" id="q6" data-ans="3" data-topic="Electron Domains">
+  <div class="qh"><span class="num">6</span><span class="tag">Electron Domains</span><span class="mark"></span></div>
+  <p class="qt">What is the ELECTRON geometry of PBr₃?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q6" value="0"><span class="let">A</span><span class="ot">Trigonal planar</span></label><label class="opt" data-k="1"><input type="radio" name="q6" value="1"><span class="let">B</span><span class="ot">Trigonal pyramidal</span></label><label class="opt" data-k="2"><input type="radio" name="q6" value="2"><span class="let">C</span><span class="ot">Bent</span></label><label class="opt" data-k="3"><input type="radio" name="q6" value="3"><span class="let">D</span><span class="ot">Tetrahedral</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) Tetrahedral.</b> P has 3 bonded Br + 1 lone pair = 4 domains, so the electron geometry is tetrahedral. (Trigonal pyramidal is its molecular geometry.)</p></details>
+  <p class="why" hidden><b>Answer: D) Tetrahedral.</b> P has 3 bonded Br + 1 lone pair = 4 domains, so the electron geometry is tetrahedral. (Trigonal pyramidal is its molecular geometry.)</p>
+</article>
+<article class="q" id="q7" data-ans="2" data-topic="Electron Domains">
+  <div class="qh"><span class="num">7</span><span class="tag">Electron Domains</span><span class="mark"></span></div>
+  <p class="qt">What is the electron geometry of NOCl?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q7" value="0"><span class="let">A</span><span class="ot">Linear</span></label><label class="opt" data-k="1"><input type="radio" name="q7" value="1"><span class="let">B</span><span class="ot">Tetrahedral</span></label><label class="opt" data-k="2"><input type="radio" name="q7" value="2"><span class="let">C</span><span class="ot">Trigonal planar</span></label><label class="opt" data-k="3"><input type="radio" name="q7" value="3"><span class="let">D</span><span class="ot">Bent</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>C) Trigonal planar.</b> N has 2 bonded atoms + 1 lone pair = 3 domains, so it is trigonal planar.</p></details>
+  <p class="why" hidden><b>Answer: C) Trigonal planar.</b> N has 2 bonded atoms + 1 lone pair = 3 domains, so it is trigonal planar.</p>
+</article>
+<article class="q" id="q8" data-ans="1" data-topic="Electron Domains">
+  <div class="qh"><span class="num">8</span><span class="tag">Electron Domains</span><span class="mark"></span></div>
+  <p class="qt">What is the ideal angle between four electron domains?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q8" value="0"><span class="let">A</span><span class="ot">90°</span></label><label class="opt" data-k="1"><input type="radio" name="q8" value="1"><span class="let">B</span><span class="ot">109.5°</span></label><label class="opt" data-k="2"><input type="radio" name="q8" value="2"><span class="let">C</span><span class="ot">107°</span></label><label class="opt" data-k="3"><input type="radio" name="q8" value="3"><span class="let">D</span><span class="ot">120°</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>B) 109.5°.</b> Four domains point to the corners of a tetrahedron: cos θ = −1/3, so θ = 109.5°.</p></details>
+  <p class="why" hidden><b>Answer: B) 109.5°.</b> Four domains point to the corners of a tetrahedron: cos θ = −1/3, so θ = 109.5°.</p>
+</article>
+<article class="q" id="q9" data-ans="0" data-topic="Electron Domains">
+  <div class="qh"><span class="num">9</span><span class="tag">Electron Domains</span><span class="mark"></span></div>
+  <p class="qt">The electron geometry and the molecular geometry have the same name when…</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q9" value="0"><span class="let">A</span><span class="ot">the central atom has no lone pairs</span></label><label class="opt" data-k="1"><input type="radio" name="q9" value="1"><span class="let">B</span><span class="ot">all the bonds are single bonds</span></label><label class="opt" data-k="2"><input type="radio" name="q9" value="2"><span class="let">C</span><span class="ot">all the outer atoms are identical</span></label><label class="opt" data-k="3"><input type="radio" name="q9" value="3"><span class="let">D</span><span class="ot">always: they are two names for one thing</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A) the central atom has no lone pairs.</b> The molecular geometry leaves out the lone pairs, so the names match only when there are no lone pairs on the central atom.</p></details>
+  <p class="why" hidden><b>Answer: A) the central atom has no lone pairs.</b> The molecular geometry leaves out the lone pairs, so the names match only when there are no lone pairs on the central atom.</p>
+</article>
+<article class="q" id="q10" data-ans="3" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">10</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">What is the molecular geometry of NO₂⁻?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q10" value="0"><span class="let">A</span><span class="ot">Linear</span></label><label class="opt" data-k="1"><input type="radio" name="q10" value="1"><span class="let">B</span><span class="ot">Trigonal planar</span></label><label class="opt" data-k="2"><input type="radio" name="q10" value="2"><span class="let">C</span><span class="ot">Trigonal pyramidal</span></label><label class="opt" data-k="3"><input type="radio" name="q10" value="3"><span class="let">D</span><span class="ot">Bent</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) Bent.</b> 3 domains (2 atoms + 1 lone pair), so the electron geometry is trigonal planar and the shape is bent.</p></details>
+  <p class="why" hidden><b>Answer: D) Bent.</b> 3 domains (2 atoms + 1 lone pair), so the electron geometry is trigonal planar and the shape is bent.</p>
+</article>
+<article class="q" id="q11" data-ans="2" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">11</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">What is the molecular geometry of CF₂Cl₂?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q11" value="0"><span class="let">A</span><span class="ot">Square planar</span></label><label class="opt" data-k="1"><input type="radio" name="q11" value="1"><span class="let">B</span><span class="ot">Trigonal pyramidal</span></label><label class="opt" data-k="2"><input type="radio" name="q11" value="2"><span class="let">C</span><span class="ot">Tetrahedral</span></label><label class="opt" data-k="3"><input type="radio" name="q11" value="3"><span class="let">D</span><span class="ot">Seesaw</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>C) Tetrahedral.</b> 4 bonded atoms and no lone pair on C gives tetrahedral. The outer atoms being different does not change the shape.</p></details>
+  <p class="why" hidden><b>Answer: C) Tetrahedral.</b> 4 bonded atoms and no lone pair on C gives tetrahedral. The outer atoms being different does not change the shape.</p>
+</article>
+<article class="q" id="q12" data-ans="1" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">12</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">What is the molecular geometry of the hydronium ion, H₃O⁺?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q12" value="0"><span class="let">A</span><span class="ot">Trigonal planar</span></label><label class="opt" data-k="1"><input type="radio" name="q12" value="1"><span class="let">B</span><span class="ot">Trigonal pyramidal</span></label><label class="opt" data-k="2"><input type="radio" name="q12" value="2"><span class="let">C</span><span class="ot">Tetrahedral</span></label><label class="opt" data-k="3"><input type="radio" name="q12" value="3"><span class="let">D</span><span class="ot">Bent</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>B) Trigonal pyramidal.</b> 8 e⁻: O has 3 bonds + 1 lone pair = 4 domains, so the shape is trigonal pyramidal (like NH₃).</p></details>
+  <p class="why" hidden><b>Answer: B) Trigonal pyramidal.</b> 8 e⁻: O has 3 bonds + 1 lone pair = 4 domains, so the shape is trigonal pyramidal (like NH₃).</p>
+</article>
+<article class="q" id="q13" data-ans="0" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">13</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">SO₃ is trigonal planar, but the sulfite ion SO₃²⁻ is trigonal pyramidal. Why?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q13" value="0"><span class="let">A</span><span class="ot">The 2 extra electrons form a lone pair on S</span></label><label class="opt" data-k="1"><input type="radio" name="q13" value="1"><span class="let">B</span><span class="ot">The ion has more O atoms</span></label><label class="opt" data-k="2"><input type="radio" name="q13" value="2"><span class="let">C</span><span class="ot">Ions are always pyramidal</span></label><label class="opt" data-k="3"><input type="radio" name="q13" value="3"><span class="let">D</span><span class="ot">The charge pulls the O atoms down</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A) The 2 extra electrons form a lone pair on S.</b> SO₃ has 24 e⁻ (3 domains on S). SO₃²⁻ has 26 e⁻: the extra 2 become a lone pair on S, giving 4 domains, 3 atoms and a trigonal pyramidal shape.</p></details>
+  <p class="why" hidden><b>Answer: A) The 2 extra electrons form a lone pair on S.</b> SO₃ has 24 e⁻ (3 domains on S). SO₃²⁻ has 26 e⁻: the extra 2 become a lone pair on S, giving 4 domains, 3 atoms and a trigonal pyramidal shape.</p>
+</article>
+<article class="q" id="q14" data-ans="3" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">14</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">What is the O–N–Cl bond angle in NOCl?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q14" value="0"><span class="let">A</span><span class="ot">180°</span></label><label class="opt" data-k="1"><input type="radio" name="q14" value="1"><span class="let">B</span><span class="ot">120°</span></label><label class="opt" data-k="2"><input type="radio" name="q14" value="2"><span class="let">C</span><span class="ot">109.5°</span></label><label class="opt" data-k="3"><input type="radio" name="q14" value="3"><span class="let">D</span><span class="ot">Slightly less than 120°</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) Slightly less than 120°.</b> A trigonal planar electron geometry with 1 lone pair: the lone pair squeezes the bond angle a little below 120° (about 113°).</p></details>
+  <p class="why" hidden><b>Answer: D) Slightly less than 120°.</b> A trigonal planar electron geometry with 1 lone pair: the lone pair squeezes the bond angle a little below 120° (about 113°).</p>
+</article>
+<article class="q" id="q15" data-ans="2" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">15</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">Which molecule has the SMALLEST bond angle?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q15" value="0"><span class="let">A</span><span class="ot">CH₄</span></label><label class="opt" data-k="1"><input type="radio" name="q15" value="1"><span class="let">B</span><span class="ot">NH₃</span></label><label class="opt" data-k="2"><input type="radio" name="q15" value="2"><span class="let">C</span><span class="ot">H₂O</span></label><label class="opt" data-k="3"><input type="radio" name="q15" value="3"><span class="let">D</span><span class="ot">BF₃</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>C) H₂O.</b> H₂O 104.5° < NH₃ 107° < CH₄ 109.5° < BF₃ 120°. Two lone pairs squeeze the most (NCERT Table 4.8).</p></details>
+  <p class="why" hidden><b>Answer: C) H₂O.</b> H₂O 104.5° < NH₃ 107° < CH₄ 109.5° < BF₃ 120°. Two lone pairs squeeze the most (NCERT Table 4.8).</p>
+</article>
+<article class="q" id="q16" data-ans="1" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">16</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">Which is the correct order of repulsion strength?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q16" value="0"><span class="let">A</span><span class="ot">bond pair–bond pair > lone pair–bond pair > lone pair–lone pair</span></label><label class="opt" data-k="1"><input type="radio" name="q16" value="1"><span class="let">B</span><span class="ot">lone pair–lone pair > lone pair–bond pair > bond pair–bond pair</span></label><label class="opt" data-k="2"><input type="radio" name="q16" value="2"><span class="let">C</span><span class="ot">lone pair–bond pair > lone pair–lone pair > bond pair–bond pair</span></label><label class="opt" data-k="3"><input type="radio" name="q16" value="3"><span class="let">D</span><span class="ot">All three are equal</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>B) lone pair–lone pair > lone pair–bond pair > bond pair–bond pair.</b> NCERT §4.4. Lone pairs are held by one nucleus only, spread out more and push harder.</p></details>
+  <p class="why" hidden><b>Answer: B) lone pair–lone pair > lone pair–bond pair > bond pair–bond pair.</b> NCERT §4.4. Lone pairs are held by one nucleus only, spread out more and push harder.</p>
+</article>
+<article class="q" id="q17" data-ans="0" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">17</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">Which of these is LINEAR?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q17" value="0"><span class="let">A</span><span class="ot">HCN</span></label><label class="opt" data-k="1"><input type="radio" name="q17" value="1"><span class="let">B</span><span class="ot">H₂O</span></label><label class="opt" data-k="2"><input type="radio" name="q17" value="2"><span class="let">C</span><span class="ot">SO₂</span></label><label class="opt" data-k="3"><input type="radio" name="q17" value="3"><span class="let">D</span><span class="ot">NO₂⁻</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A) HCN.</b> HCN: C has 2 domains (C–H and C≡N) and no lone pair, so it is linear. The other three are bent.</p></details>
+  <p class="why" hidden><b>Answer: A) HCN.</b> HCN: C has 2 domains (C–H and C≡N) and no lone pair, so it is linear. The other three are bent.</p>
+</article>
+<article class="q" id="q18" data-ans="3" data-topic="Shape &amp; Angle">
+  <div class="qh"><span class="num">18</span><span class="tag">Shape &amp; Angle</span><span class="mark"></span></div>
+  <p class="qt">A central atom has 2 bonded atoms and 2 lone pairs. What is the shape?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q18" value="0"><span class="let">A</span><span class="ot">Linear, 180°</span></label><label class="opt" data-k="1"><input type="radio" name="q18" value="1"><span class="let">B</span><span class="ot">Bent, slightly less than 120°</span></label><label class="opt" data-k="2"><input type="radio" name="q18" value="2"><span class="let">C</span><span class="ot">Trigonal pyramidal, about 107°</span></label><label class="opt" data-k="3"><input type="radio" name="q18" value="3"><span class="let">D</span><span class="ot">Bent, about 104.5°</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) Bent, about 104.5°.</b> 4 domains give a tetrahedral electron geometry. With 2 lone pairs, the atoms form a bent shape at about 104.5°, like H₂O.</p></details>
+  <p class="why" hidden><b>Answer: D) Bent, about 104.5°.</b> 4 domains give a tetrahedral electron geometry. With 2 lone pairs, the atoms form a bent shape at about 104.5°, like H₂O.</p>
+</article>
+<article class="q" id="q19" data-ans="2" data-topic="3-D Redraw">
+  <div class="qh"><span class="num">19</span><span class="tag">3-D Redraw</span><span class="mark"></span></div>
+  <p class="qt">In a wedge-and-dash drawing, a hashed wedge (dash) means the bond…</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q19" value="0"><span class="let">A</span><span class="ot">comes out toward you</span></label><label class="opt" data-k="1"><input type="radio" name="q19" value="1"><span class="let">B</span><span class="ot">lies in the plane of the page</span></label><label class="opt" data-k="2"><input type="radio" name="q19" value="2"><span class="let">C</span><span class="ot">points back, away from you</span></label><label class="opt" data-k="3"><input type="radio" name="q19" value="3"><span class="let">D</span><span class="ot">is a double bond</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>C) points back, away from you.</b> Plain line: in the plane. Solid wedge: toward you. Hashed wedge: away from you.</p></details>
+  <p class="why" hidden><b>Answer: C) points back, away from you.</b> Plain line: in the plane. Solid wedge: toward you. Hashed wedge: away from you.</p>
+</article>
+<article class="q" id="q20" data-ans="1" data-topic="3-D Redraw">
+  <div class="qh"><span class="num">20</span><span class="tag">3-D Redraw</span><span class="mark"></span></div>
+  <p class="qt">Which is the correct 3-D drawing of NH₃?</p>
+  <div class="opts pics"><label class="opt" data-k="0"><input type="radio" name="q20" value="0"><span class="let">A</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-68.7 -82.1 137.5 133.2" width="137.5" height="133.2" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">N</text><line x1="0" y1="-13" x2="0" y2="-49" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="0" y="-62" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><line x1="-11.3" y1="6.5" x2="-42.4" y2="24.5" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-53.7" y="31" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><line x1="11.3" y1="6.5" x2="42.4" y2="24.5" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="53.7" y="31" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text></svg></span></span></label><label class="opt" data-k="1"><input type="radio" name="q20" value="1"><span class="let">B</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-73.3 -56 147.6 137.2" width="147.6" height="137.2" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">N</text><ellipse cx="0" cy="-30" rx="17" ry="10" transform="rotate(-90 0 -30)" style="fill:var(--lobe-bg);stroke:var(--lobe-ln);stroke-width:1.2"/><circle cx="3.4" cy="-33" r="2.4" style="fill:currentColor"/><circle cx="-3.4" cy="-33" r="2.4" style="fill:currentColor"/><line x1="-12.2" y1="4.4" x2="-46" y2="16.8" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-58.3" y="21.2" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><polygon points="11.5,3.5 43.6,18 46.3,9.4" style="fill:currentColor;stroke:currentColor;stroke-width:1.2;stroke-linejoin:round"/><text x="59.3" y="18.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><line x1="3.8" y1="14.1" x2="1.3" y2="14.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="5.2" y1="18.9" x2="1.6" y2="19.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="6.6" y1="23.7" x2="1.9" y2="24.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="8.1" y1="28.5" x2="2.2" y2="29.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="9.5" y1="33.4" x2="2.5" y2="34.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="10.9" y1="38.2" x2="2.8" y2="39.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="12.4" y1="43" x2="3.1" y2="44.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><text x="10.8" y="61.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text></svg></span></span></label><label class="opt" data-k="2"><input type="radio" name="q20" value="2"><span class="let">C</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-73.3 -82.1 147.6 163.3" width="147.6" height="163.3" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">N</text><line x1="0" y1="-13" x2="0" y2="-49" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="0" y="-62" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><line x1="-12.2" y1="4.4" x2="-46" y2="16.8" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-58.3" y="21.2" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><polygon points="11.5,3.5 43.6,18 46.3,9.4" style="fill:currentColor;stroke:currentColor;stroke-width:1.2;stroke-linejoin:round"/><text x="59.3" y="18.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><line x1="3.8" y1="14.1" x2="1.3" y2="14.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="5.2" y1="18.9" x2="1.6" y2="19.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="6.6" y1="23.7" x2="1.9" y2="24.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="8.1" y1="28.5" x2="2.2" y2="29.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="9.5" y1="33.4" x2="2.5" y2="34.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="10.9" y1="38.2" x2="2.8" y2="39.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="12.4" y1="43" x2="3.1" y2="44.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><text x="10.8" y="61.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text></svg></span></span></label><label class="opt" data-k="3"><input type="radio" name="q20" value="3"><span class="let">D</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-68.7 -56 137.5 107.1" width="137.5" height="107.1" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">N</text><ellipse cx="0" cy="-30" rx="17" ry="10" transform="rotate(-90 0 -30)" style="fill:var(--lobe-bg);stroke:var(--lobe-ln);stroke-width:1.2"/><circle cx="3.4" cy="-33" r="2.4" style="fill:currentColor"/><circle cx="-3.4" cy="-33" r="2.4" style="fill:currentColor"/><line x1="-11.3" y1="6.5" x2="-42.4" y2="24.5" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-53.7" y="31" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text><line x1="11.3" y1="6.5" x2="42.4" y2="24.5" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="53.7" y="31" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">H</text></svg></span></span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>B.</b> NH₃ has 4 domains (3 H + 1 lone pair), so it is trigonal pyramidal: the lone pair on top, with 1 plain line, 1 wedge and 1 dash below.</p></details>
+  <p class="why" hidden><b>Answer: B.</b> NH₃ has 4 domains (3 H + 1 lone pair), so it is trigonal pyramidal: the lone pair on top, with 1 plain line, 1 wedge and 1 dash below.</p>
+</article>
+<article class="q" id="q21" data-ans="0" data-topic="3-D Redraw">
+  <div class="qh"><span class="num">21</span><span class="tag">3-D Redraw</span><span class="mark"></span></div>
+  <p class="qt">Which drawing shows the shape of CF₂Cl₂ (X = F or Cl)?</p>
+  <div class="opts pics"><label class="opt" data-k="0"><input type="radio" name="q21" value="0"><span class="let">A</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-73.3 -82.1 147.6 163.3" width="147.6" height="163.3" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">C</text><line x1="0" y1="-13" x2="0" y2="-49" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="0" y="-62" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><line x1="-12.2" y1="4.4" x2="-46" y2="16.8" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-58.3" y="21.2" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><polygon points="11.5,3.5 43.6,18 46.3,9.4" style="fill:currentColor;stroke:currentColor;stroke-width:1.2;stroke-linejoin:round"/><text x="59.3" y="18.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><line x1="3.8" y1="14.1" x2="1.3" y2="14.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="5.2" y1="18.9" x2="1.6" y2="19.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="6.6" y1="23.7" x2="1.9" y2="24.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="8.1" y1="28.5" x2="2.2" y2="29.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="9.5" y1="33.4" x2="2.5" y2="34.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="10.9" y1="38.2" x2="2.8" y2="39.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="12.4" y1="43" x2="3.1" y2="44.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><text x="10.8" y="61.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text></svg></span></span></label><label class="opt" data-k="1"><input type="radio" name="q21" value="1"><span class="let">B</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-73.3 -56 147.6 137.2" width="147.6" height="137.2" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">C</text><ellipse cx="0" cy="-30" rx="17" ry="10" transform="rotate(-90 0 -30)" style="fill:var(--lobe-bg);stroke:var(--lobe-ln);stroke-width:1.2"/><circle cx="3.4" cy="-33" r="2.4" style="fill:currentColor"/><circle cx="-3.4" cy="-33" r="2.4" style="fill:currentColor"/><line x1="-12.2" y1="4.4" x2="-46" y2="16.8" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-58.3" y="21.2" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><polygon points="11.5,3.5 43.6,18 46.3,9.4" style="fill:currentColor;stroke:currentColor;stroke-width:1.2;stroke-linejoin:round"/><text x="59.3" y="18.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><line x1="3.8" y1="14.1" x2="1.3" y2="14.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="5.2" y1="18.9" x2="1.6" y2="19.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="6.6" y1="23.7" x2="1.9" y2="24.5" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="8.1" y1="28.5" x2="2.2" y2="29.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="9.5" y1="33.4" x2="2.5" y2="34.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="10.9" y1="38.2" x2="2.8" y2="39.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><line x1="12.4" y1="43" x2="3.1" y2="44.6" style="stroke:currentColor;stroke-width:1.6;stroke-linecap:round"/><text x="10.8" y="61.1" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text></svg></span></span></label><label class="opt" data-k="2"><input type="radio" name="q21" value="2"><span class="let">C</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-68.7 -82.1 137.5 133.2" width="137.5" height="133.2" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">C</text><line x1="0" y1="-13" x2="0" y2="-49" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="0" y="-62" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><line x1="-11.3" y1="6.5" x2="-42.4" y2="24.5" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-53.7" y="31" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><line x1="11.3" y1="6.5" x2="42.4" y2="24.5" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="53.7" y="31" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text></svg></span></span></label><label class="opt" data-k="3"><input type="radio" name="q21" value="3"><span class="let">D</span><span class="ot"><span class="pic"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-65.8 -52.5 131.7 108.2" width="131.7" height="108.2" role="img"><text x="0" y="0" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">C</text><ellipse cx="-14.1" cy="-26.5" rx="17" ry="10" transform="rotate(-118 -14.1 -26.5)" style="fill:var(--lobe-bg);stroke:var(--lobe-ln);stroke-width:1.2"/><circle cx="-12.5" cy="-30.7" r="2.4" style="fill:currentColor"/><circle cx="-18.5" cy="-27.5" r="2.4" style="fill:currentColor"/><ellipse cx="14.1" cy="-26.5" rx="17" ry="10" transform="rotate(-62 14.1 -26.5)" style="fill:var(--lobe-bg);stroke:var(--lobe-ln);stroke-width:1.2"/><circle cx="18.5" cy="-27.5" r="2.4" style="fill:currentColor"/><circle cx="12.5" cy="-30.7" r="2.4" style="fill:currentColor"/><line x1="-10.6" y1="7.5" x2="-40.1" y2="28.1" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="-50.8" y="35.6" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text><line x1="10.6" y1="7.5" x2="40.1" y2="28.1" style="stroke:currentColor;stroke-width:2.2;stroke-linecap:round"/><text x="50.8" y="35.6" style="fill:currentColor;font:600 22px 'IBM Plex Sans','DejaVu Sans',Arial,sans-serif" text-anchor="middle" dominant-baseline="central">X</text></svg></span></span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A.</b> Four bonded atoms and no lone pair on C: tetrahedral, with 2 bonds in the plane, 1 wedge and 1 dash.</p></details>
+  <p class="why" hidden><b>Answer: A.</b> Four bonded atoms and no lone pair on C: tetrahedral, with 2 bonds in the plane, 1 wedge and 1 dash.</p>
+</article>
+<article class="q" id="q22" data-ans="3" data-topic="Bond Polarity">
+  <div class="qh"><span class="num">22</span><span class="tag">Bond Polarity</span><span class="mark"></span></div>
+  <p class="qt">Using NCERT electronegativities, which bond is NONPOLAR?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q22" value="0"><span class="let">A</span><span class="ot">C–O</span></label><label class="opt" data-k="1"><input type="radio" name="q22" value="1"><span class="let">B</span><span class="ot">P–Br</span></label><label class="opt" data-k="2"><input type="radio" name="q22" value="2"><span class="let">C</span><span class="ot">C–F</span></label><label class="opt" data-k="3"><input type="radio" name="q22" value="3"><span class="let">D</span><span class="ot">C–H</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) C–H.</b> C–H: 2.5 − 2.1 = 0.4, below 0.5. The others: C–O 1.0, P–Br 0.7, C–F 1.5, all polar.</p></details>
+  <p class="why" hidden><b>Answer: D) C–H.</b> C–H: 2.5 − 2.1 = 0.4, below 0.5. The others: C–O 1.0, P–Br 0.7, C–F 1.5, all polar.</p>
+</article>
+<article class="q" id="q23" data-ans="2" data-topic="Bond Polarity">
+  <div class="qh"><span class="num">23</span><span class="tag">Bond Polarity</span><span class="mark"></span></div>
+  <p class="qt">What is ΔEN for a C–F bond, and what kind of bond is it?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q23" value="0"><span class="let">A</span><span class="ot">1.5, ionic</span></label><label class="opt" data-k="1"><input type="radio" name="q23" value="1"><span class="let">B</span><span class="ot">0.5, nonpolar covalent</span></label><label class="opt" data-k="2"><input type="radio" name="q23" value="2"><span class="let">C</span><span class="ot">1.5, polar covalent</span></label><label class="opt" data-k="3"><input type="radio" name="q23" value="3"><span class="let">D</span><span class="ot">6.5, ionic</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>C) 1.5, polar covalent.</b> 4.0 − 2.5 = 1.5, which is between 0.5 and 1.7, so it is polar covalent.</p></details>
+  <p class="why" hidden><b>Answer: C) 1.5, polar covalent.</b> 4.0 − 2.5 = 1.5, which is between 0.5 and 1.7, so it is polar covalent.</p>
+</article>
+<article class="q" id="q24" data-ans="1" data-topic="Bond Polarity">
+  <div class="qh"><span class="num">24</span><span class="tag">Bond Polarity</span><span class="mark"></span></div>
+  <p class="qt">In the crossed-arrow dipole for an H–Cl bond, the arrowhead points toward…</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q24" value="0"><span class="let">A</span><span class="ot">H, the less electronegative atom</span></label><label class="opt" data-k="1"><input type="radio" name="q24" value="1"><span class="let">B</span><span class="ot">Cl, the more electronegative atom</span></label><label class="opt" data-k="2"><input type="radio" name="q24" value="2"><span class="let">C</span><span class="ot">the middle of the bond</span></label><label class="opt" data-k="3"><input type="radio" name="q24" value="3"><span class="let">D</span><span class="ot">nowhere, since H–Cl is nonpolar</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>B) Cl, the more electronegative atom.</b> The cross sits at the δ+ end (H) and the arrowhead at the δ− end (Cl), which is where the electrons are pulled (NCERT §4.3.6).</p></details>
+  <p class="why" hidden><b>Answer: B) Cl, the more electronegative atom.</b> The cross sits at the δ+ end (H) and the arrowhead at the δ− end (Cl), which is where the electrons are pulled (NCERT §4.3.6).</p>
+</article>
+<article class="q" id="q25" data-ans="0" data-topic="Bond Polarity">
+  <div class="qh"><span class="num">25</span><span class="tag">Bond Polarity</span><span class="mark"></span></div>
+  <p class="qt">Which bond in NOCl is nonpolar (NCERT values)?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q25" value="0"><span class="let">A</span><span class="ot">N–Cl</span></label><label class="opt" data-k="1"><input type="radio" name="q25" value="1"><span class="let">B</span><span class="ot">N=O</span></label><label class="opt" data-k="2"><input type="radio" name="q25" value="2"><span class="let">C</span><span class="ot">Both</span></label><label class="opt" data-k="3"><input type="radio" name="q25" value="3"><span class="let">D</span><span class="ot">Neither</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A) N–Cl.</b> N–Cl: 3.0 − 3.0 = 0, nonpolar. N=O: 3.5 − 3.0 = 0.5, polar.</p></details>
+  <p class="why" hidden><b>Answer: A) N–Cl.</b> N–Cl: 3.0 − 3.0 = 0, nonpolar. N=O: 3.5 − 3.0 = 0.5, polar.</p>
+</article>
+<article class="q" id="q26" data-ans="3" data-topic="Molecular Polarity">
+  <div class="qh"><span class="num">26</span><span class="tag">Molecular Polarity</span><span class="mark"></span></div>
+  <p class="qt">Which molecule is NONPOLAR?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q26" value="0"><span class="let">A</span><span class="ot">SO₂</span></label><label class="opt" data-k="1"><input type="radio" name="q26" value="1"><span class="let">B</span><span class="ot">H₂O</span></label><label class="opt" data-k="2"><input type="radio" name="q26" value="2"><span class="let">C</span><span class="ot">NH₃</span></label><label class="opt" data-k="3"><input type="radio" name="q26" value="3"><span class="let">D</span><span class="ot">CO₂</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) CO₂.</b> CO₂ is linear, so its two equal C=O dipoles cancel (0 D). The others are bent or pyramidal.</p></details>
+  <p class="why" hidden><b>Answer: D) CO₂.</b> CO₂ is linear, so its two equal C=O dipoles cancel (0 D). The others are bent or pyramidal.</p>
+</article>
+<article class="q" id="q27" data-ans="2" data-topic="Molecular Polarity">
+  <div class="qh"><span class="num">27</span><span class="tag">Molecular Polarity</span><span class="mark"></span></div>
+  <p class="qt">CCl₄ has four polar C–Cl bonds. Why is the molecule nonpolar?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q27" value="0"><span class="let">A</span><span class="ot">C–Cl bonds are actually nonpolar</span></label><label class="opt" data-k="1"><input type="radio" name="q27" value="1"><span class="let">B</span><span class="ot">Carbon has a lone pair that cancels them</span></label><label class="opt" data-k="2"><input type="radio" name="q27" value="2"><span class="let">C</span><span class="ot">It is tetrahedral with 4 identical atoms, so the dipoles cancel</span></label><label class="opt" data-k="3"><input type="radio" name="q27" value="3"><span class="let">D</span><span class="ot">Molecules with 5 atoms are always nonpolar</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>C) It is tetrahedral with 4 identical atoms, so the dipoles cancel.</b> Four equal vectors to the corners of a tetrahedron add to zero (NCERT Table 4.5: CCl₄ = 0 D).</p></details>
+  <p class="why" hidden><b>Answer: C) It is tetrahedral with 4 identical atoms, so the dipoles cancel.</b> Four equal vectors to the corners of a tetrahedron add to zero (NCERT Table 4.5: CCl₄ = 0 D).</p>
+</article>
+<article class="q" id="q28" data-ans="1" data-topic="Molecular Polarity">
+  <div class="qh"><span class="num">28</span><span class="tag">Molecular Polarity</span><span class="mark"></span></div>
+  <p class="qt">Which of these is POLAR?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q28" value="0"><span class="let">A</span><span class="ot">BF₃</span></label><label class="opt" data-k="1"><input type="radio" name="q28" value="1"><span class="let">B</span><span class="ot">CF₂Cl₂</span></label><label class="opt" data-k="2"><input type="radio" name="q28" value="2"><span class="let">C</span><span class="ot">CH₄</span></label><label class="opt" data-k="3"><input type="radio" name="q28" value="3"><span class="let">D</span><span class="ot">CCl₄</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>B) CF₂Cl₂.</b> CF₂Cl₂ is tetrahedral, but the C–F dipoles (1.5) are stronger than the C–Cl dipoles (0.5), so they can't cancel.</p></details>
+  <p class="why" hidden><b>Answer: B) CF₂Cl₂.</b> CF₂Cl₂ is tetrahedral, but the C–F dipoles (1.5) are stronger than the C–Cl dipoles (0.5), so they can't cancel.</p>
+</article>
+<article class="q" id="q29" data-ans="0" data-topic="Molecular Polarity">
+  <div class="qh"><span class="num">29</span><span class="tag">Molecular Polarity</span><span class="mark"></span></div>
+  <p class="qt">The formate ion, HCO₂⁻, is trigonal planar. Is it polar?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q29" value="0"><span class="let">A</span><span class="ot">Yes: the outer atoms are not all the same (H vs O)</span></label><label class="opt" data-k="1"><input type="radio" name="q29" value="1"><span class="let">B</span><span class="ot">No: trigonal planar is always symmetric</span></label><label class="opt" data-k="2"><input type="radio" name="q29" value="2"><span class="let">C</span><span class="ot">No: ions cannot be polar</span></label><label class="opt" data-k="3"><input type="radio" name="q29" value="3"><span class="let">D</span><span class="ot">Yes: C has a lone pair</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>A) Yes: the outer atoms are not all the same (H vs O).</b> A symmetric shape cancels only if all the outer atoms are identical. The strong C–O dipoles are not balanced by the weak C–H.</p></details>
+  <p class="why" hidden><b>Answer: A) Yes: the outer atoms are not all the same (H vs O).</b> A symmetric shape cancels only if all the outer atoms are identical. The strong C–O dipoles are not balanced by the weak C–H.</p>
+</article>
+<article class="q" id="q30" data-ans="3" data-topic="Molecular Polarity">
+  <div class="qh"><span class="num">30</span><span class="tag">Molecular Polarity</span><span class="mark"></span></div>
+  <p class="qt">NCERT lists H₂O at 1.85 D but CO₂ at 0 D, though both have polar bonds. What explains the difference?</p>
+  <div class="opts"><label class="opt" data-k="0"><input type="radio" name="q30" value="0"><span class="let">A</span><span class="ot">O–H bonds are more polar than C=O bonds</span></label><label class="opt" data-k="1"><input type="radio" name="q30" value="1"><span class="let">B</span><span class="ot">CO₂ has no lone pairs anywhere</span></label><label class="opt" data-k="2"><input type="radio" name="q30" value="2"><span class="let">C</span><span class="ot">H₂O has more atoms</span></label><label class="opt" data-k="3"><input type="radio" name="q30" value="3"><span class="let">D</span><span class="ot">H₂O is bent, CO₂ is linear</span></label></div>
+  <details class="key nojs"><summary>Show answer</summary><p><b>D) H₂O is bent, CO₂ is linear.</b> The shape decides it. The bent H₂O's dipoles add (2µ cos 52.25°), while the linear CO₂'s point in opposite directions and cancel.</p></details>
+  <p class="why" hidden><b>Answer: D) H₂O is bent, CO₂ is linear.</b> The shape decides it. The bent H₂O's dipoles add (2µ cos 52.25°), while the linear CO₂'s point in opposite directions and cancel.</p>
+</article>
+  <h2>Part B — Free response (show your work)</h2>
+<article class="q fr" id="q31">
+  <div class="qh"><span class="num">31</span><span class="tag">Full row · free response</span></div>
+  <p class="qt">Complete every column of the worksheet row for <b>SO₂</b>: valence e⁻, Lewis structure, electron geometry, molecular geometry &amp; bond angle, the 3-D redraw, bond polarity and molecular polarity.</p>
+  <textarea placeholder="Write your working here (it stays on this device only while the page is open)." rows="5"></textarea>
+  <details class="key frkey"><summary>Show worked solution</summary><ul><li>Valence e⁻: 6 + 2(6) = 18.</li><li>Lewis: O–S–O uses 4, each O takes 3 lone pairs (12), and the last 2 go on S as a lone pair. S has only 6, so make one S=O. There are 2 resonance forms (O=S–O ↔ O–S=O).</li><li>Electron geometry: S has 2 atoms + 1 lone pair = 3 domains, so trigonal planar.</li><li>Molecular geometry: bent, slightly less than 120° (NCERT Table 4.8: 119.5°).</li><li>Redraw: all in one plane: the lone pair on top of S and the O atoms at lower left and right.</li><li>Bond polarity: S–O: 3.5 − 2.5 = 1.0, polar.</li><li>Molecular polarity: polar. It is bent, so the two S–O dipoles add.</li></ul></details>
+</article>
+<article class="q fr" id="q32">
+  <div class="qh"><span class="num">32</span><span class="tag">Full row · free response</span></div>
+  <p class="qt">Complete the row for <b>CHCl₃</b>, then explain in one or two sentences why CHCl₃ is polar while CCl₄ is not.</p>
+  <textarea placeholder="Write your working here (it stays on this device only while the page is open)." rows="5"></textarea>
+  <details class="key frkey"><summary>Show worked solution</summary><ul><li>Valence e⁻: 4 + 1 + 3(7) = 26.</li><li>Lewis: C in the centre with single bonds to H and three Cl; each Cl has 3 lone pairs. All formal charges are 0.</li><li>Electron geometry: 4 atoms + 0 lone pairs = 4 domains, so tetrahedral.</li><li>Molecular geometry: tetrahedral, 109.5°.</li><li>Redraw: 2 plain lines, 1 wedge and 1 dash (put H anywhere).</li><li>Bond polarity: C–H 0.4 is nonpolar; C–Cl 0.5 is polar.</li><li>Molecular polarity: polar. In CCl₄ four identical dipoles cancel (0 D). Replacing one Cl with H removes one of them, so the rest no longer cancel. NCERT Table 4.5: CHCl₃ = 1.04 D.</li></ul></details>
+</article>
+  <footer>Follows the Session C3 notes, the 9/30 class worksheet and NCERT Class 11 Ch4 (§4.4 VSEPR; §4.3.6 polarity, Table 4.5).<br>Bond angles are the VSEPR values a test expects. Real molecules can differ by a few degrees.</footer>
+</div>
+
+<div class="bar"><div class="inner">
+  <span class="count" id="count"></span><span id="warn" hidden></span>
+  <button class="btn" id="submit">Submit</button>
+</div></div>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  var N = 30;
+  var qs = Array.prototype.slice.call(document.querySelectorAll('article.q:not(.fr)'));
+  var $ = function (id) { return document.getElementById(id); };
+  var graded = false, armed = false;
+
+  function answered() { return qs.filter(function (q) { return q.querySelector('input:checked'); }).length; }
+  function upd() {
+    if (graded) return;
+    $('count').innerHTML = '<b>' + answered() + '</b> / ' + N + ' answered';
+    $('warn').hidden = true; armed = false; $('submit').textContent = 'Submit';
+  }
+  document.addEventListener('change', function (e) { if (e.target.type === 'radio') upd(); });
+  upd();
+
+  function grade() {
+    graded = true;
+    var score = 0, per = {};
+    qs.forEach(function (q) {
+      var ans = +q.dataset.ans, t = q.dataset.topic, pick = q.querySelector('input:checked');
+      per[t] = per[t] || [0, 0]; per[t][1]++;
+      var ok = pick && +pick.value === ans;
+      if (ok) { score++; per[t][0]++; }
+      q.classList.add('graded', ok ? 'ok' : 'no');
+      q.querySelector('.mark').textContent = ok ? '✓ Correct' : (pick ? '✗ Incorrect' : '— Not answered');
+      q.querySelectorAll('.opt').forEach(function (o) {
+        var k = +o.dataset.k;
+        if (k === ans) o.classList.add('right');
+        else if (pick && +pick.value === k) o.classList.add('wrong');
+      });
+      q.querySelectorAll('input').forEach(function (i) { i.disabled = true; });
+      q.querySelector('.why').hidden = false;
+    });
+    document.querySelectorAll('.frkey').forEach(function (d) { d.classList.add('unlocked'); });
+    var pct = Math.round(100 * score / N);
+    $('score').textContent = score + ' / ' + N + '  (' + pct + '%)';
+    $('scoreline').textContent = pct >= 90 ? 'Excellent. You are ready.' : pct >= 75 ? 'Solid. Review the topics flagged below.' : 'Keep going. Work through the explanations for every miss, then retake.';
+    var rows = '';
+    Object.keys(per).forEach(function (t) {
+      var p = per[t], weak = p[0] / p[1] < 0.75;
+      rows += '<tr' + (weak ? ' class="weak"' : '') + '><td>' + t + '</td><td>' + p[0] + ' / ' + p[1] + '</td></tr>';
+    });
+    $('bytopic').innerHTML = rows + '<tr><td>Free response: compare your work with the worked solutions</td><td>Q' + (N + 1) + '–' + (N + 2) + '</td></tr>';
+    $('result').hidden = false; $('warn').hidden = true;
+    $('count').innerHTML = 'Score: <b>' + score + ' / ' + N + '</b>';
+    $('submit').textContent = 'Back to top';
+    window.scrollTo(0, 0);
+  }
+
+  $('submit').onclick = function () {
+    if (graded) { window.scrollTo(0, 0); return; }
+    var left = N - answered();
+    if (left > 0 && !armed) {
+      armed = true; $('warn').hidden = false;
+      $('warn').textContent = left + ' unanswered.';
+      $('submit').textContent = 'Submit anyway';
+      return;
+    }
+    grade();
+  };
+  $('onlywrong').onclick = function () {
+    var on = document.body.classList.toggle('only-wrong');
+    this.textContent = on ? 'Show all questions' : 'Show only my mistakes';
+  };
+  $('retry').onclick = function () {
+    graded = false; document.body.classList.remove('only-wrong');
+    $('onlywrong').textContent = 'Show only my mistakes';
+    qs.forEach(function (q) {
+      q.classList.remove('graded', 'ok', 'no'); q.querySelector('.mark').textContent = '';
+      q.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('right', 'wrong'); });
+      q.querySelectorAll('input').forEach(function (i) { i.disabled = false; i.checked = false; });
+      q.querySelector('.why').hidden = true;
+    });
+    document.querySelectorAll('.frkey').forEach(function (d) { d.classList.remove('unlocked'); d.open = false; });
+    $('result').hidden = true; upd(); window.scrollTo(0, 0);
+  };
+})();
+</script>
+</body>
+</html>

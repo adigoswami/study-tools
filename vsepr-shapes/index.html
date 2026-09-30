@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>VSEPR Shape Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f1e7; --surface:#fff; --surface2:#faf7f0; --text:#201c15; --muted:#6f6858; --border:#ddd3ba;
+          --ink:#201c15; --ink-text:#f5f1e7; --accent:#2f5d9e; --accent-bg:#dde7f6;
+          --good:#157a45; --good-bg:#dbeee0; --bad:#b4371f; --bad-bg:#f8ded6;
+          --dip:#b4371f; --net:#1f4e8c; --bond:#8d8575; --lobe:rgba(214,203,176,.55); --lobe-ln:#a79c80;
+          --stage:#fbf8f1;
+          --shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14161c; --surface:#1d2027; --surface2:#181b21; --text:#ece7db; --muted:#9a9385; --border:#333844;
+            --ink:#ece7db; --ink-text:#14161c; --accent:#7fa8ea; --accent-bg:#1e2c46;
+            --good:#6bce93; --good-bg:#16321f; --bad:#f08a70; --bad-bg:#3d1d16;
+            --dip:#f08a70; --net:#7fa8ea; --bond:#8b8578; --lobe:rgba(120,112,95,.45); --lobe-ln:#8d8471;
+            --stage:#171a20;
+            --shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3); }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:980px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; }
+  .sub { color:var(--muted); font-size:13.5px; margin:0 0 14px; line-height:1.5; }
+  .modes { display:flex; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:5px; margin:0 0 14px; }
+  .modes button { flex:1; border:0; background:transparent; color:var(--muted); font:600 14px "IBM Plex Sans",sans-serif; padding:10px; border-radius:10px; cursor:pointer; }
+  .modes button[aria-pressed="true"] { background:var(--ink); color:var(--ink-text); }
+  .grid { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:14px; align-items:start; }
+  @media (max-width:760px) { .grid { grid-template-columns:1fr; } }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:14px 16px; }
+  .stage { position:relative; background:var(--stage); border:1px solid var(--border); border-radius:14px; overflow:hidden; touch-action:none; cursor:grab; }
+  .stage:active { cursor:grabbing; }
+  .stage svg { display:block; width:100%; height:auto; }
+  .hint { position:absolute; left:10px; bottom:8px; font:500 11.5px "IBM Plex Mono",monospace; color:var(--muted); pointer-events:none; }
+  .formula { position:absolute; left:12px; top:8px; font:700 22px "Fraunces",Georgia,serif; }
+  .formula small { display:block; font:500 12px "IBM Plex Sans",sans-serif; color:var(--muted); }
+  .toggles { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .tg { border:1px solid var(--border); background:var(--surface); color:var(--muted); font:600 12.5px "IBM Plex Sans",sans-serif; padding:7px 11px; border-radius:99px; cursor:pointer; }
+  .tg[aria-pressed="true"] { background:var(--accent-bg); color:var(--accent); border-color:transparent; }
+  .ctl { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); }
+  .ctl:last-child { border-bottom:0; }
+  .ctl label { font-weight:600; font-size:14px; }
+  .ctl label small { display:block; font-weight:400; color:var(--muted); font-size:12px; }
+  .step { display:flex; align-items:center; gap:6px; }
+  .step button { width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--surface2); color:var(--text); font:700 18px "IBM Plex Sans",sans-serif; cursor:pointer; }
+  .step button:disabled { opacity:.35; cursor:default; }
+  .step output { min-width:26px; text-align:center; font:700 18px "IBM Plex Mono",monospace; }
+  .seg { display:flex; gap:4px; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:3px; }
+  .seg button { border:0; background:transparent; color:var(--muted); font:600 12.5px "IBM Plex Sans",sans-serif; padding:7px 10px; border-radius:8px; cursor:pointer; }
+  .seg button[aria-pressed="true"] { background:var(--surface); color:var(--text); box-shadow:var(--shadow); }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { border:1.5px solid var(--border); background:var(--surface); color:var(--text); font:600 13.5px "IBM Plex Sans",sans-serif; padding:6px 10px; border-radius:99px; cursor:pointer; }
+  .chip[aria-pressed="true"] { background:var(--ink); color:var(--ink-text); border-color:var(--ink); }
+  .chip.ws { border-color:var(--accent); }
+  .lbl { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin:12px 0 6px; }
+  .lbl:first-child { margin-top:0; }
+  dl.facts { display:grid; grid-template-columns:auto 1fr; gap:6px 12px; margin:0; font-size:14.5px; }
+  dl.facts dt { color:var(--muted); font-size:13px; padding-top:1px; }
+  dl.facts dd { margin:0; font-weight:600; }
+  dl.facts dd small { display:block; font-weight:400; color:var(--muted); font-size:12.5px; }
+  .beyond { display:inline-block; font:600 10px "IBM Plex Mono",monospace; padding:2px 7px; border-radius:99px; background:var(--bad-bg); color:var(--bad); margin-left:4px; vertical-align:middle; }
+  .verdict { margin-top:12px; padding:10px 12px; border-radius:12px; font-size:14px; line-height:1.5; }
+  .verdict.polar { background:var(--bad-bg); }
+  .verdict.nonpolar { background:var(--good-bg); }
+  .verdict b { font-size:15px; }
+  .note { font-size:12.5px; color:var(--muted); margin-top:10px; line-height:1.5; }
+  .legend { display:flex; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--muted); margin-top:8px; }
+  .legend i { display:inline-block; width:18px; height:3px; vertical-align:middle; margin-right:4px; border-radius:2px; }
+  footer { margin-top:22px; font-size:12px; color:var(--muted); text-align:center; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>VSEPR Shape Explorer</h1>
+  <p class="sub">Build any shape from bonded atoms and lone pairs, or load a real molecule. Drag the model to turn it around. Switch on the bond dipoles to see whether they cancel.</p>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button type="button" id="m-real" aria-pressed="true">Real molecules</button>
+    <button type="button" id="m-build" aria-pressed="false">Build a shape</button>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="stage" id="stage">
+        <svg id="view" viewBox="-200 -170 400 340" aria-label="3D model"></svg>
+        <div class="formula" id="fml"></div>
+        <div class="hint">drag to rotate</div>
+      </div>
+      <div class="toggles">
+        <button class="tg" id="t-rot" aria-pressed="true">Auto-rotate</button>
+        <button class="tg" id="t-lp" aria-pressed="true">Lone pairs</button>
+        <button class="tg" id="t-dip" aria-pressed="false">Bond dipoles</button>
+        <button class="tg" id="t-reset" aria-pressed="false">Reset view</button>
+      </div>
+      <div class="legend" id="legend" hidden><span><i style="background:var(--dip)"></i>bond dipole (points to the δ− atom)</span><span><i style="background:var(--net);height:5px"></i>net dipole</span></div>
+    </div>
+
+    <div>
+      <div class="card" id="real-ctl">
+        <div class="lbl">The 9/30 worksheet</div>
+        <div class="chips" id="chips-ws"></div>
+        <div class="lbl">More molecules and ions</div>
+        <div class="chips" id="chips-more"></div>
+      </div>
+      <div class="card" id="build-ctl" hidden>
+        <div class="ctl"><label>Bonded atoms<small>around the central atom A</small></label>
+          <div class="step"><button id="b-" aria-label="fewer atoms">−</button><output id="nb">4</output><button id="b+" aria-label="more atoms">+</button></div></div>
+        <div class="ctl"><label>Lone pairs<small>on the central atom</small></label>
+          <div class="step"><button id="l-" aria-label="fewer lone pairs">−</button><output id="nl">0</output><button id="l+" aria-label="more lone pairs">+</button></div></div>
+        <div class="ctl"><label>Outer atoms</label>
+          <div class="seg"><button id="o-same" aria-pressed="true">All the same</button><button id="o-diff" aria-pressed="false">One different</button></div></div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <dl class="facts" id="facts"></dl>
+        <div class="verdict" id="verdict"></div>
+        <div class="note" id="note"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Follows the Session C3 notes and NCERT Class 11 Ch4 (§4.4 VSEPR, Tables 4.6–4.8; §4.3.6 polarity and dipole moment).<br>Electronegativities: Pauling values from NCERT Class 11 Ch3, as in C1. Bond rule: ΔEN below 0.5 nonpolar, 0.5–1.7 polar.</footer>
+</div>
+
+<script>
+(function () {
+  var BANK = [{"id":"PBr3","f":"PBr₃","name":"phosphorus tribromide","c":"P","clp":1,"q":0,"o":[["Br",1],["Br",1],["Br",1]],"ws":true,"note":"","val":26,"dom":4,"eg":"tetrahedral","mg":"trigonal pyramidal","ang":"≈107° (less than 109.5°)","axe":"AX₃E","bonds":[{"l":"P–Br","d":0.7,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on P makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0],"same":true},{"id":"HCO2","f":"HCO₂⁻","name":"formate ion","c":"C","clp":0,"q":-1,"o":[["H",1],["O",2],["O",1]],"ws":true,"note":"","val":18,"dom":3,"eg":"trigonal planar","mg":"trigonal planar","ang":"120°","axe":"AX₃","bonds":[{"l":"C–H","d":0.4,"p":false},{"l":"C=O","d":1.0,"p":true},{"l":"C–O","d":1.0,"p":true}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,-1],"same":false},{"id":"NOCl","f":"NOCl","name":"nitrosyl chloride","c":"N","clp":1,"q":0,"o":[["Cl",1],["O",2]],"ws":true,"note":"","val":18,"dom":3,"eg":"trigonal planar","mg":"bent","ang":"slightly less than 120°","axe":"AX₂E","bonds":[{"l":"N–Cl","d":0.0,"p":false},{"l":"N=O","d":0.5,"p":true}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the lone pair on N makes the shape unsymmetric and the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0],"same":false},{"id":"NO2","f":"NO₂⁻","name":"nitrite ion","c":"N","clp":1,"q":-1,"o":[["O",2],["O",1]],"ws":true,"note":"","val":18,"dom":3,"eg":"trigonal planar","mg":"bent","ang":"slightly less than 120°","axe":"AX₂E","bonds":[{"l":"N=O","d":0.5,"p":true},{"l":"N–O","d":0.5,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on N makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":0,"fco":[0,-1],"same":true},{"id":"CF2Cl2","f":"CF₂Cl₂","name":"dichlorodifluoromethane (Freon-12)","c":"C","clp":0,"q":0,"o":[["Cl",1],["Cl",1],["F",1],["F",1]],"ws":true,"note":"","val":32,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"C–Cl","d":0.5,"p":true},{"l":"C–F","d":1.5,"p":true}],"bondpol":"all polar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0,0],"same":false},{"id":"CO2","f":"CO₂","name":"carbon dioxide","c":"C","clp":0,"q":0,"o":[["O",2],["O",2]],"ws":false,"note":"","val":16,"dom":2,"eg":"linear","mg":"linear","ang":"180°","axe":"AX₂","bonds":[{"l":"C=O","d":1.0,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":0,"fco":[0,0],"same":true},{"id":"HCN","f":"HCN","name":"hydrogen cyanide","c":"C","clp":0,"q":0,"o":[["H",1],["N",3]],"ws":false,"note":"","val":10,"dom":2,"eg":"linear","mg":"linear","ang":"180°","axe":"AX₂","bonds":[{"l":"C–H","d":0.4,"p":false},{"l":"C≡N","d":0.5,"p":true}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0],"same":false},{"id":"OCS","f":"OCS","name":"carbonyl sulfide","c":"C","clp":0,"q":0,"o":[["O",2],["S",2]],"ws":false,"note":"","val":16,"dom":2,"eg":"linear","mg":"linear","ang":"180°","axe":"AX₂","bonds":[{"l":"C=O","d":1.0,"p":true},{"l":"C=S","d":0.0,"p":false}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0],"same":false},{"id":"CS2","f":"CS₂","name":"carbon disulfide","c":"C","clp":0,"q":0,"o":[["S",2],["S",2]],"ws":false,"note":"","val":16,"dom":2,"eg":"linear","mg":"linear","ang":"180°","axe":"AX₂","bonds":[{"l":"C=S","d":0.0,"p":false}],"bondpol":"all nonpolar","polar":"nonpolar","why":"no polar bonds, so there are no dipoles to add up","fcc":0,"fco":[0,0],"same":true},{"id":"BF3","f":"BF₃","name":"boron trifluoride","c":"B","clp":0,"q":0,"o":[["F",1],["F",1],["F",1]],"ws":false,"note":"B has only 6 electrons (an incomplete octet, NCERT §4.1.5). Its 3 bonds are still 3 domains. B–F has ΔEN = 2.0, past the 1.7 line, but B and F are both non-metals sharing electrons, so treat it as a very polar covalent bond, as C1 did for H–F.","val":24,"dom":3,"eg":"trigonal planar","mg":"trigonal planar","ang":"120°","axe":"AX₃","bonds":[{"l":"B–F","d":2.0,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":0,"fco":[0,0,0],"same":true},{"id":"CH2O","f":"CH₂O","name":"formaldehyde","c":"C","clp":0,"q":0,"o":[["O",2],["H",1],["H",1]],"ws":false,"note":"","val":12,"dom":3,"eg":"trigonal planar","mg":"trigonal planar","ang":"120°","axe":"AX₃","bonds":[{"l":"C=O","d":1.0,"p":true},{"l":"C–H","d":0.4,"p":false}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0],"same":false},{"id":"COCl2","f":"COCl₂","name":"phosgene","c":"C","clp":0,"q":0,"o":[["O",2],["Cl",1],["Cl",1]],"ws":false,"note":"","val":24,"dom":3,"eg":"trigonal planar","mg":"trigonal planar","ang":"120°","axe":"AX₃","bonds":[{"l":"C=O","d":1.0,"p":true},{"l":"C–Cl","d":0.5,"p":true}],"bondpol":"all polar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0],"same":false},{"id":"SO3","f":"SO₃","name":"sulfur trioxide","c":"S","clp":0,"q":0,"o":[["O",2],["O",1],["O",1]],"ws":false,"note":"Drawn in its octet form (as in C2). Some textbooks use an expanded octet on S; the shape is trigonal planar either way.","val":24,"dom":3,"eg":"trigonal planar","mg":"trigonal planar","ang":"120°","axe":"AX₃","bonds":[{"l":"S=O","d":1.0,"p":true},{"l":"S–O","d":1.0,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":2,"fco":[0,-1,-1],"same":true},{"id":"NO3","f":"NO₃⁻","name":"nitrate ion","c":"N","clp":0,"q":-1,"o":[["O",2],["O",1],["O",1]],"ws":false,"note":"","val":24,"dom":3,"eg":"trigonal planar","mg":"trigonal planar","ang":"120°","axe":"AX₃","bonds":[{"l":"N=O","d":0.5,"p":true},{"l":"N–O","d":0.5,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":1,"fco":[0,-1,-1],"same":true},{"id":"CO3","f":"CO₃²⁻","name":"carbonate ion","c":"C","clp":0,"q":-2,"o":[["O",2],["O",1],["O",1]],"ws":false,"note":"","val":24,"dom":3,"eg":"trigonal planar","mg":"trigonal planar","ang":"120°","axe":"AX₃","bonds":[{"l":"C=O","d":1.0,"p":true},{"l":"C–O","d":1.0,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":0,"fco":[0,-1,-1],"same":true},{"id":"SO2","f":"SO₂","name":"sulfur dioxide","c":"S","clp":1,"q":0,"o":[["O",2],["O",1]],"ws":false,"note":"NCERT Table 4.8 gives the O–S–O angle as 119.5°: just under 120°, because the lone pair pushes harder than a bonding pair.","val":18,"dom":3,"eg":"trigonal planar","mg":"bent","ang":"slightly less than 120°","axe":"AX₂E","bonds":[{"l":"S=O","d":1.0,"p":true},{"l":"S–O","d":1.0,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on S makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":1,"fco":[0,-1],"same":true},{"id":"CH4","f":"CH₄","name":"methane","c":"C","clp":0,"q":0,"o":[["H",1],["H",1],["H",1],["H",1]],"ws":false,"note":"","val":8,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"C–H","d":0.4,"p":false}],"bondpol":"all nonpolar","polar":"nonpolar","why":"no polar bonds, so there are no dipoles to add up","fcc":0,"fco":[0,0,0,0],"same":true},{"id":"CCl4","f":"CCl₄","name":"carbon tetrachloride","c":"C","clp":0,"q":0,"o":[["Cl",1],["Cl",1],["Cl",1],["Cl",1]],"ws":false,"note":"","val":32,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"C–Cl","d":0.5,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":0,"fco":[0,0,0,0],"same":true},{"id":"SiCl4","f":"SiCl₄","name":"silicon tetrachloride","c":"Si","clp":0,"q":0,"o":[["Cl",1],["Cl",1],["Cl",1],["Cl",1]],"ws":false,"note":"","val":32,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"Si–Cl","d":1.2,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":0,"fco":[0,0,0,0],"same":true},{"id":"CHCl3","f":"CHCl₃","name":"chloroform","c":"C","clp":0,"q":0,"o":[["H",1],["Cl",1],["Cl",1],["Cl",1]],"ws":false,"note":"","val":26,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"C–H","d":0.4,"p":false},{"l":"C–Cl","d":0.5,"p":true}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0,0],"same":false},{"id":"CH2Cl2","f":"CH₂Cl₂","name":"dichloromethane","c":"C","clp":0,"q":0,"o":[["Cl",1],["Cl",1],["H",1],["H",1]],"ws":false,"note":"","val":20,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"C–Cl","d":0.5,"p":true},{"l":"C–H","d":0.4,"p":false}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0,0],"same":false},{"id":"CH3Cl","f":"CH₃Cl","name":"chloromethane","c":"C","clp":0,"q":0,"o":[["Cl",1],["H",1],["H",1],["H",1]],"ws":false,"note":"","val":14,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"C–Cl","d":0.5,"p":true},{"l":"C–H","d":0.4,"p":false}],"bondpol":"some polar, some nonpolar","polar":"polar","why":"the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0,0],"same":false},{"id":"NH4","f":"NH₄⁺","name":"ammonium ion","c":"N","clp":0,"q":1,"o":[["H",1],["H",1],["H",1],["H",1]],"ws":false,"note":"","val":8,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"N–H","d":0.9,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":1,"fco":[0,0,0,0],"same":true},{"id":"SO4","f":"SO₄²⁻","name":"sulfate ion","c":"S","clp":0,"q":-2,"o":[["O",1],["O",1],["O",1],["O",1]],"ws":false,"note":"Octet form, as in C2 (formal charge +2 on S). The shape is tetrahedral in any version.","val":32,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"S–O","d":1.0,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":2,"fco":[-1,-1,-1,-1],"same":true},{"id":"PO4","f":"PO₄³⁻","name":"phosphate ion","c":"P","clp":0,"q":-3,"o":[["O",1],["O",1],["O",1],["O",1]],"ws":false,"note":"","val":32,"dom":4,"eg":"tetrahedral","mg":"tetrahedral","ang":"109.5°","axe":"AX₄","bonds":[{"l":"P–O","d":1.4,"p":true}],"bondpol":"all polar","polar":"nonpolar","why":"the shape is symmetric (no lone pairs on the central atom and identical outer atoms), so the equal bond dipoles cancel","fcc":1,"fco":[-1,-1,-1,-1],"same":true},{"id":"NH3","f":"NH₃","name":"ammonia","c":"N","clp":1,"q":0,"o":[["H",1],["H",1],["H",1]],"ws":false,"note":"NCERT Table 4.8: H–N–H = 107°, squeezed from 109.5° by the lone pair.","val":8,"dom":4,"eg":"tetrahedral","mg":"trigonal pyramidal","ang":"≈107° (less than 109.5°)","axe":"AX₃E","bonds":[{"l":"N–H","d":0.9,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on N makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0],"same":true},{"id":"PCl3","f":"PCl₃","name":"phosphorus trichloride","c":"P","clp":1,"q":0,"o":[["Cl",1],["Cl",1],["Cl",1]],"ws":false,"note":"","val":26,"dom":4,"eg":"tetrahedral","mg":"trigonal pyramidal","ang":"≈107° (less than 109.5°)","axe":"AX₃E","bonds":[{"l":"P–Cl","d":0.9,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on P makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0],"same":true},{"id":"NF3","f":"NF₃","name":"nitrogen trifluoride","c":"N","clp":1,"q":0,"o":[["F",1],["F",1],["F",1]],"ws":false,"note":"NCERT §4.3.6: NF₃ is polar but only weakly (0.23 D), because the lone pair points the opposite way to the N–F bond dipoles.","val":26,"dom":4,"eg":"tetrahedral","mg":"trigonal pyramidal","ang":"≈107° (less than 109.5°)","axe":"AX₃E","bonds":[{"l":"N–F","d":1.0,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on N makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":0,"fco":[0,0,0],"same":true},{"id":"H3O","f":"H₃O⁺","name":"hydronium ion","c":"O","clp":1,"q":1,"o":[["H",1],["H",1],["H",1]],"ws":false,"note":"","val":8,"dom":4,"eg":"tetrahedral","mg":"trigonal pyramidal","ang":"≈107° (less than 109.5°)","axe":"AX₃E","bonds":[{"l":"O–H","d":1.4,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on O makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":1,"fco":[0,0,0],"same":true},{"id":"SO3b","f":"SO₃²⁻","name":"sulfite ion","c":"S","clp":1,"q":-2,"o":[["O",1],["O",1],["O",1]],"ws":false,"note":"","val":26,"dom":4,"eg":"tetrahedral","mg":"trigonal pyramidal","ang":"≈107° (less than 109.5°)","axe":"AX₃E","bonds":[{"l":"S–O","d":1.0,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on S makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":1,"fco":[-1,-1,-1],"same":true},{"id":"ClO3","f":"ClO₃⁻","name":"chlorate ion","c":"Cl","clp":1,"q":-1,"o":[["O",1],["O",1],["O",1]],"ws":false,"note":"Octet form (formal charge +2 on Cl). The shape is the same in every version.","val":26,"dom":4,"eg":"tetrahedral","mg":"trigonal pyramidal","ang":"≈107° (less than 109.5°)","axe":"AX₃E","bonds":[{"l":"Cl–O","d":0.5,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pair on Cl makes the shape unsymmetric, so the bond dipoles do not cancel","fcc":2,"fco":[-1,-1,-1],"same":true},{"id":"H2O","f":"H₂O","name":"water","c":"O","clp":2,"q":0,"o":[["H",1],["H",1]],"ws":false,"note":"NCERT Table 4.8: H–O–H = 104.5°; two lone pairs squeeze harder than one.","val":8,"dom":4,"eg":"tetrahedral","mg":"bent","ang":"≈104.5° (less than 109.5°)","axe":"AX₂E₂","bonds":[{"l":"O–H","d":1.4,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pairs on O make the shape unsymmetric, so the bond dipoles do not cancel","fcc":0,"fco":[0,0],"same":true},{"id":"OF2","f":"OF₂","name":"oxygen difluoride","c":"O","clp":2,"q":0,"o":[["F",1],["F",1]],"ws":false,"note":"","val":20,"dom":4,"eg":"tetrahedral","mg":"bent","ang":"≈104.5° (less than 109.5°)","axe":"AX₂E₂","bonds":[{"l":"O–F","d":0.5,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pairs on O make the shape unsymmetric, so the bond dipoles do not cancel","fcc":0,"fco":[0,0],"same":true},{"id":"HOCl","f":"HOCl","name":"hypochlorous acid","c":"O","clp":2,"q":0,"o":[["H",1],["Cl",1]],"ws":false,"note":"","val":14,"dom":4,"eg":"tetrahedral","mg":"bent","ang":"≈104.5° (less than 109.5°)","axe":"AX₂E₂","bonds":[{"l":"O–H","d":1.4,"p":true},{"l":"O–Cl","d":0.5,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pairs on O make the shape unsymmetric and the outer atoms are not all the same, so the bond dipoles do not cancel","fcc":0,"fco":[0,0],"same":false},{"id":"ClO2","f":"ClO₂⁻","name":"chlorite ion","c":"Cl","clp":2,"q":-1,"o":[["O",1],["O",1]],"ws":false,"note":"","val":20,"dom":4,"eg":"tetrahedral","mg":"bent","ang":"≈104.5° (less than 109.5°)","axe":"AX₂E₂","bonds":[{"l":"Cl–O","d":0.5,"p":true}],"bondpol":"all polar","polar":"polar","why":"the lone pairs on Cl make the shape unsymmetric, so the bond dipoles do not cancel","fcc":1,"fco":[-1,-1],"same":true}];
+  var EN = { H:2.1, Be:1.5, B:2.0, C:2.5, N:3.0, O:3.5, F:4.0, Si:1.8, P:2.1, S:2.5, Cl:3.0, Br:2.8, I:2.5, A:2.0, X:3.0, Y:3.8 };
+  var COL = { H:['#f2f2f2','#201c15'], C:['#3b3b3b','#fff'], N:['#3b62d6','#fff'], O:['#e0413a','#fff'], F:['#8fd46a','#201c15'],
+              Cl:['#2fb14a','#fff'], Br:['#a63a2a','#fff'], P:['#ef8a2c','#201c15'], S:['#e6c229','#201c15'], B:['#f0a58a','#201c15'],
+              Si:['#c9b48a','#201c15'], A:['#6b5fd6','#fff'], X:['#9aa3ad','#201c15'], Y:['#e0413a','#fff'] };
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = 'http://www.w3.org/2000/svg';
+
+  // ---------- geometry ----------
+  function norm(v) { var l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; }
+  function pyr(gamma, n, lpUp) {
+    // n vectors symmetric about -y, pairwise angle gamma (degrees)
+    var cg = Math.cos(gamma * Math.PI / 180), ca;
+    if (n === 3) ca = Math.sqrt((cg + 0.5) / 1.5); else ca = Math.sqrt((1 + cg) / 2);
+    var sa = Math.sqrt(1 - ca * ca), out = [];
+    for (var i = 0; i < n; i++) { var p = (n === 3 ? i * 120 + 90 : i * 180) * Math.PI / 180; out.push([sa * Math.cos(p), -ca, sa * Math.sin(p)]); }
+    return out;
+  }
+  // returns {atoms:[vec], lps:[vec]}; slightly squeezed real angles for lone-pair shapes
+  function layout(nb, nl) {
+    var d = nb + nl, t = 1 / 3, s8 = Math.sqrt(8) / 3;
+    if (d === 2) return { atoms: [[-1, 0, 0], [1, 0, 0]], lps: [] };
+    if (d === 3) {
+      if (nl === 0) return { atoms: [[0, 1, 0], [-0.866, -0.5, 0], [0.866, -0.5, 0]], lps: [] };
+      var a = 58.5 * Math.PI / 180; // 117 deg
+      return { atoms: [[-Math.sin(a), -Math.cos(a), 0], [Math.sin(a), -Math.cos(a), 0]], lps: [[0, 1, 0]] };
+    }
+    if (d === 4) {
+      if (nl === 0) return { atoms: [[0, 1, 0], [s8, -t, 0], [-s8 / 2, -t, Math.sqrt(2 / 3)], [-s8 / 2, -t, -Math.sqrt(2 / 3)]], lps: [] };
+      if (nl === 1) return { atoms: pyr(107, 3), lps: [[0, 1, 0]] };
+      if (nl === 2) { var h = 52.25 * Math.PI / 180; return { atoms: [[-Math.sin(h), -Math.cos(h), 0], [Math.sin(h), -Math.cos(h), 0]], lps: [[0, 0.58, 0.82], [0, 0.58, -0.82]] }; }
+    }
+    if (d === 5) {
+      var ax = [[0, 1, 0], [0, -1, 0]], eq = [[1, 0, 0], [-0.5, 0, 0.866], [-0.5, 0, -0.866]];
+      var lps5 = eq.slice(0, nl), rest = eq.slice(nl).concat(ax);
+      if (nl === 3) rest = ax;
+      return { atoms: rest, lps: lps5 };
+    }
+    if (d === 6) {
+      var all = [[0, 1, 0], [0, -1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]];
+      return { atoms: all.slice(nl), lps: all.slice(0, nl) };
+    }
+  }
+  var SHAPE = {
+    '2,0': ['linear', 'linear', '180°'],
+    '3,0': ['trigonal planar', 'trigonal planar', '120°'], '3,1': ['trigonal planar', 'bent', 'slightly less than 120°'],
+    '4,0': ['tetrahedral', 'tetrahedral', '109.5°'], '4,1': ['tetrahedral', 'trigonal pyramidal', '≈107° (less than 109.5°)'],
+    '4,2': ['tetrahedral', 'bent', '≈104.5° (less than 109.5°)'],
+    '5,0': ['trigonal bipyramidal', 'trigonal bipyramidal', '90° and 120°'], '5,1': ['trigonal bipyramidal', 'seesaw', 'less than 90° and 120°'],
+    '5,2': ['trigonal bipyramidal', 'T-shaped', 'less than 90°'], '5,3': ['trigonal bipyramidal', 'linear', '180°'],
+    '6,0': ['octahedral', 'octahedral', '90°'], '6,1': ['octahedral', 'square pyramidal', 'less than 90°'], '6,2': ['octahedral', 'square planar', '90°']
+  };
+  var EXAMPLES = { '2,0': 'CO₂, HCN, BeCl₂', '3,0': 'BF₃, SO₃, HCO₂⁻', '3,1': 'SO₂, NO₂⁻, NOCl', '4,0': 'CH₄, CCl₄, CF₂Cl₂',
+    '4,1': 'NH₃, PBr₃, H₃O⁺', '4,2': 'H₂O, OF₂, ClO₂⁻', '5,0': 'PCl₅', '5,1': 'SF₄', '5,2': 'ClF₃', '5,3': 'XeF₂', '6,0': 'SF₆', '6,1': 'BrF₅', '6,2': 'XeF₄' };
+  var SUBN = '₀₁₂₃₄₅₆₇₈₉';
+  function axe(nb, nl) { return 'AX' + (nb > 1 ? SUBN[nb] : '') + (nl ? 'E' + (nl > 1 ? SUBN[nl] : '') : ''); }
+
+  // ---------- state ----------
+  var st = { mode: 'real', mol: BANK[0], nb: 4, nl: 0, diff: false, lp: true, dip: false, rot: true, yaw: 0.6, pitch: -0.35 };
+  var model = null;
+
+  function buildModel() {
+    var nb, nl, center, outer;
+    if (st.mode === 'real') {
+      var m = st.mol; nb = m.o.length; nl = m.clp; center = m.c; outer = m.o;
+    } else {
+      nb = st.nb; nl = st.nl; center = 'A';
+      outer = []; for (var i = 0; i < nb; i++) outer.push([(st.diff && i === 0) ? 'Y' : 'X', 1]);
+    }
+    var L = layout(nb, nl);
+    // put 'different' atoms somewhere sensible: keep bank order (first atom takes the first slot)
+    model = { center: center, nb: nb, nl: nl, atoms: L.atoms.map(function (v, i) { return { v: v, s: outer[i][0], bo: outer[i][1] }; }), lps: L.lps };
+  }
+
+  // ---------- rendering ----------
+  function rot(v) {
+    var cy = Math.cos(st.yaw), sy = Math.sin(st.yaw), cp = Math.cos(st.pitch), sp = Math.sin(st.pitch);
+    var x = v[0] * cy + v[2] * sy, z = -v[0] * sy + v[2] * cy;
+    var y = v[1] * cp - z * sp; z = v[1] * sp + z * cp;
+    return [x, y, z];
+  }
+  var R = 105; // bond length in px
+  function proj(v, len) { var r = rot(v), k = 1 + r[2] * 0.12; return { x: r[0] * (len || R) * k, y: -r[1] * (len || R) * k, z: r[2], k: k }; }
+  function el(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var a in attrs) e.setAttribute(a, attrs[a]); if (parent) parent.appendChild(e); return e; }
+
+  function defs(svg) {
+    var d = el('defs', {}, svg);
+    Object.keys(COL).forEach(function (k) {
+      var g = el('radialGradient', { id: 'g-' + k, cx: '35%', cy: '30%', r: '75%' }, d);
+      el('stop', { offset: '0%', 'stop-color': '#ffffff', 'stop-opacity': .75 }, g);
+      el('stop', { offset: '35%', 'stop-color': COL[k][0] }, g);
+      el('stop', { offset: '100%', 'stop-color': COL[k][0], 'stop-opacity': 1 }, g);
+    });
+  }
+  function arrow(g, x1, y1, x2, y2, color, w) {
+    var dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy); if (L < 6) return;
+    var ux = dx / L, uy = dy / L, px = -uy, py = ux, hd = 6 + w * 1.6;
+    el('line', { x1: x1, y1: y1, x2: x2 - ux * hd * .7, y2: y2 - uy * hd * .7, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round' }, g);
+    el('polygon', { points: [x2, y2, x2 - ux * hd + px * hd * .5, y2 - uy * hd + py * hd * .5, x2 - ux * hd - px * hd * .5, y2 - uy * hd - py * hd * .5].join(' '), fill: color }, g);
+    var cx = x1 + ux * 6, cy = y1 + uy * 6;
+    el('line', { x1: cx - px * 6, y1: cy - py * 6, x2: cx + px * 6, y2: cy + py * 6, stroke: color, 'stroke-width': w, 'stroke-linecap': 'round' }, g);
+  }
+
+  var svg = $('view');
+  function draw() {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    defs(svg);
+    var items = [];
+    var c0 = proj([0, 0, 0]);
+    var rc = 24;
+    model.atoms.forEach(function (a) {
+      var p = proj(a.v), ra = (a.s === 'H' ? 17 : 22) * p.k;
+      items.push({ z: p.z / 2 - 0.001, f: function (g) {
+        var dx = p.x - c0.x, dy = p.y - c0.y, L = Math.hypot(dx, dy) || 1, px = -dy / L, py = dx / L;
+        var offs = a.bo === 3 ? [-7, 0, 7] : a.bo === 2 ? [-4.5, 4.5] : [0];
+        offs.forEach(function (o) { el('line', { x1: c0.x + px * o, y1: c0.y + py * o, x2: p.x + px * o, y2: p.y + py * o, stroke: 'var(--bond)', 'stroke-width': a.bo > 1 ? 4.5 : 8, 'stroke-linecap': 'round' }, g); });
+      } });
+      items.push({ z: p.z, f: function (g) {
+        el('circle', { cx: p.x, cy: p.y, r: ra, fill: 'url(#g-' + a.s + ')', stroke: 'rgba(0,0,0,.25)', 'stroke-width': 1 }, g);
+        var t = el('text', { x: p.x, y: p.y + 1, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: COL[a.s][1], 'font-family': 'IBM Plex Sans, Arial, sans-serif', 'font-weight': 700, 'font-size': (a.s.length > 1 ? 15 : 17) * p.k }, g);
+        t.textContent = a.s;
+      } });
+    });
+    if (st.lp) model.lps.forEach(function (v) {
+      var p = proj(v, 62), dx = p.x - c0.x, dy = p.y - c0.y, L = Math.hypot(dx, dy);
+      var ang = Math.atan2(dy, dx) * 180 / Math.PI, cx = c0.x + dx * 0.72, cy = c0.y + dy * 0.72;
+      var rx = Math.max(14, L * 0.55), ry = 17;
+      items.push({ z: p.z * 0.6, f: function (g) {
+        el('ellipse', { cx: cx, cy: cy, rx: rx, ry: ry, transform: 'rotate(' + ang + ' ' + cx + ' ' + cy + ')', fill: 'var(--lobe)', stroke: 'var(--lobe-ln)', 'stroke-width': 1.3 }, g);
+        var ux = L ? dx / L : 0, uy = L ? dy / L : -1, px = -uy, py = ux, mx = c0.x + dx * 0.82, my = c0.y + dy * 0.82;
+        el('circle', { cx: mx + px * 5, cy: my + py * 5, r: 3.2, fill: 'var(--ink)' }, g);
+        el('circle', { cx: mx - px * 5, cy: my - py * 5, r: 3.2, fill: 'var(--ink)' }, g);
+      } });
+    });
+    items.push({ z: 0, f: function (g) {
+      el('circle', { cx: c0.x, cy: c0.y, r: rc, fill: 'url(#g-' + model.center + ')', stroke: 'rgba(0,0,0,.25)', 'stroke-width': 1 }, g);
+      var t = el('text', { x: c0.x, y: c0.y + 1, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: COL[model.center][1], 'font-family': 'IBM Plex Sans, Arial, sans-serif', 'font-weight': 700, 'font-size': model.center.length > 1 ? 16 : 19 }, g);
+      t.textContent = model.center;
+    } });
+    items.sort(function (a, b) { return a.z - b.z; });
+    var g = el('g', {}, svg);
+    items.forEach(function (it) { it.f(g); });
+
+    if (st.dip) {
+      var gd = el('g', {}, svg), net = [0, 0, 0];
+      model.atoms.forEach(function (a) {
+        var d = EN[a.s] - EN[model.center];
+        net[0] += d * a.v[0]; net[1] += d * a.v[1]; net[2] += d * a.v[2];
+        if (Math.abs(d) < 0.5) return;
+        var p = proj(a.v), dx = p.x - c0.x, dy = p.y - c0.y, L = Math.hypot(dx, dy); if (L < 20) return;
+        var ux = dx / L, uy = dy / L, px = -uy, py = ux, off = 17;
+        var s = [c0.x + ux * 30 + px * off, c0.y + uy * 30 + py * off], e = [p.x - ux * 26 + px * off, p.y - uy * 26 + py * off];
+        if (d > 0) arrow(gd, s[0], s[1], e[0], e[1], 'var(--dip)', 3); else arrow(gd, e[0], e[1], s[0], s[1], 'var(--dip)', 3);
+      });
+      var mag = Math.hypot(net[0], net[1], net[2]), ix = 148, iy = -118;
+      el('circle', { cx: ix, cy: iy, r: 44, fill: 'var(--surface)', stroke: 'var(--border)', 'stroke-width': 1.5 }, gd);
+      var lab = el('text', { x: ix, y: iy + 58, 'text-anchor': 'middle', fill: 'var(--net)', 'font-family': 'IBM Plex Sans, Arial, sans-serif', 'font-weight': 700, 'font-size': 13 }, gd);
+      if (mag > 1e-3 && anyPolar()) {
+        var pn = proj(norm(net), 1), l2 = Math.hypot(pn.x, pn.y) || 1, sc = 34 * Math.max(0.35, l2);
+        arrow(gd, ix - pn.x / l2 * sc, iy - pn.y / l2 * sc, ix + pn.x / l2 * sc, iy + pn.y / l2 * sc, 'var(--net)', 5);
+        lab.textContent = 'net dipole';
+      } else {
+        var z = el('text', { x: ix, y: iy + 1, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: 'var(--net)', 'font-family': 'IBM Plex Sans, Arial, sans-serif', 'font-weight': 700, 'font-size': 22 }, gd);
+        z.textContent = '0'; lab.textContent = 'net dipole = 0';
+      }
+    }
+  }
+  function anyPolar() { return model.atoms.some(function (a) { return Math.abs(EN[a.s] - EN[model.center]) >= 0.5; }); }
+
+  // ---------- info ----------
+  function info() {
+    var nb = model.nb, nl = model.nl, key = (nb + nl) + ',' + nl, sh = SHAPE[key];
+    var beyond = (nb + nl) > 4 ? '<span class="beyond">beyond this test</span>' : '';
+    var f = '', m = st.mol;
+    if (st.mode === 'real') {
+      $('fml').innerHTML = m.f + '<small>' + m.name + '</small>';
+      f += '<dt>Valence e⁻</dt><dd>' + m.val + '</dd>';
+    } else {
+      $('fml').innerHTML = axe(nb, nl) + '<small>' + (st.diff ? 'one outer atom different (Y)' : 'all outer atoms the same (X)') + '</small>';
+    }
+    f += '<dt>Electron domains</dt><dd>' + (nb + nl) + '<small>' + nb + ' bonded atom' + (nb > 1 ? 's' : '') + ' + ' + nl + ' lone pair' + (nl === 1 ? '' : 's') + ' on the central atom</small></dd>';
+    f += '<dt>Electron geometry</dt><dd>' + sh[0] + beyond + '</dd>';
+    f += '<dt>Molecular geometry</dt><dd>' + sh[1] + '<small>' + axe(nb, nl) + (nl ? ' · the lone pairs are invisible in the name' : ' · same as the electron geometry (no lone pairs)') + '</small></dd>';
+    f += '<dt>Bond angle</dt><dd>' + sh[2] + '</dd>';
+    if (st.mode === 'real') {
+      f += '<dt>Bonds</dt><dd>' + m.bonds.map(function (b) { return b.l + ' ΔEN ' + b.d.toFixed(1) + ' → ' + (b.p ? 'polar' : 'nonpolar'); }).join('<br>') + '</dd>';
+    } else {
+      f += '<dt>Examples</dt><dd>' + EXAMPLES[key] + '</dd>';
+    }
+    $('facts').innerHTML = f;
+    // polarity
+    var polar, why;
+    if (st.mode === 'real') { polar = m.polar === 'polar'; why = m.why; }
+    else {
+      polar = nl > 0 && !(nb + nl === 5 && nl === 3) && !(nb + nl === 6 && nl === 2) || st.diff;
+      if (!polar) why = (nl ? 'the lone pairs sit opposite each other, so the shape stays symmetric' : 'the shape is symmetric and every outer atom is the same') + ', so the equal bond dipoles cancel';
+      else why = (nl && !(nb + nl === 5 && nl === 3) && !(nb + nl === 6 && nl === 2) ? 'the lone pair' + (nl > 1 ? 's make' : ' makes') + ' the shape unsymmetric' : '') +
+                 (st.diff ? ((nl && !(nb + nl === 5 && nl === 3) && !(nb + nl === 6 && nl === 2)) ? ' and ' : '') + 'the different outer atom pulls harder than the others' : '') + ', so the bond dipoles do not cancel';
+    }
+    var v = $('verdict');
+    v.className = 'verdict ' + (polar ? 'polar' : 'nonpolar');
+    v.innerHTML = '<b>' + (polar ? 'Polar molecule' : 'Nonpolar molecule') + '</b><br>' + why.charAt(0).toUpperCase() + why.slice(1) + '.' +
+      (st.dip ? '' : ' <span style="color:var(--muted)">Turn on <i>Bond dipoles</i> to see it.</span>');
+    $('note').innerHTML = st.mode === 'real' && m.note ? m.note : (st.mode === 'build' ? 'In <b>Build</b> mode the outer atoms X are more electronegative than A, and Y is more electronegative still.' : '');
+    $('legend').hidden = !st.dip;
+  }
+
+  // ---------- controls ----------
+  function refresh() { buildModel(); info(); draw(); }
+  function mkChips() {
+    BANK.forEach(function (m) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip' + (m.ws ? ' ws' : ''); b.innerHTML = m.f; b.title = m.name;
+      b.setAttribute('aria-pressed', m === st.mol);
+      b.onclick = function () { st.mol = m; document.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); }); b.setAttribute('aria-pressed', 'true'); refresh(); };
+      (m.ws ? $('chips-ws') : $('chips-more')).appendChild(b);
+    });
+  }
+  function setMode(real) {
+    st.mode = real ? 'real' : 'build';
+    $('m-real').setAttribute('aria-pressed', real); $('m-build').setAttribute('aria-pressed', !real);
+    $('real-ctl').hidden = !real; $('build-ctl').hidden = real;
+    refresh();
+  }
+  function updSteps() {
+    $('nb').textContent = st.nb; $('nl').textContent = st.nl;
+    var d = st.nb + st.nl, maxL = { 2: 0, 3: 1, 4: 2, 5: 3, 6: 2 };
+    $('b-').disabled = st.nb <= 2 || (st.nb - 1 + st.nl) < 2;
+    $('b+').disabled = d >= 6;
+    $('l-').disabled = st.nl <= 0;
+    $('l+').disabled = d >= 6 || st.nl + 1 > (maxL[d + 1] || 0);
+  }
+  function tog(id, key) { $(id).onclick = function () { st[key] = !st[key]; this.setAttribute('aria-pressed', st[key]); info(); draw(); }; }
+  $('m-real').onclick = function () { setMode(true); };
+  $('m-build').onclick = function () { setMode(false); };
+  $('b-').onclick = function () { st.nb--; updSteps(); refresh(); };
+  $('b+').onclick = function () { st.nb++; updSteps(); refresh(); };
+  $('l-').onclick = function () { st.nl--; updSteps(); refresh(); };
+  $('l+').onclick = function () { st.nl++; updSteps(); refresh(); };
+  $('o-same').onclick = function () { st.diff = false; this.setAttribute('aria-pressed', 'true'); $('o-diff').setAttribute('aria-pressed', 'false'); refresh(); };
+  $('o-diff').onclick = function () { st.diff = true; this.setAttribute('aria-pressed', 'true'); $('o-same').setAttribute('aria-pressed', 'false'); refresh(); };
+  tog('t-lp', 'lp'); tog('t-dip', 'dip'); tog('t-rot', 'rot');
+  $('t-reset').onclick = function () { st.yaw = 0.6; st.pitch = -0.35; draw(); };
+
+  // drag to rotate
+  var drag = null, stage = $('stage');
+  stage.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, yaw: st.yaw, pitch: st.pitch }; stage.setPointerCapture(e.pointerId); });
+  stage.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    st.yaw = drag.yaw + (e.clientX - drag.x) * 0.012;
+    st.pitch = Math.max(-1.5, Math.min(1.5, drag.pitch + (e.clientY - drag.y) * 0.012));
+    draw();
+  });
+  function end() { drag = null; }
+  stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
+
+  var last = 0;
+  function tick(t) {
+    if (st.rot && !drag && last) { st.yaw += (t - last) * 0.00045; draw(); }
+    last = t; requestAnimationFrame(tick);
+  }
+  mkChips(); updSteps(); refresh(); requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
