@@ -5,7 +5,7 @@
 **Class worksheet (9/30):** an 8-column table: *Chemical Formula · Valence e⁻ · Lewis · Electron Geometry · Molecular Geometry & Bond Angle · Molecular Geometry Redraw · Bond Polarity? · Molecular Polarity?* The rows are PBr₃, HCO₂⁻, NOCl, NO₂⁻ and CF₂Cl₂. Dhairya finished most of the PBr₃ and HCO₂⁻ rows in class. **Expect the test to use this same table**, so every worked example below is laid out column by column.\
 **Grade-9 foundation:** NCERT Class 9 Ch9 *Atomic Foundations of Matter*, §9.4.1 *Bonding by sharing of electrons: Covalent Bond* (valence electrons, shared pairs, the octet).\
 **Grade-11 depth:** NCERT Class 11 Ch4 *Chemical Bonding and Molecular Structure*: §4.3.6 *Polarity of Bonds* (dipole moment, the crossed arrow, bond dipoles adding as vectors, Table 4.5, pp. 110–112) and §4.4 *The VSEPR Theory* (postulates, repulsion order, Tables 4.6–4.8, pp. 112–116). Electronegativities are the Pauling values from NCERT Class 11 Ch3, the same ones used in C1.\
-**Interactive tools** (study-tools site, Chemistry): *VSEPR Shape Explorer* (`vsepr-shapes/`), *Worksheet Trainer* (`vsepr-table/`), *VSEPR & Polarity flashcards* (`vsepr-flashcards/`) and *VSEPR & Polarity Practice Test* (`vsepr-test/`).
+**Interactive tools** (study-tools site, Chemistry): *VSEPR Shape Explorer* (`vsepr-shapes/`), *Wedge & Dash Lab* (`wedge-dash/`), *Worksheet Trainer* (`vsepr-table/`), *Worksheet Test* (`vsepr-worksheet/`), *VSEPR & Polarity flashcards* (`vsepr-flashcards/`) and *VSEPR & Polarity Practice Test* (`vsepr-test/`).
 
 <style>figure{display:block;width:100%;margin:10px 0;} img{max-width:100% !important;} figcaption{text-align:center;font-size:12px;color:#666;} table{font-size:12.5px;}</style>
 
@@ -28,7 +28,7 @@
 | 20–23 min | Part 3: the 3-D redraw with wedges and dashes |
 | 23–31 min | Part 4: bond polarity and molecular polarity |
 | 31–42 min | Part 5: the worksheet: check rows 1–2 together, then he solves rows 3–5 alone |
-| 42–45 min | Exit ticket; homework is the *Worksheet Trainer* plus the practice test |
+| 42–45 min | Exit ticket; homework is the *Wedge & Dash Lab* plus the *Worksheet Test* |
 
 **Pacing note.** Part 5 is the priority, since it is exactly what the test looks like. If you run behind, skip the derivations (the 109.5° cube proof and the vector sums). State the results and leave the proofs to the notes. Do not skip the "electron geometry vs molecular geometry" distinction in Part 2. It is the most common test mistake.
 
@@ -151,16 +151,58 @@ NCERT §4.4 gives the order of repulsion:
 
 ## Part 3 — The 3-D Redraw: Wedges & Dashes (3 min)
 
-A page is flat, so chemists use three kinds of line to show depth:
+*In the lesson, spend the 3 minutes on the rule and one drawing. The rest of this part is reference for the practice tools: **Wedge & Dash Lab** lets him turn a 3-D model and watch the drawing change.*
+
+### What the three lines mean
+
+A page is flat, but most molecules are not. Chemists use three kinds of line to show depth:
 
 ![Wedge and dash key](fig_wedge.png){width=100%}
 
-**How to draw each shape:**
+- **Plain line:** the bond lies **in the page**.
+- **Solid wedge:** the atom comes **out of the page, toward you**. It is drawn wider at that end because closer things look bigger.
+- **Hashed wedge (dash):** the atom goes **behind the page, away from you**.
 
-- **Linear, trigonal planar, bent:** everything lies in one plane, so use plain lines only.
-- **Tetrahedral:** 2 bonds in the plane of the page (plain lines), 1 wedge (toward you) and 1 dash (away).
-- **Trigonal pyramidal:** the lone pair points up; below it go 1 plain line, 1 wedge and 1 dash.
-- **Always** draw the central atom's lone pairs in the redraw (as a lobe or two dots). They are why the shape is what it is. Outer atoms' lone pairs can be left out of the redraw.
+The **thin end** of a wedge always sits at the central atom. The **wide end** is at the atom that sticks out.
+
+### When are they needed? The page test
+
+Ask: *can this molecule lie flat on the page?*
+
+- **Yes, if the shape is flat.** Linear, trigonal planar and bent molecules have all their atoms in one plane. Lay that plane on the page and every bond is a **plain line**. No wedges, no dashes.
+- **No, if the shape is 3-D.** Tetrahedral and trigonal pyramidal molecules cannot lie flat. A page can still hold the central atom and **2** of the outer atoms, because any 3 points lie in one plane. The atoms that are left over stick out: the one in front gets the **wedge**, the one behind gets the **dash**.
+
+| Molecular geometry | Flat? | Draw it with |
+| ---- | ---- | ---- |
+| linear, trigonal planar, bent | yes | plain lines only |
+| tetrahedral | no | 2 plain lines + 1 wedge + 1 dash |
+| trigonal pyramidal | no | lone pair on top + 1 plain line + 1 wedge + 1 dash |
+
+### How to draw it, step by step
+
+![Drawing a tetrahedral and a trigonal pyramidal molecule](fig_wedge_steps.png){width=92%}
+
+**Tetrahedral:**
+
+1. Write the central atom. Draw **2 plain lines** in a wide V: one straight up and one down to the left. These two bonds are in the page.
+2. On the other side, draw the **wedge**, thin end at the central atom.
+3. Next to the wedge, draw the **dash**.
+4. Write one atom at the end of every bond.
+
+**Trigonal pyramidal:** the same drawing, with the top bond replaced by the **lone pair**. That leaves 1 plain line, 1 wedge and 1 dash.
+
+**Why this works:** it is the molecule seen from the side, with two bonds lying in the page. Turn the molecule round to the back and the wedge and the dash swap, so it does not matter which of the two you call the wedge.
+
+### Common mistakes
+
+![Common wedge and dash mistakes](fig_wedge_mistakes.png){width=100%}
+
+- **A flat cross** (4 plain lines at 90°) shows a flat molecule, not a tetrahedron.
+- **Two wedges** (or two dashes): the two leftover atoms are on opposite sides of the page, so there is always one of each.
+- **A wedge drawn backwards:** the thin end goes at the central atom.
+- **A missing lone pair:** always draw the central atom's lone pairs in the redraw (a lobe or two dots). They are why the shape is what it is. Outer atoms' lone pairs can be left out.
+- **Wedges on a flat molecule:** BF₃, SO₂, NO₂⁻, NOCl and HCO₂⁻ all lie in the page.
+- **A bond with no atom on it:** every line, wedge and dash ends at an atom.
 
 ---
 
@@ -231,7 +273,8 @@ For a molecule with more than one bond, NCERT §4.3.6 says the dipole moment of 
 
 ### Feedback on his rows 1–2
 
-- **PBr₃:** everything he wrote is right: 26 e⁻, the Lewis structure (lone pair on P, 3 on each Br), tetrahedral with 4 domains, trigonal pyramidal 107°, the wedge/dash redraw, and polar bonds. **Missing:** molecular polarity = **Polar** (it has a lone pair, so it is not symmetric).
+- **PBr₃:** the answers he wrote are right: 26 e⁻, the Lewis structure (lone pair on P, 3 on each Br), tetrahedral with 4 domains, trigonal pyramidal 107°, and polar bonds. **Missing:** molecular polarity = **Polar** (it has a lone pair, so it is not symmetric).
+  - **His redraw needs a second look.** He has the right idea (the lone pair on P, with one plain line, one wedge and one dash), but check two things with him. Every bond must end at an atom: the solid wedge seems to have no Br written at its wide end. And the thin end of each wedge goes at P: his hashed wedge looks as if it is drawn the other way round. This is the part he is unsure about, so go through Part 3 and the *Wedge & Dash Lab* with him.
 - **HCO₂⁻:** right so far: 18 e⁻, brackets and the − charge, trigonal planar with 3 e⁻ domains, trigonal planar 120°, and the redraw. **Missing:** bond polarity: C–H is **nonpolar** (ΔEN 0.4; his "H: nonpolar" note is right) and C–O is **polar** (ΔEN 1.0). Molecular polarity is **Polar**, because the outer atoms are not all the same (1 H and 2 O).
   - Also mention: HCO₂⁻ has **2 resonance structures** (the double bond can sit on either O), just like NO₂⁻ in C2. The shape is the same in both.
 - **Spelling on the test:** "trigonal plan**a**r" (not "planer") and "pyramid**a**l".
@@ -328,7 +371,7 @@ The net points toward the side with the two F atoms. If all four were Cl (CCl₄
 
 ## Homework — Complete the Row (answers below)
 
-*For each one, fill in all 8 worksheet columns: valence e⁻, Lewis, electron geometry (with the number of domains), molecular geometry & bond angle, the 3-D redraw, bond polarity (with ΔEN) and molecular polarity.* Then do one round of the *Worksheet Trainer* and take the *VSEPR & Polarity Practice Test*.
+*For each one, fill in all 8 worksheet columns: valence e⁻, Lewis, electron geometry (with the number of domains), molecular geometry & bond angle, the 3-D redraw, bond polarity (with ΔEN) and molecular polarity.* Then practise the drawings in the *Wedge & Dash Lab* (10 right in *Draw it*), and take the *Worksheet Test* until he scores 90% or more.
 
 1. CH₂Cl₂
 2. SO₃²⁻ (sulfite)
