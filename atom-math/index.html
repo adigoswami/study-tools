@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Isotopes, Ions and Average Atomic Mass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f1e7; --surface:#fff; --surface2:#faf7f0; --text:#201c15; --muted:#6f6858; --border:#ddd3ba;
+          --ink:#201c15; --ink-text:#f5f1e7; --accent:#2f5d9e; --accent-bg:#dde7f6;
+          --good:#157a45; --good-bg:#dbeee0; --bad:#b4371f; --bad-bg:#f8ded6;
+          --shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14161c; --surface:#1d2027; --surface2:#181b21; --text:#ece7db; --muted:#9a9385; --border:#333844;
+            --ink:#ece7db; --ink-text:#14161c; --accent:#7fa8ea; --accent-bg:#1e2c46;
+            --good:#6bce93; --good-bg:#16321f; --bad:#f08a70; --bad-bg:#3d1d16;
+            --shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3); }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:760px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; line-height:1.15; }
+  .sub { color:var(--muted); font-size:13.5px; margin:0 0 14px; line-height:1.5; }
+  .sub b { color:var(--text); font-weight:600; }
+
+  .seg { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:4px; margin:0 0 14px; }
+  .seg button { flex:1; min-height:44px; border:0; background:transparent; color:var(--muted); font:600 14px "IBM Plex Sans",sans-serif; padding:8px 6px; border-radius:10px; cursor:pointer; line-height:1.2; }
+  .seg button[aria-pressed="true"] { background:var(--ink); color:var(--ink-text); }
+  @media (max-width:560px) { .seg { display:grid; grid-template-columns:1fr 1fr; } }
+
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:14px 16px; margin-bottom:12px; }
+  @media (max-width:420px) { .card { padding:13px 12px; } }
+  .lbl { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin:0 0 8px; }
+  .meta { display:flex; justify-content:space-between; gap:10px; font:600 12px "IBM Plex Mono",monospace; color:var(--muted); margin-bottom:6px; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { min-height:40px; border:1.5px solid var(--border); background:var(--surface); color:var(--text); font:600 13.5px "IBM Plex Sans",sans-serif; padding:8px 12px; border-radius:99px; cursor:pointer; }
+  .chip[aria-pressed="true"] { background:var(--ink); color:var(--ink-text); border-color:var(--ink); }
+  .btn { min-height:44px; border:0; border-radius:11px; font:600 14.5px "IBM Plex Sans",sans-serif; padding:11px 15px; cursor:pointer; background:var(--ink); color:var(--ink-text); }
+  .btn.ghost { background:transparent; color:var(--text); border:1px solid var(--border); }
+  .btn:disabled { opacity:.4; cursor:default; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .acts { margin-top:12px; }
+  .q { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(18px,4.6vw,21px); line-height:1.35; margin:4px 0 12px; }
+  .nb { white-space:nowrap; }
+  .tip { margin:8px 0 0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+
+  /* nuclear symbol: mass number above atomic number on the left, charge top right */
+  .nuc { display:inline-flex; align-items:stretch; white-space:nowrap; line-height:1; vertical-align:middle; font-size:1.3em; color:var(--text); }
+  .nuc-l { display:inline-flex; flex-direction:column; justify-content:space-between; align-items:flex-end; margin-right:.1em; padding:.04em 0 .02em; font:600 .5em/1 "IBM Plex Sans",Arial,sans-serif; }
+  .nuc-l sup, .nuc-l sub, .nuc-c { font-size:inherit; line-height:1; vertical-align:baseline; position:static; }
+  .nuc-s { font:600 1em/1.1 "Fraunces",Georgia,serif; }
+  .nuc-c { align-self:flex-start; margin-left:.1em; padding-top:.04em; font:600 .5em/1 "IBM Plex Sans",Arial,sans-serif; }
+  .nuc.big { font-size:54px; }
+  .nuc.mid { font-size:32px; }
+
+  .stage { background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:18px 10px; text-align:center; min-width:0; }
+  .stage .words { font-size:17px; font-weight:600; line-height:1.4; }
+  .stage .lbl { margin-bottom:10px; }
+  .pair { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px; }
+  .pair .stage { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:12px 8px 16px; }
+  .pair .stage .body { flex:1; display:flex; align-items:center; justify-content:center; min-height:64px; }
+  .pair .nuc.big { font-size:44px; }
+  .pair .words { font-size:15.5px; }
+
+  .fields { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:12px; }
+  .fields.two { grid-template-columns:repeat(2,minmax(0,1fr)); max-width:420px; }
+  .fields.one { grid-template-columns:minmax(0,220px); }
+  .fld { display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .fld span { font-size:12.5px; font-weight:600; color:var(--muted); }
+  input.num, select.sel { width:100%; min-height:46px; font:600 17px "IBM Plex Mono",monospace; padding:8px 8px; border-radius:11px; border:1.5px solid var(--border); background:var(--surface2); color:var(--text); text-align:center; }
+  select.sel { font:600 16px "IBM Plex Sans",sans-serif; text-align:left; padding:8px 10px; }
+  input.num:focus, select.sel:focus, .btn:focus-visible, .chip:focus-visible, .opt:focus-visible, .seg button:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .ok-in { border-color:var(--good) !important; background:var(--good-bg) !important; }
+  .no-in { border-color:var(--bad) !important; background:var(--bad-bg) !important; }
+
+  .opts { display:grid; gap:8px; margin-top:12px; }
+  .opts.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .opt { min-height:48px; display:flex; align-items:center; justify-content:flex-start; gap:10px; text-align:left; border:1.5px solid var(--border); background:var(--surface); color:var(--text); border-radius:12px; padding:11px 12px; cursor:pointer; font:500 15px "IBM Plex Sans",sans-serif; line-height:1.35; }
+  .opts.two .opt { justify-content:center; text-align:center; min-height:72px; }
+  .opt:disabled { cursor:default; opacity:1; color:var(--text); }
+  .opt.right { border-color:var(--good); background:var(--good-bg); }
+  .opt.wrong { border-color:var(--bad); background:var(--bad-bg); }
+
+  .fb { margin-top:12px; padding:10px 12px; border-radius:12px; font-size:14.5px; line-height:1.5; }
+  .fb.ok { background:var(--good-bg); } .fb.no { background:var(--bad-bg); } .fb.note { background:var(--accent-bg); }
+  .fb > b:first-child { display:block; }
+  ul.pf { list-style:none; margin:6px 0 0; padding:0; }
+  ul.pf li { padding:6px 0 6px 10px; border-left:3px solid var(--muted); margin-top:6px; }
+  ul.pf li.ok { border-left-color:var(--good); }
+  ul.pf li.no { border-left-color:var(--bad); }
+  ul.pf li b { display:block; }
+
+  table.data { width:100%; border-collapse:collapse; table-layout:fixed; font-size:15px; font-variant-numeric:tabular-nums; }
+  table.data th { font:600 11px "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); text-align:left; padding:6px 6px; border-bottom:1px solid var(--border); vertical-align:bottom; }
+  table.data td { padding:8px 6px; border-bottom:1px solid var(--border); text-align:left; overflow-wrap:anywhere; }
+  table.data tfoot td { border-bottom:0; font-weight:600; }
+  table.data .unk { color:var(--accent); font-weight:700; }
+  table.data .n, table.data th.n { text-align:right; }
+  table.mini { margin-top:8px; font-size:14px; }
+  table.mini th, table.mini td { padding:5px 6px; text-align:center; }
+  table.mini td:first-child, table.mini th:first-child { text-align:left; }
+
+  ol.steps { margin:12px 0 0; padding-left:22px; font-size:14.5px; line-height:1.55; }
+  ol.steps li { margin-bottom:10px; }
+  ol.steps li > b { display:block; }
+  .eq { display:block; font:500 13.5px/1.6 "IBM Plex Mono",monospace; overflow-wrap:anywhere; }
+  .eq b { font-weight:600; }
+
+  table.calc td { padding:5px 4px; }
+  table.calc td:first-child { font-weight:600; font-size:14px; }
+  table.calc input.num { font-size:16px; min-height:44px; text-align:right; padding:6px 8px; }
+  .work { margin-top:12px; padding:10px 12px; border-radius:12px; background:var(--surface2); border:1px solid var(--border); }
+  .work .big { font:600 19px "Fraunces",Georgia,serif; margin:8px 0 0; }
+  svg.nl { display:block; width:100%; max-width:440px; height:auto; margin:10px auto 0; }
+  .nl-axis { stroke:var(--muted); stroke-width:1.5; }
+  .nl-dot { fill:var(--accent); fill-opacity:.82; stroke:var(--surface); stroke-width:1.5; }
+  .nl-avg { stroke:var(--text); stroke-width:2.5; stroke-linecap:round; }
+  .nl-tri { fill:var(--text); }
+  .nl-lab { fill:var(--text); font:600 12px "IBM Plex Sans",Arial,sans-serif; }
+  .nl-sub { fill:var(--muted); font:500 10.5px "IBM Plex Mono",monospace; }
+
+  details.rules summary { cursor:pointer; font-weight:600; font-size:14.5px; min-height:40px; display:flex; align-items:center; list-style:none; }
+  details.rules summary::-webkit-details-marker { display:none; }
+  details.rules summary::before { content:"+"; display:inline-block; width:20px; font:600 17px "IBM Plex Mono",monospace; color:var(--muted); }
+  details.rules[open] summary::before { content:"\2212"; }
+  details.rules ul { margin:4px 0 4px; padding-left:22px; font-size:14px; line-height:1.6; }
+  footer { margin-top:22px; font-size:12px; color:var(--muted); text-align:center; line-height:1.5; }
+  footer button { min-height:40px; margin-top:6px; border:1px solid var(--border); background:transparent; color:var(--muted); border-radius:10px; padding:8px 12px; font:600 12.5px "IBM Plex Sans",sans-serif; cursor:pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>Isotopes, Ions and Average Atomic Mass</h1>
+  <p class="sub"><b>How to use:</b> pick a mode, answer, then press Check. Keep a periodic table and a calculator next to you.</p>
+
+  <div class="seg" role="group" aria-label="Mode">
+    <button type="button" id="m-count" aria-pressed="true">Count particles</button>
+    <button type="button" id="m-pair" aria-pressed="false">Isotope or ion?</button>
+    <button type="button" id="m-avg" aria-pressed="false">Average mass</button>
+    <button type="button" id="m-calc" aria-pressed="false">Calculator</button>
+  </div>
+
+  <!-- ============ 1 COUNT PARTICLES ============ -->
+  <section id="count">
+    <div class="card">
+      <div class="meta"><span>Count particles</span><span id="count-score"></span></div>
+      <p class="q" id="p-q"></p>
+      <div class="stage" id="p-stage"></div>
+      <div class="fields" id="p-fields">
+        <label class="fld"><span>Protons</span><input class="num" id="p-p" type="text" inputmode="decimal" autocomplete="off" aria-label="Protons"></label>
+        <label class="fld"><span>Neutrons</span><input class="num" id="p-n" type="text" inputmode="decimal" autocomplete="off" aria-label="Neutrons"></label>
+        <label class="fld"><span>Electrons</span><input class="num" id="p-e" type="text" inputmode="decimal" autocomplete="off" aria-label="Electrons"></label>
+      </div>
+      <div class="opts two" id="p-opts" hidden></div>
+      <div id="p-fb" aria-live="polite"></div>
+      <div class="row acts">
+        <button type="button" class="btn" id="p-check">Check</button>
+        <button type="button" class="btn ghost" id="p-z">Show atomic number</button>
+        <button type="button" class="btn ghost" id="p-next">Skip →</button>
+      </div>
+    </div>
+    <details class="card rules">
+      <summary>Quick rules</summary>
+      <ul>
+        <li><b>Protons</b> = atomic number (the bottom-left number). Protons tell you the element.</li>
+        <li><b>Neutrons</b> = mass number − atomic number.</li>
+        <li><b>Electrons</b> = protons − charge. In a neutral atom, electrons = protons.</li>
+        <li>A <b>positive ion (cation)</b> has lost electrons. A <b>negative ion (anion)</b> has gained electrons.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- ============ 2 ISOTOPE OR ION ============ -->
+  <section id="pair" hidden>
+    <div class="card">
+      <div class="meta"><span id="c-kind">Isotope or ion?</span><span id="pair-score"></span></div>
+      <p class="q" id="c-q"></p>
+      <div id="c-stage"></div>
+      <div class="opts" id="c-opts"></div>
+      <div id="c-fb" aria-live="polite"></div>
+      <div class="row acts"><button type="button" class="btn ghost" id="c-next">Skip →</button></div>
+    </div>
+    <details class="card rules">
+      <summary>Quick rules</summary>
+      <ul>
+        <li><b>Isotopes:</b> same protons, different neutrons, so different mass numbers.</li>
+        <li><b>Ions:</b> same protons, different electrons.</li>
+        <li>Different protons always means a <b>different element</b>.</li>
+        <li>A positive ion keeps the element name: sodium ion. A negative ion ends in <b>-ide</b>: chloride ion.</li>
+        <li><b>Hyphen notation:</b> element name-mass number, like carbon-14.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- ============ 3 AVERAGE ATOMIC MASS ============ -->
+  <section id="avg" hidden>
+    <div class="card">
+      <div class="lbl">Question type</div>
+      <div class="chips" id="q-chips" role="group" aria-label="Question type">
+        <button type="button" class="chip" data-t="mix" aria-pressed="true">Mixed</button>
+        <button type="button" class="chip" data-t="A" aria-pressed="false">A · Find the average</button>
+        <button type="button" class="chip" data-t="B" aria-pressed="false">B · Find the percents</button>
+        <button type="button" class="chip" data-t="C" aria-pressed="false">C · Find a mass</button>
+        <button type="button" class="chip" data-t="D" aria-pressed="false">D · No calculator</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="meta"><span id="q-kind"></span><span id="avg-score"></span></div>
+      <p class="q" id="q-text"></p>
+      <div id="q-table"></div>
+      <div id="q-inputs"></div>
+      <div id="q-fb" aria-live="polite"></div>
+      <div class="row acts">
+        <button type="button" class="btn" id="q-check">Check</button>
+        <button type="button" class="btn ghost" id="q-hint">Hint</button>
+        <button type="button" class="btn ghost" id="q-sol">Show full solution</button>
+        <button type="button" class="btn ghost" id="q-next">Skip →</button>
+      </div>
+      <ol class="steps" id="q-steps" hidden></ol>
+    </div>
+    <details class="card rules">
+      <summary>Quick rules</summary>
+      <ul>
+        <li><b>Average atomic mass</b> = sum of (isotope mass × fraction). Fraction = percent ÷ 100. Unit: amu.</li>
+        <li>The percents add to 100, so the fractions add to 1.</li>
+        <li>Two isotopes with unknown percents: let the fractions be <b>x</b> and <b>(1 − x)</b>.</li>
+        <li>It is a weighted average, so it sits closest to the mass of the most abundant isotope.</li>
+        <li>Answers are accepted within 0.02 amu or 0.3 percentage points.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- ============ 4 CALCULATOR ============ -->
+  <section id="calc" hidden>
+    <div class="card">
+      <div class="lbl">Element</div>
+      <select class="sel" id="k-preset" aria-label="Element preset"></select>
+      <table class="data calc" style="margin-top:12px">
+        <colgroup><col style="width:27%"><col style="width:38%"><col style="width:35%"></colgroup>
+        <thead><tr><th>Isotope</th><th class="n">Mass (amu)</th><th class="n">Percent (%)</th></tr></thead>
+        <tbody id="k-rows"></tbody>
+      </table>
+      <div class="row acts">
+        <button type="button" class="btn ghost" id="k-add">Add row</button>
+        <button type="button" class="btn ghost" id="k-del">Remove row</button>
+        <button type="button" class="btn ghost" id="k-reset">Reset</button>
+      </div>
+      <div class="work" id="k-work" aria-live="polite"></div>
+      <div id="k-warn"></div>
+      <div id="k-line"></div>
+      <p class="tip">Dot size shows abundance. The line marks the average. Change a percent and watch the line move toward the bigger dot.</p>
+    </div>
+  </section>
+
+  <footer>Isotope masses and percents are rounded textbook values. Averages are worked out from them, so the last digit can differ from your periodic table.<br>
+    <button type="button" id="reset-scores">Reset scores</button></footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var MINUS = '−', TIMES = '×', DIV = '÷';
+  function $(id) { return document.getElementById(id); }
+  function rnd(n) { return Math.floor(Math.random() * n); }
+  function pick(a) { return a[rnd(a.length)]; }
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = rnd(i + 1), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function weighted(pairs) {
+    var t = 0, i; for (i = 0; i < pairs.length; i++) t += pairs[i][1];
+    var r = Math.random() * t;
+    for (i = 0; i < pairs.length; i++) { r -= pairs[i][1]; if (r < 0) return pairs[i][0]; }
+    return pairs[pairs.length - 1][0];
+  }
+  function fx(x, d) { return x.toFixed(d).replace('-', MINUS); }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function eq(s) { return '<span class="eq">' + s + '</span>'; }
+  // keep isotope names such as Cl-37 or carbon-14 on one line (text only: never pass SVG through this)
+  function nb(s) { return String(s).replace(/([A-Za-z]+-(?:\d+|\?))/g, '<span class="nb">$1</span>'); }
+  // read a typed number: allows a comma for the decimal point and a trailing % or amu
+  function num(s) {
+    s = String(s == null ? '' : s).trim().replace(/\s*(%|amu)$/i, '').replace(',', '.').replace(MINUS, '-');
+    if (!/^[-+]?(\d+\.?\d*|\.\d+)$/.test(s)) return NaN;
+    return parseFloat(s);
+  }
+
+  // ================= DATA =================
+  // isotope data for average atomic mass: [mass number, mass in amu, natural abundance in %]
+  var RAW = [
+    ['Li', 'lithium', 3, [[6, '6.015', '7.59'], [7, '7.016', '92.41']]],
+    ['B', 'boron', 5, [[10, '10.013', '19.9'], [11, '11.009', '80.1']]],
+    ['C', 'carbon', 6, [[12, '12.000', '98.93'], [13, '13.003', '1.07']]],
+    ['N', 'nitrogen', 7, [[14, '14.003', '99.636'], [15, '15.000', '0.364']]],
+    ['Ne', 'neon', 10, [[20, '19.992', '90.48'], [21, '20.994', '0.27'], [22, '21.991', '9.25']]],
+    ['Mg', 'magnesium', 12, [[24, '23.985', '78.99'], [25, '24.986', '10.00'], [26, '25.983', '11.01']]],
+    ['Si', 'silicon', 14, [[28, '27.977', '92.223'], [29, '28.976', '4.685'], [30, '29.974', '3.092']]],
+    ['Cl', 'chlorine', 17, [[35, '34.969', '75.78'], [37, '36.966', '24.22']]],
+    ['K', 'potassium', 19, [[39, '38.964', '93.258'], [40, '39.964', '0.012'], [41, '40.962', '6.730']]],
+    ['Cu', 'copper', 29, [[63, '62.930', '69.15'], [65, '64.928', '30.85']]],
+    ['Ga', 'gallium', 31, [[69, '68.926', '60.108'], [71, '70.925', '39.892']]],
+    ['Br', 'bromine', 35, [[79, '78.918', '50.69'], [81, '80.916', '49.31']]],
+    ['Rb', 'rubidium', 37, [[85, '84.912', '72.17'], [87, '86.909', '27.83']]],
+    ['Ag', 'silver', 47, [[107, '106.905', '51.839'], [109, '108.905', '48.161']]]
+  ];
+  var DATA = RAW.map(function (r) {
+    return { sym: r[0], name: r[1], Z: r[2], iso: r[3].map(function (i) {
+      return { A: i[0], label: r[0] + '-' + i[0], hy: r[1] + '-' + i[0], ms: i[1], ps: i[2], m: parseFloat(i[1]), p: parseFloat(i[2]) };
+    }) };
+  });
+  // weighted average: sum of mass x percent / 100
+  function average(isos) { var s = 0; for (var i = 0; i < isos.length; i++) s += isos[i].m * isos[i].p / 100; return s; }
+  function r3(x) { return Number(x.toFixed(3)); }
+  function dataFor(sym) { for (var i = 0; i < DATA.length; i++) if (DATA[i].sym === sym) return DATA[i]; return null; }
+
+  // elements for particle counting: realistic mass numbers and common ion charges
+  var SYMS = ('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd ' +
+    'In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb').split(' ');
+  var ELEMENTS = [
+    { Z: 1, sym: 'H', name: 'hydrogen', iso: [1, 2, 3], ch: [1], stem: 'hydr' },
+    { Z: 2, sym: 'He', name: 'helium', iso: [3, 4], ch: [] },
+    { Z: 3, sym: 'Li', name: 'lithium', iso: [6, 7], ch: [1], stem: 'lith' },
+    { Z: 4, sym: 'Be', name: 'beryllium', iso: [9], ch: [] },
+    { Z: 5, sym: 'B', name: 'boron', iso: [10, 11], ch: [] },
+    { Z: 6, sym: 'C', name: 'carbon', iso: [12, 13, 14], ch: [] },
+    { Z: 7, sym: 'N', name: 'nitrogen', iso: [14, 15], ch: [-3], stem: 'nitr' },
+    { Z: 8, sym: 'O', name: 'oxygen', iso: [16, 17, 18], ch: [-2], stem: 'ox' },
+    { Z: 9, sym: 'F', name: 'fluorine', iso: [19], ch: [-1], stem: 'fluor' },
+    { Z: 10, sym: 'Ne', name: 'neon', iso: [20, 22], ch: [] },
+    { Z: 11, sym: 'Na', name: 'sodium', iso: [23], ch: [1], stem: 'sod' },
+    { Z: 12, sym: 'Mg', name: 'magnesium', iso: [24, 25, 26], ch: [2], stem: 'magnes' },
+    { Z: 13, sym: 'Al', name: 'aluminum', iso: [27], ch: [3], stem: 'alumin' },
+    { Z: 14, sym: 'Si', name: 'silicon', iso: [28, 30], ch: [] },
+    { Z: 15, sym: 'P', name: 'phosphorus', iso: [31], ch: [-3], stem: 'phosph' },
+    { Z: 16, sym: 'S', name: 'sulfur', iso: [32, 34], ch: [-2], stem: 'sulf' },
+    { Z: 17, sym: 'Cl', name: 'chlorine', iso: [35, 37], ch: [-1], stem: 'chlor' },
+    { Z: 18, sym: 'Ar', name: 'argon', iso: [40], ch: [] },
+    { Z: 19, sym: 'K', name: 'potassium', iso: [39, 41], ch: [1], stem: 'potass' },
+    { Z: 20, sym: 'Ca', name: 'calcium', iso: [40, 42, 44], ch: [2], stem: 'calc' },
+    { Z: 26, sym: 'Fe', name: 'iron', iso: [54, 56, 57], ch: [2, 3] },
+    { Z: 29, sym: 'Cu', name: 'copper', iso: [63, 65], ch: [1, 2] },
+    { Z: 30, sym: 'Zn', name: 'zinc', iso: [64, 66], ch: [2], stem: 'zinc' },
+    { Z: 35, sym: 'Br', name: 'bromine', iso: [79, 81], ch: [-1], stem: 'brom' },
+    { Z: 47, sym: 'Ag', name: 'silver', iso: [107, 109], ch: [1], stem: 'silver' },
+    { Z: 53, sym: 'I', name: 'iodine', iso: [127], ch: [-1], stem: 'iod' }
+  ];
+  var BYSYM = {}; ELEMENTS.forEach(function (e) { BYSYM[e.sym] = e; });
+  var ROMAN = ['', 'I', 'II', 'III', 'IV'];
+
+  // ================= CHEMISTRY HELPERS =================
+  function species(el, A, charge) { return { sym: el.sym, name: el.name, Z: el.Z, A: A, charge: charge || 0 }; }
+  function sp3(sym, A, charge) { return species(BYSYM[sym], A, charge); }
+  // protons = Z; neutrons = A - Z; electrons = Z - charge
+  function particleCounts(sp) { return { p: sp.Z, n: sp.A - sp.Z, e: sp.Z - sp.charge }; }
+  function chargeText(c) { if (!c) return ''; var n = Math.abs(c); return (n === 1 ? '' : n) + (c > 0 ? '+' : MINUS); }   // 2+, 3−, +, −
+  function chargeWords(c) { return Math.abs(c) + (c > 0 ? '+' : MINUS); }                                                // 1+, 2−
+  function hyphen(sp) { return sp.name + '-' + sp.A; }
+  function article(w) { return /^[aeio]/.test(w) ? 'an' : 'a'; }
+  function speciesWords(sp) {
+    return sp.charge ? article(sp.name) + ' ' + hyphen(sp) + ' ion with a ' + chargeWords(sp.charge) + ' charge' : 'a neutral atom of ' + hyphen(sp);
+  }
+  function shortWords(sp) { return sp.charge ? hyphen(sp) + ' ion, ' + chargeWords(sp.charge) + ' charge' : hyphen(sp) + ', neutral atom'; }
+  // positive ion keeps the element name; a one-atom negative ion ends in -ide
+  function ionName(sp) {
+    var el = BYSYM[sp.sym];
+    if (!sp.charge) return sp.name + ' atom';
+    if (sp.charge < 0) return el.stem + 'ide ion';
+    return sp.name + (el.ch.length > 1 ? '(' + ROMAN[sp.charge] + ')' : '') + ' ion';
+  }
+  // the rendered symbol. o.swap puts the two left numbers the wrong way round (used for wrong choices only)
+  function nuc(o, size) {
+    var top = o.swap ? o.Z : o.A, bot = o.swap ? o.A : o.Z, ch = chargeText(o.charge);
+    var say = o.sym + ', top left ' + top + ', bottom left ' + bot + (o.charge ? ', charge ' + chargeWords(o.charge).replace(MINUS, ' minus').replace('+', ' plus') : '');
+    return '<span class="nuc' + (size ? ' ' + size : '') + '" role="img" aria-label="' + say + '">' +
+      '<span class="nuc-l" aria-hidden="true"><sup>' + top + '</sup><sub>' + bot + '</sub></span>' +
+      '<span class="nuc-s" aria-hidden="true">' + o.sym + '</span>' +
+      (ch ? '<sup class="nuc-c" aria-hidden="true">' + ch + '</sup>' : '') + '</span>';
+  }
+
+  // ================= MODE 1 ITEMS =================
+  function randomSpecies(ionChance) {
+    var el = pick(ELEMENTS), A = pick(el.iso), c = 0;
+    if (el.ch.length && Math.random() < (ionChance == null ? 0.55 : ionChance)) c = pick(el.ch);
+    return species(el, A, c);
+  }
+  // 4 symbols: the right one, plus slips a student really makes
+  function reverseChoices(sp) {
+    var c = particleCounts(sp), out = [], seen = {};
+    function add(ch, ok) {
+      var o = { sym: sp.sym, Z: sp.Z, A: sp.A, charge: sp.charge, swap: false, ok: !!ok }, k;
+      for (k in ch) o[k] = ch[k];
+      var key = [o.sym, o.swap ? o.Z : o.A, o.swap ? o.A : o.Z, o.charge].join('|');
+      if (seen[key] || out.length >= 4) return;
+      seen[key] = 1; out.push(o);
+    }
+    add({}, true);
+    if (c.n >= 1) add({ A: c.n, slip: 'mass' });                              // mass number = neutrons only
+    if (sp.charge) add({ charge: -sp.charge, slip: 'sign' });                 // charge sign the wrong way
+    else if (sp.A !== sp.Z) add({ swap: true, slip: 'swap' });                // two left numbers swapped
+    var wz = c.e !== sp.Z && c.e >= 1 ? c.e : (c.n !== sp.Z && c.n >= 1 ? c.n : sp.Z + 1);
+    add({ sym: SYMS[wz - 1], Z: wz, slip: 'element' });                       // element read from electrons or neutrons
+    add({ A: sp.A + sp.Z, slip: 'mass' });
+    if (sp.A !== sp.Z) add({ swap: true, slip: 'swap' });
+    add({ charge: sp.charge + 1, slip: 'sign' });
+    return shuffle(out);
+  }
+  function makeParticleItem(kind) {
+    kind = kind || weighted([['symbol', 1], ['words', 1], ['reverse', 1]]);
+    var sp = randomSpecies(), it = { kind: kind, sp: sp, answer: particleCounts(sp) };
+    if (kind === 'words') it.words = speciesWords(sp);
+    if (kind === 'reverse') it.choices = reverseChoices(sp);
+    return it;
+  }
+  function chargeSigned(c) { return c > 0 ? '(+' + c + ')' : c < 0 ? '(' + MINUS + (-c) + ')' : '0'; }
+  function particleReasons(sp) {
+    var c = particleCounts(sp), n = Math.abs(sp.charge);
+    return {
+      p: 'Protons = atomic number Z = ' + sp.Z + '.',
+      n: 'Neutrons = A ' + MINUS + ' Z = ' + sp.A + ' ' + MINUS + ' ' + sp.Z + ' = ' + c.n + '.',
+      e: 'Electrons = Z ' + MINUS + ' charge = ' + sp.Z + ' ' + MINUS + ' ' + chargeSigned(sp.charge) + ' = ' + c.e + '. ' +
+        (sp.charge > 0 ? 'A ' + chargeWords(sp.charge) + ' charge means ' + plural(n, 'electron') + ' lost.'
+          : sp.charge < 0 ? 'A ' + chargeWords(sp.charge) + ' charge means ' + plural(n, 'electron') + ' gained.'
+          : 'A neutral atom has electrons = protons.')
+    };
+  }
+
+  // ================= MODE 2 ITEMS =================
+  var REL = { isotopes: 'Isotopes of the same element', ion: 'An atom and its ion (same element, different electrons)', different: 'Different elements', identical: 'Identical' };
+  var REL_ORDER = ['isotopes', 'ion', 'different', 'identical'];
+  function classify(a, b) {
+    if (a.Z !== b.Z) return 'different';
+    if (a.A === b.A && a.charge === b.charge) return 'identical';
+    if (a.A !== b.A && a.charge === b.charge) return 'isotopes';
+    if (a.A === b.A && (a.charge === 0 || b.charge === 0)) return 'ion';
+    return 'other';
+  }
+  // look-alike pairs of different elements: same mass number, same electrons, or same neutrons
+  var TRAPS = [
+    ['C', 14, 0, 'N', 14, 0], ['Ar', 40, 0, 'Ca', 40, 0], ['H', 3, 0, 'He', 3, 0], ['Ca', 40, 2, 'Ar', 40, 0],
+    ['Na', 23, 1, 'Ne', 20, 0], ['F', 19, -1, 'Ne', 20, 0], ['O', 16, -2, 'Ne', 22, 0], ['Mg', 24, 2, 'Ne', 20, 0], ['Al', 27, 3, 'Ne', 20, 0],
+    ['Cl', 35, -1, 'Ar', 40, 0], ['K', 39, 1, 'Ar', 40, 0], ['S', 32, -2, 'Ar', 40, 0], ['Li', 7, 1, 'He', 4, 0],
+    ['Na', 23, 1, 'F', 19, -1], ['K', 39, 1, 'Cl', 37, -1], ['Mg', 24, 2, 'O', 16, -2],
+    ['C', 13, 0, 'N', 14, 0], ['N', 15, 0, 'O', 16, 0], ['Na', 23, 0, 'Mg', 24, 0], ['P', 31, 0, 'S', 32, 0],
+    ['K', 39, 0, 'Ca', 40, 0], ['B', 11, 0, 'C', 12, 0], ['O', 18, 0, 'F', 19, 0], ['Si', 30, 0, 'P', 31, 0]
+  ];
+  function makeCompareItem(kind) {
+    kind = kind || weighted([['compare', 6], ['name', 2], ['hyphen', 2]]);
+    if (kind === 'name') return makeNameItem();
+    if (kind === 'hyphen') return makeHyphenItem();
+    var rel = weighted([['isotopes', 3], ['ion', 3], ['different', 3], ['identical', 1.5]]), a, b, el, t, two;
+    if (rel === 'isotopes') {
+      el = pick(ELEMENTS.filter(function (e) { return e.iso.length > 1; }));
+      two = shuffle(el.iso.slice()).slice(0, 2);
+      a = species(el, two[0], 0); b = species(el, two[1], 0);
+    } else if (rel === 'ion') {
+      el = pick(ELEMENTS.filter(function (e) { return e.ch.length; }));
+      a = species(el, pick(el.iso), 0); b = species(el, a.A, pick(el.ch));
+    } else if (rel === 'different') {
+      t = pick(TRAPS); a = sp3(t[0], t[1], t[2]); b = sp3(t[3], t[4], t[5]);
+    } else {
+      a = randomSpecies(0.5); b = { sym: a.sym, name: a.name, Z: a.Z, A: a.A, charge: a.charge };
+    }
+    if (rel !== 'identical' && Math.random() < 0.5) { t = a; a = b; b = t; }
+    var bForm = rel === 'identical' ? pick(['words', 'counts']) : weighted([['symbol', 6], ['words', 2], ['counts', 2]]);
+    return { kind: 'compare', a: a, b: b, bForm: bForm, answer: classify(a, b) };
+  }
+  function makeNameItem() {
+    var el = pick(ELEMENTS.filter(function (e) { return e.ch.length === 1 && e.stem; })), sp = species(el, pick(el.iso), el.ch[0]);
+    var right = ionName(sp), opts, why;
+    if (sp.charge > 0) {
+      opts = [right, el.stem + 'ide ion', el.name + '(' + ROMAN[sp.charge] + ') ion', el.name + ' atom'];
+      why = 'A positive ion keeps the element name: <b>' + right + '</b>. The -ide ending is only for negative ions. Roman numerals are only for metals that can have more than one charge, like iron and copper.';
+    } else {
+      opts = [right, el.name + ' ion', el.stem + 'ate ion', el.stem + 'ite ion'];
+      why = 'A negative ion made from one atom ends in -ide: <b>' + right + '</b>. Names ending in -ate or -ite are for ions that also contain oxygen.';
+    }
+    return { kind: 'name', sp: sp, answer: right, options: shuffle(opts.map(function (t, i) { return { t: t, ok: i === 0 }; })), why: why };
+  }
+  function makeHyphenItem() {
+    var sp;
+    do { sp = randomSpecies(0); } while (sp.A === sp.Z);
+    var n = sp.A - sp.Z, right = hyphen(sp), opts = [right], cands = [sp.name + '-' + sp.Z, sp.name + '-' + n, sp.A + '-' + sp.name, sp.name + '-' + (sp.A + sp.Z), sp.Z + '-' + sp.name];
+    cands.forEach(function (c) { if (opts.length < 4 && opts.indexOf(c) < 0) opts.push(c); });
+    return { kind: 'hyphen', sp: sp, answer: right, options: shuffle(opts.map(function (t, i) { return { t: t, ok: i === 0 }; })),
+      why: 'Hyphen notation is the element name, then the <b>mass number</b>: <b>' + right + '</b>. The mass number is the top-left number (' + sp.A + '). The atomic number (' + sp.Z + ') is not written, because the name already tells you the element.' };
+  }
+  function compareWhy(it) {
+    var a = particleCounts(it.a), b = particleCounts(it.b), r = it.answer;
+    if (r === 'isotopes') return 'Same protons (' + a.p + '), so the same element. Different neutrons (' + a.n + ' and ' + b.n + '), so they are isotopes.';
+    if (r === 'ion') {
+      var ion = it.a.charge ? it.a : it.b, k = Math.abs(ion.charge);
+      return 'Same protons (' + a.p + ') and same neutrons (' + a.n + '). Only the electrons differ (' + a.e + ' and ' + b.e + '). The ion has ' +
+        (ion.charge > 0 ? k + ' fewer ' + (k === 1 ? 'electron' : 'electrons') + ', so its charge is ' + chargeWords(ion.charge) + ' (a cation).'
+          : k + ' more ' + (k === 1 ? 'electron' : 'electrons') + ', so its charge is ' + chargeWords(ion.charge) + ' (an anion).');
+    }
+    if (r === 'different') {
+      var same = [];
+      if (it.a.A === it.b.A) same.push('mass number');
+      if (a.n === b.n) same.push('number of neutrons');
+      if (a.e === b.e) same.push('number of electrons');
+      return 'Different protons (' + a.p + ' and ' + b.p + '), so they are different elements: ' + it.a.name + ' and ' + it.b.name + '.' +
+        (same.length ? ' Having the same ' + same.join(' and ') + ' does not change that.' : '');
+    }
+    return 'Same protons, neutrons and electrons. It is the same thing written two ways.';
+  }
+
+  // ================= MODE 3 QUESTIONS =================
+  function fracStr(ps) { var d = (ps.split('.')[1] || '').length + 2; return (parseFloat(ps) / 100).toFixed(d); }
+  function topIndex(isos) { var k = 0; isos.forEach(function (r, i) { if (r.p > isos[k].p) k = i; }); return k; }
+  var TYPE_NAME = { A: 'A · Find the average', B: 'B · Find the percents', C: 'C · Find a mass', D: 'D · No calculator' };
+  // variants that keep the numbers sensible
+  function b3Givens(el) {   // which isotope can be the given one, so both unknown percents are at least 1
+    var out = [];
+    el.iso.forEach(function (g, gi) { if (el.iso.every(function (r, i) { return i === gi || r.p >= 1; })) out.push(gi); });
+    return out;
+  }
+  function cUnknowns(el) { var out = []; el.iso.forEach(function (r, i) { if (r.p >= 10) out.push(i); }); return out; }
+
+  function makeQuestion(type, avoid, force) {
+    if (!type || type === 'mix') type = weighted([['A', 3], ['B', 3], ['C', 3], ['D', 2]]);
+    force = force || {};
+    var pool = DATA.filter(function (e) { return e.sym !== avoid; }), el, variant = '', g = -1, u = -1;
+    if (type === 'B') {
+      var three = force.three != null ? force.three : Math.random() < 0.3;
+      // two-isotope sets need both percents to be at least 1, or the 0.3 point tolerance would be too loose (leaves out nitrogen)
+      pool = pool.filter(function (e) { return three ? e.iso.length === 3 : e.iso.length === 2 && e.iso[0].p >= 1 && e.iso[1].p >= 1; });
+      variant = three ? '3' : '2';
+    }
+    el = force.sym ? dataFor(force.sym) : pick(pool);
+    if (type === 'B' && variant === '3') g = force.g != null ? force.g : pick(b3Givens(el));
+    if (type === 'C') u = force.u != null ? force.u : pick(cUnknowns(el));
+    var n = el.iso.length, avg = average(el.iso), avgR = r3(avg), avgS = avgR.toFixed(3), top = topIndex(el.iso);
+    var rows = el.iso.map(function (r, i) {
+      return { A: r.A, label: r.label, hy: r.hy, m: r.m, ms: r.ms, p: r.p, ps: r.ps, givenM: r.m, givenP: r.p };
+    });
+    var q = { type: type, variant: variant, sym: el.sym, name: el.name, rows: rows, avg: avgR, avgText: avgS, givenAvg: avgR, tol: 0.02 };
+    var intro = cap(el.name) + ' has ' + n + ' natural isotopes. ', steps, x, i;
+    var formula = eq('average atomic mass = sum of (mass ' + TIMES + ' fraction)');
+
+    if (type === 'A') {
+      q.givenAvg = null;
+      q.text = intro + 'Find its average atomic mass.';
+      q.answer = { avg: avg };
+      q.answerText = fx(avg, 3) + ' amu';
+      steps = [
+        { t: 'Write the formula', h: formula + 'Fraction = percent ' + DIV + ' 100.' },
+        { t: 'Substitute', h: eq('= ' + rows.map(function (r) { return '(' + r.ms + ' ' + TIMES + ' ' + fracStr(r.ps) + ')'; }).join(' + ')) },
+        { t: 'Multiply each pair', h: eq('= ' + rows.map(function (r) { return fx(r.m * r.p / 100, 4); }).join(' + ')) },
+        { t: 'Add', h: eq('= <b>' + fx(avg, 3) + ' amu</b>') + 'Check: it is closest to ' + rows[top].ms + ', the mass of the most abundant isotope (' + rows[top].label + ').' }
+      ];
+    } else if (type === 'B') {
+      q.tol = 0.3;
+      var ua = [], d2;
+      rows.forEach(function (r, k) { if (k !== g) { r.givenP = null; ua.push(k); } });
+      var r1 = rows[ua[0]], r2 = rows[ua[1]], dm = r1.m - r2.m, p1, p2;
+      d2 = Math.min(r1.p, r2.p) < 5 ? 2 : 1;
+      if (variant === '2') {
+        var rhs = avgR - r2.m;
+        x = rhs / dm; p1 = 100 * x; p2 = 100 - p1;
+        q.text = intro + 'Its average atomic mass is ' + avgS + ' amu. Find the percent abundance of each isotope.';
+        var p1s = (Number(x.toFixed(4)) * 100).toFixed(d2), p2s = (100 - Number(p1s)).toFixed(d2);
+        steps = [
+          { t: 'Set up with x', h: 'Let x = fraction of ' + r1.label + '. Then (1 ' + MINUS + ' x) = fraction of ' + r2.label + ', because the fractions add to 1.' +
+            eq('(mass₁ ' + TIMES + ' x) + (mass₂ ' + TIMES + ' (1 ' + MINUS + ' x)) = average') },
+          { t: 'Substitute', h: eq(r1.ms + 'x + ' + r2.ms + '(1 ' + MINUS + ' x) = ' + avgS) },
+          { t: 'Rearrange to find x', h: eq(r1.ms + 'x + ' + r2.ms + ' ' + MINUS + ' ' + r2.ms + 'x = ' + avgS) +
+            eq(fx(dm, 3) + 'x = ' + avgS + ' ' + MINUS + ' ' + r2.ms) + eq(fx(dm, 3) + 'x = ' + fx(rhs, 3)) + eq('x = ' + fx(x, 4)) },
+          { t: 'Answer', h: eq(r1.label + ' = ' + fx(x, 4) + ' ' + TIMES + ' 100 = <b>' + p1s + '%</b>') + eq(r2.label + ' = 100 ' + MINUS + ' ' + p1s + ' = <b>' + p2s + '%</b>') +
+            'Check: the average is closer to ' + (p1 > p2 ? r1.ms : r2.ms) + ', so ' + (p1 > p2 ? r1.label : r2.label) + ' has the bigger percent.' }
+        ];
+        q.answerText = r1.label + ' ' + p1s + '%, ' + r2.label + ' ' + p2s + '%';
+      } else {
+        var rg = rows[g], fgS = fracStr(rg.ps), fg = rg.p / 100, s = 1 - fg, dS = fgS.split('.')[1].length, sS = s.toFixed(dS);
+        var kg = rg.m * fg, k2 = r2.m * s, rhs3 = avgR - kg - k2;
+        x = rhs3 / dm; p1 = 100 * x; p2 = 100 * (s - x);
+        q.text = intro + 'Its average atomic mass is ' + avgS + ' amu, and ' + rg.label + ' is ' + rg.ps + '%. Find the percent abundance of the other two.';
+        var q1s = (Number(x.toFixed(4)) * 100).toFixed(d2), restS = (100 * s).toFixed(Math.max(d2, dS - 2)), q2s = (100 * s - Number(q1s)).toFixed(d2);
+        var subs = rows.map(function (r, k) { return k === g ? '(' + r.ms + ' ' + TIMES + ' ' + fgS + ')' : k === ua[0] ? r.ms + 'x' : r.ms + '(' + sS + ' ' + MINUS + ' x)'; }).join(' + ');
+        var expd = rows.map(function (r, k) { return k === g ? fx(kg, 4) : k === ua[0] ? r.ms + 'x' : fx(k2, 4) + ' ' + MINUS + ' ' + r.ms + 'x'; }).join(' + ');
+        steps = [
+          { t: 'Set up with x', h: rg.label + ' is ' + rg.ps + '%, a fraction of ' + fgS + '. The fractions add to 1, so the other two share 1 ' + MINUS + ' ' + fgS + ' = ' + sS + '. ' +
+            'Let x = fraction of ' + r1.label + '. Then (' + sS + ' ' + MINUS + ' x) = fraction of ' + r2.label + '.' + formula },
+          { t: 'Substitute', h: eq(subs + ' = ' + avgS) },
+          { t: 'Rearrange to find x', h: eq(expd + ' = ' + avgS) + eq(fx(dm, 3) + 'x = ' + avgS + ' ' + MINUS + ' ' + fx(kg, 4) + ' ' + MINUS + ' ' + fx(k2, 4)) +
+            eq(fx(dm, 3) + 'x = ' + fx(rhs3, 4)) + eq('x = ' + fx(x, 4)) },
+          { t: 'Answer', h: eq(r1.label + ' = ' + fx(x, 4) + ' ' + TIMES + ' 100 = <b>' + q1s + '%</b>') + eq(r2.label + ' = ' + restS + ' ' + MINUS + ' ' + q1s + ' = <b>' + q2s + '%</b>') +
+            'Check: the three percents add to 100.' }
+        ];
+        q.answerText = r1.label + ' ' + q1s + '%, ' + r2.label + ' ' + q2s + '%';
+      }
+      q.answer = { pcts: [{ i: ua[0], label: r1.label, value: p1 }, { i: ua[1], label: r2.label, value: p2 }], x: x };
+      q.given = g;
+    } else if (type === 'C') {
+      var ru = rows[u], fu = ru.p / 100, fuS = fracStr(ru.ps), known = 0, kp = [];
+      rows.forEach(function (r, k) { if (k !== u) { known += r.m * r.p / 100; kp.push(fx(r.m * r.p / 100, 4)); } });
+      var rhsC = avgR - known, m = rhsC / fu;
+      ru.givenM = null; ru.shown = el.sym + '-?';
+      q.text = intro + 'Its average atomic mass is ' + avgS + ' amu. Find the mass of the unknown isotope.';
+      q.answer = { mass: m, i: u };
+      q.answerText = fx(m, 3) + ' amu';
+      steps = [
+        { t: 'Write the formula', h: formula + 'Let m = the unknown mass.' },
+        { t: 'Substitute', h: eq(avgS + ' = ' + rows.map(function (r, k) { return '(' + (k === u ? 'm' : r.ms) + ' ' + TIMES + ' ' + fracStr(r.ps) + ')'; }).join(' + ')) },
+        { t: 'Rearrange to find m', h: eq(avgS + ' = ' + rows.map(function (r, k) { return k === u ? fuS + 'm' : fx(r.m * r.p / 100, 4); }).join(' + ')) +
+          eq(fuS + 'm = ' + avgS + ' ' + MINUS + ' ' + kp.join(' ' + MINUS + ' ') + ' = ' + fx(rhsC, 4)) + eq('m = ' + fx(rhsC, 4) + ' ' + DIV + ' ' + fuS) },
+        { t: 'Answer', h: eq('m = <b>' + fx(m, 3) + ' amu</b>') + 'That is close to ' + Math.round(m) + ', so the isotope is ' + el.name + '-' + Math.round(m) + '.' }
+      ];
+      q.unknown = u;
+    } else {
+      rows.forEach(function (r) { r.givenP = null; });
+      q.text = 'No calculator. ' + cap(el.name) + ' has ' + n + ' natural isotopes and an average atomic mass of ' + avgS + ' amu. Which isotope is the most abundant?';
+      q.answer = { i: top, label: rows[top].label };
+      q.answerText = el.name + '-' + rows[top].A;
+      var dist = rows.map(function (r) { return Math.abs(avgR - r.m); });
+      steps = [
+        { t: 'Use the idea', h: 'A weighted average is pulled toward the isotope there is most of. So the average sits closest to the mass of the most abundant isotope.' },
+        { t: 'Compare', h: 'Average = ' + avgS + '. Isotope masses: ' + rows.map(function (r) { return r.ms; }).join(', ') + '.' },
+        { t: 'Find the closest mass', h: rows.map(function (r, k) { return eq(r.label + ': ' + fx(dist[k], 3) + ' away'); }).join('') },
+        { t: 'Answer', h: '<b>' + cap(el.name) + '-' + rows[top].A + '</b> is the closest, so it is the most abundant. Real abundances: ' +
+          rows.map(function (r) { return r.label + ' ' + r.ps + '%'; }).join(', ') + '.' }
+      ];
+    }
+    q.steps = steps;
+    return q;
+  }
+  // mark a typed answer. vals = array of numbers in input order. returns { ok, msg }
+  function judge(q, vals) {
+    var lo = Math.min.apply(null, q.rows.map(function (r) { return r.m; })), hi = Math.max.apply(null, q.rows.map(function (r) { return r.m; })), v = vals[0], plain = 0;
+    if (q.type === 'A') {
+      if (Math.abs(v - q.answer.avg) <= 0.02 + 1e-9) return { ok: true, msg: 'Average atomic mass = ' + q.answerText + '.' };
+      q.rows.forEach(function (r) { plain += r.m / q.rows.length; });
+      if (Math.abs(v - plain) <= 0.02) return { ok: false, msg: 'That is the plain average of the masses. Each mass must be multiplied by its fraction first.' };
+      if (Math.abs(v - q.answer.avg * 100) <= 2) return { ok: false, msg: 'You used the percents as they are. Divide each percent by 100 first.' };
+      if (v < lo || v > hi) return { ok: false, msg: 'The average must lie between the lightest mass (' + fx(lo, 3) + ') and the heaviest (' + fx(hi, 3) + ').' };
+      return { ok: false, msg: 'Your answer is too ' + (v > q.answer.avg ? 'high' : 'low') + '. Multiply each mass by percent ' + DIV + ' 100, then add.' };
+    }
+    if (q.type === 'B') {
+      var a = q.answer.pcts, ok = Math.abs(vals[0] - a[0].value) <= 0.3 + 1e-9 && Math.abs(vals[1] - a[1].value) <= 0.3 + 1e-9, total = a[0].value + a[1].value;
+      if (ok) return { ok: true, msg: q.answerText + '.' };
+      if (Math.abs(vals[0] - a[1].value) <= 0.3 && Math.abs(vals[1] - a[0].value) <= 0.3) {
+        var big = a[0].value > a[1].value ? 0 : 1;
+        return { ok: false, msg: 'Right numbers, wrong way round. The average is closer to ' + q.rows[a[big].i].ms + ', so ' + a[big].label + ' has the bigger percent.' };
+      }
+      if (Math.abs(vals[0] - a[0].value / 100) <= 0.004 && Math.abs(vals[1] - a[1].value / 100) <= 0.004) return { ok: false, msg: 'Those are fractions. Multiply by 100 to get percents.' };
+      if (Math.abs(vals[0] + vals[1] - total) > 0.5) return { ok: false, msg: 'The two percents must add to ' + (q.variant === '3' ? fx(total, 2) + ' (100 minus the one you were given).' : '100.') };
+      return { ok: false, msg: 'They add up correctly, but the split is off. Set up x and solve again.' };
+    }
+    if (Math.abs(v - q.answer.mass) <= 0.02 + 1e-9) return { ok: true, msg: 'Mass = ' + q.answerText + '.' };
+    return { ok: false, msg: 'Your answer is too ' + (v > q.answer.mass ? 'high' : 'low') + '. Take away the known mass ' + TIMES + ' fraction from the average, then divide by the fraction of the unknown isotope.' };
+  }
+
+  // ================= MODE 4 CALCULATOR MATH =================
+  // rows: [{ m, p }] as typed text. returns products, total percent, sum
+  function calcCompute(rows) {
+    var out = { complete: true, products: [], total: 0, sum: 0, items: [] };
+    rows.forEach(function (r, i) {
+      var m = num(r.m), p = num(r.p), good = isFinite(m) && isFinite(p) && m > 0 && p >= 0;
+      if (!good) { out.complete = false; out.products.push(null); return; }
+      out.products.push(m * p / 100); out.total += p; out.sum += m * p / 100;
+      out.items.push({ label: r.label || 'Isotope ' + (i + 1), m: m, p: p, ms: String(r.m).trim().replace(',', '.') });
+    });
+    out.balanced = out.complete && Math.abs(out.total - 100) <= 0.05 + 1e-9;
+    return out;
+  }
+  function nice(x, d) { return String(Number(x.toFixed(d))).replace('-', MINUS); }
+  // number line: one dot per isotope (area shows abundance), a line at the average
+  function numberLine(items, avg) {
+    var W = 320, H = 122, L = 34, R = W - 34, y = 62, ms = items.map(function (i) { return i.m; });
+    var lo = Math.min.apply(null, ms), hi = Math.max.apply(null, ms);
+    if (!(hi - lo > 1e-9)) { lo -= 0.5; hi += 0.5; }
+    function X(m) { return L + (m - lo) / (hi - lo) * (R - L); }
+    var s = '<svg class="nl" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Number line of isotope masses with the average marked">';
+    s += '<line class="nl-axis" x1="6" y1="' + y + '" x2="' + (W - 6) + '" y2="' + y + '"/>';
+    items.forEach(function (it) {
+      var r = 4 + 13 * Math.sqrt(Math.max(0, Math.min(100, it.p)) / 100), x = X(it.m).toFixed(1);
+      s += '<circle class="nl-dot" cx="' + x + '" cy="' + y + '" r="' + r.toFixed(1) + '"/>';
+      s += '<text class="nl-lab" x="' + x + '" y="' + (y + 34) + '" text-anchor="middle">' + it.label + '</text>';
+      s += '<text class="nl-sub" x="' + x + '" y="' + (y + 48) + '" text-anchor="middle">' + (it.ms || nice(it.m, 3)) + '</text>';
+    });
+    if (isFinite(avg) && avg >= lo - 1e-9 && avg <= hi + 1e-9) {
+      var xa = X(avg), tx = Math.max(58, Math.min(W - 58, xa));
+      s += '<line class="nl-avg" x1="' + xa.toFixed(1) + '" y1="' + (y - 30) + '" x2="' + xa.toFixed(1) + '" y2="' + (y + 20) + '"/>';
+      s += '<path class="nl-tri" d="M' + (xa - 5).toFixed(1) + ' ' + (y - 36) + 'h10l-5 8z"/>';
+      s += '<text class="nl-lab" x="' + tx.toFixed(1) + '" y="' + (y - 42) + '" text-anchor="middle">average ' + fx(avg, 3) + '</text>';
+    }
+    return s + '</svg>';
+  }
+
+  // ================= SCORE =================
+  var KEY = 'atom-math-v1', SCORE = { count: { c: 0, a: 0 }, pair: { c: 0, a: 0 }, avg: { c: 0, a: 0 } }, SAVED = {};
+  function load() {
+    try {
+      var s = JSON.parse(window.localStorage.getItem(KEY));
+      if (s && typeof s === 'object') {
+        SAVED = s;
+        ['count', 'pair', 'avg'].forEach(function (k) {
+          var v = s.score && s.score[k];
+          if (v && isFinite(v.c) && isFinite(v.a) && v.c >= 0 && v.a >= v.c) SCORE[k] = { c: Math.floor(v.c), a: Math.floor(v.a) };
+        });
+      }
+    } catch (e) { SAVED = {}; }
+  }
+  function save() { try { SAVED.score = SCORE; window.localStorage.setItem(KEY, JSON.stringify(SAVED)); } catch (e) { /* works without storage */ } }
+  function paintScore() { ['count', 'pair', 'avg'].forEach(function (k) { $(k + '-score').textContent = 'Score ' + SCORE[k].c + ' / ' + SCORE[k].a; }); }
+  function bump(mode, ok) { SCORE[mode].a++; if (ok) SCORE[mode].c++; save(); paintScore(); }
+  function fbHTML(ok, body, title) { return '<div class="fb ' + (ok ? 'ok' : 'no') + '"><b>' + (title || (ok ? '✓ Correct' : '✗ Not quite')) + '</b>' + body + '</div>'; }
+
+  // ================= MODE SWITCH =================
+  var MODES = ['count', 'pair', 'avg', 'calc'], mode = 'count';
+  function setMode(m, quiet) {
+    mode = m;
+    MODES.forEach(function (k) { $(k).hidden = k !== m; $('m-' + k).setAttribute('aria-pressed', k === m ? 'true' : 'false'); });
+    if (m === 'count' && !P.item) P.next();
+    if (m === 'pair' && !C.item) C.next();
+    if (m === 'avg' && !Q.q) Q.next();
+    if (m === 'calc' && !K.rows.length) K.loadPreset('Cl');
+    if (!quiet) { try { SAVED.mode = m; window.localStorage.setItem(KEY, JSON.stringify(SAVED)); } catch (e) { /* ignore */ } }
+  }
+  MODES.forEach(function (k) { $('m-' + k).onclick = function () { setMode(k); }; });
+
+  // ================= MODE 1 UI =================
+  var P = { item: null, done: false, picked: -1 };
+  P.next = function (forceKind) {
+    var it = makeParticleItem(forceKind); P.item = it; P.done = false;
+    $('p-fb').innerHTML = '';
+    var typed = it.kind !== 'reverse';
+    $('p-fields').hidden = !typed; $('p-stage').hidden = !typed; $('p-opts').hidden = typed; $('p-check').hidden = !typed;
+    $('p-z').hidden = it.kind !== 'words'; $('p-z').disabled = false; $('p-z').textContent = 'Show atomic number';
+    $('p-next').textContent = 'Skip →'; $('p-next').className = 'btn ghost';
+    ['p', 'n', 'e'].forEach(function (k) { var i = $('p-' + k); i.value = ''; i.disabled = false; i.className = 'num'; });
+    if (it.kind === 'symbol') {
+      $('p-q').textContent = 'How many protons, neutrons and electrons?';
+      $('p-stage').innerHTML = nuc(it.sp, 'big');
+    } else if (it.kind === 'words') {
+      $('p-q').textContent = 'How many protons, neutrons and electrons are in:';
+      $('p-stage').innerHTML = '<div class="words">' + nb(it.words) + '</div>';
+    } else {
+      var c = it.answer;
+      $('p-q').textContent = 'Which symbol has ' + plural(c.p, 'proton') + ', ' + plural(c.n, 'neutron') + ' and ' + plural(c.e, 'electron') + '?';
+      var box = $('p-opts'); box.innerHTML = '';
+      it.choices.forEach(function (ch, i) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.innerHTML = nuc(ch, 'mid');
+        b.onclick = function () { P.choose(i); };
+        box.appendChild(b);
+      });
+    }
+  };
+  P.finish = function () { P.done = true; $('p-check').hidden = true; $('p-z').hidden = true; $('p-next').textContent = 'Next →'; $('p-next').className = 'btn'; };
+  P.check = function () {
+    var it = P.item; if (!it || P.done || it.kind === 'reverse') return;
+    var got = {}, bad = false;
+    ['p', 'n', 'e'].forEach(function (k) { var v = num($('p-' + k).value); got[k] = v; if (!isFinite(v) || v < 0 || v !== Math.floor(v)) bad = true; });
+    if (bad) { $('p-fb').innerHTML = '<div class="fb note">Type a whole number in all three boxes.</div>'; return; }
+    var why = particleReasons(it.sp), names = { p: 'Protons', n: 'Neutrons', e: 'Electrons' }, all = true, li = '';
+    ['p', 'n', 'e'].forEach(function (k) {
+      var ok = got[k] === it.answer[k]; if (!ok) all = false;
+      var i = $('p-' + k); i.disabled = true; i.classList.add(ok ? 'ok-in' : 'no-in');
+      li += '<li class="' + (ok ? 'ok' : 'no') + '"><b>' + (ok ? '✓ ' : '✗ ') + names[k] + ': ' + it.answer[k] + (ok ? '' : ' (you wrote ' + got[k] + ')') + '</b>' + why[k] + '</li>';
+    });
+    $('p-fb').innerHTML = fbHTML(all, '<ul class="pf">' + li + '</ul>');
+    bump('count', all); P.finish();
+  };
+  P.choose = function (i) {
+    var it = P.item; if (!it || P.done || it.kind !== 'reverse') return;
+    var ok = it.choices[i].ok, c = it.answer, sp = it.sp, slip = it.choices[i].slip;
+    Array.prototype.forEach.call($('p-opts').children, function (b, j) { b.disabled = true; if (it.choices[j].ok) b.classList.add('right'); });
+    if (!ok) $('p-opts').children[i].classList.add('wrong');
+    var note = { mass: 'The top-left number is the mass number: protons + neutrons, not neutrons alone.', sign: 'Check the sign of the charge: more electrons than protons is negative.',
+      swap: 'The mass number goes on top and the atomic number goes below it.', element: 'The element comes from the protons, never from the neutrons or electrons.' };
+    $('p-fb').innerHTML = fbHTML(ok, (ok || !slip ? '' : note[slip] + ' ') + '<ul class="pf">' +
+      '<li><b>Element</b>' + c.p + ' protons means Z = ' + sp.Z + ': ' + sp.name + ' (' + sp.sym + ').</li>' +
+      '<li><b>Mass number</b>A = protons + neutrons = ' + c.p + ' + ' + c.n + ' = ' + sp.A + '.</li>' +
+      '<li><b>Charge</b>protons ' + MINUS + ' electrons = ' + c.p + ' ' + MINUS + ' ' + c.e + ' = ' + (sp.charge ? chargeSigned(sp.charge).replace(/[()]/g, '') + ', written ' + chargeText(sp.charge) : '0, so no charge is written') + '.</li></ul>');
+    bump('count', ok); P.finish();
+  };
+  $('p-check').onclick = P.check;
+  $('p-next').onclick = function () { P.next(); };
+  $('p-z').onclick = function () { var sp = P.item.sp; this.textContent = cap(sp.name) + ': atomic number ' + sp.Z; this.disabled = true; };
+  ['p', 'n', 'e'].forEach(function (k) { $('p-' + k).addEventListener('keydown', function (e) { if (e.key === 'Enter') P.check(); }); });
+
+  // ================= MODE 2 UI =================
+  var C = { item: null, done: false };
+  function speciesBox(sp, form, tag) {
+    var c = particleCounts(sp), body = form === 'words' ? '<div class="words">' + nb(shortWords(sp)) + '</div>'
+      : form === 'counts' ? '<div class="words">' + plural(c.p, 'proton') + '<br>' + plural(c.n, 'neutron') + '<br>' + plural(c.e, 'electron') + '</div>' : nuc(sp, 'big');
+    return '<div class="stage"><div class="lbl">' + tag + '</div><div class="body">' + body + '</div></div>';
+  }
+  C.next = function (forceKind) {
+    var it = makeCompareItem(forceKind), opts; C.item = it; C.done = false;
+    $('c-fb').innerHTML = ''; $('c-next').textContent = 'Skip →'; $('c-next').className = 'btn ghost';
+    if (it.kind === 'compare') {
+      $('c-kind').textContent = 'Isotope or ion?';
+      $('c-q').textContent = 'How are these two related?';
+      $('c-stage').innerHTML = '<div class="pair">' + speciesBox(it.a, 'symbol', 'First') + speciesBox(it.b, it.bForm, 'Second') + '</div>';
+      opts = REL_ORDER.map(function (k) { return { t: REL[k], ok: k === it.answer }; });
+    } else {
+      $('c-kind').textContent = it.kind === 'name' ? 'Name the ion' : 'Hyphen notation';
+      $('c-q').textContent = it.kind === 'name' ? 'Name this ion.' : 'Write this atom in hyphen notation.';
+      $('c-stage').innerHTML = '<div class="stage">' + nuc(it.sp, 'big') + '</div>';
+      opts = it.options;
+    }
+    it.shown = opts;
+    var box = $('c-opts'); box.innerHTML = '';
+    opts.forEach(function (o, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.textContent = o.t;
+      b.onclick = function () { C.choose(i); };
+      box.appendChild(b);
+    });
+  };
+  C.choose = function (i) {
+    var it = C.item; if (!it || C.done) return;
+    C.done = true;
+    var ok = it.shown[i].ok, body;
+    Array.prototype.forEach.call($('c-opts').children, function (b, j) { b.disabled = true; if (it.shown[j].ok) b.classList.add('right'); });
+    if (!ok) $('c-opts').children[i].classList.add('wrong');
+    if (it.kind === 'compare') {
+      var a = particleCounts(it.a), b = particleCounts(it.b);
+      body = compareWhy(it) + '<table class="data mini"><thead><tr><th></th><th>Protons</th><th>Neutrons</th><th>Electrons</th></tr></thead><tbody>' +
+        '<tr><td>' + nuc(it.a) + '</td><td>' + a.p + '</td><td>' + a.n + '</td><td>' + a.e + '</td></tr>' +
+        '<tr><td>' + nuc(it.b) + '</td><td>' + b.p + '</td><td>' + b.n + '</td><td>' + b.e + '</td></tr></tbody></table>';
+    } else body = nb(it.why);
+    $('c-fb').innerHTML = fbHTML(ok, body);
+    bump('pair', ok);
+    $('c-next').textContent = 'Next →'; $('c-next').className = 'btn';
+  };
+  $('c-next').onclick = function () { C.next(); };
+
+  // ================= MODE 3 UI =================
+  var Q = { q: null, type: 'mix', shown: 0, scored: false, solved: false, last: '' };
+  Q.next = function (force) {
+    var q = makeQuestion(force && force.type || Q.type, Q.last, force); Q.q = q; Q.last = q.sym; Q.shown = 0; Q.scored = false; Q.solved = false;
+    $('q-kind').textContent = TYPE_NAME[q.type];
+    $('q-text').innerHTML = nb(q.text);
+    $('q-fb').innerHTML = ''; $('q-steps').innerHTML = ''; $('q-steps').hidden = true;
+    $('q-hint').disabled = false; $('q-hint').textContent = 'Hint'; $('q-sol').disabled = false;
+    $('q-check').hidden = q.type === 'D'; $('q-next').textContent = 'Skip →'; $('q-next').className = 'btn ghost';
+    var showP = q.type !== 'D', t = '<table class="data"><thead><tr><th>Isotope</th><th>Mass (amu)</th>' + (showP ? '<th>Abundance (%)</th>' : '') + '</tr></thead><tbody>';
+    q.rows.forEach(function (r) {
+      t += '<tr><td>' + (r.shown || r.label) + '</td><td' + (r.givenM == null ? ' class="unk">?' : '>' + r.ms) + '</td>' +
+        (showP ? '<td' + (r.givenP == null ? ' class="unk">?' : '>' + r.ps) + '</td>' : '') + '</tr>';
+    });
+    t += '</tbody><tfoot><tr><td>Average</td><td' + (q.givenAvg == null ? ' class="unk">?' : '>' + q.avgText) + '</td>' + (showP ? '<td></td>' : '') + '</tr></tfoot></table>';
+    $('q-table').innerHTML = t;
+    var box = $('q-inputs'), h = '';
+    function field(id, label) { return '<label class="fld"><span>' + label + '</span><input class="num" id="' + id + '" type="text" inputmode="decimal" autocomplete="off" aria-label="' + label + '"></label>'; }
+    if (q.type === 'A') h = '<div class="fields one">' + field('q-a0', 'Average atomic mass (amu)') + '</div>';
+    else if (q.type === 'B') h = '<div class="fields two">' + field('q-a0', q.answer.pcts[0].label + ' (%)') + field('q-a1', q.answer.pcts[1].label + ' (%)') + '</div>';
+    else if (q.type === 'C') h = '<div class="fields one">' + field('q-a0', 'Mass of the unknown isotope (amu)') + '</div>';
+    else h = '<div class="opts two">' + q.rows.map(function (r, i) { return '<button type="button" class="opt" data-i="' + i + '">' + r.hy + '</button>'; }).join('') + '</div>';
+    box.innerHTML = h;
+    Array.prototype.forEach.call(box.querySelectorAll('input'), function (i) { i.addEventListener('keydown', function (e) { if (e.key === 'Enter') Q.check(); }); });
+    Array.prototype.forEach.call(box.querySelectorAll('.opt'), function (b) { b.onclick = function () { Q.choose(+b.dataset.i); }; });
+  };
+  Q.paintSteps = function () {
+    var q = Q.q, ol = $('q-steps'), h = '';
+    for (var i = 0; i < Q.shown; i++) h += '<li><b>' + q.steps[i].t + '</b>' + nb(q.steps[i].h) + '</li>';
+    ol.innerHTML = h; ol.hidden = !Q.shown;
+    var all = Q.shown >= q.steps.length;
+    $('q-hint').disabled = all; $('q-sol').disabled = all;
+    $('q-hint').textContent = all ? 'All steps shown' : Q.shown ? 'Next hint (' + Q.shown + ' of ' + q.steps.length + ')' : 'Hint';
+    if (all && !Q.scored) {   // the answer is on screen: this question can no longer score as correct
+      Q.scored = true; bump('avg', false);
+      if (!Q.solved) $('q-fb').innerHTML = '<div class="fb note">The answer is shown below, so this one counts as not correct. Work through the steps, then try the next question.</div>';
+    }
+  };
+  Q.finish = function () { Q.solved = true; $('q-check').hidden = true; $('q-next').textContent = 'Next question →'; $('q-next').className = 'btn'; };
+  Q.check = function () {
+    var q = Q.q; if (!q || Q.solved || q.type === 'D') return;
+    var ins = $('q-inputs').querySelectorAll('input'), vals = [], bad = false;
+    Array.prototype.forEach.call(ins, function (i) { var v = num(i.value); vals.push(v); i.classList.remove('ok-in', 'no-in'); if (!isFinite(v)) bad = true; });
+    if (bad) { $('q-fb').innerHTML = '<div class="fb note">Type a number in ' + (ins.length > 1 ? 'both boxes' : 'the box') + ' first.</div>'; return; }
+    var j = judge(q, vals), first = !Q.scored;
+    if (first) { Q.scored = true; bump('avg', j.ok); }
+    Array.prototype.forEach.call(ins, function (i) { i.classList.add(j.ok ? 'ok-in' : 'no-in'); if (j.ok) i.disabled = true; });
+    $('q-fb').innerHTML = fbHTML(j.ok, nb(j.msg) + (j.ok ? '' : ' <span class="tip" style="display:block">Change your answer and check again, or use a hint.' + (first ? '' : ' Only your first try is scored.') + '</span>'), j.ok ? '' : '✗ Not yet');
+    if (j.ok) Q.finish();
+  };
+  Q.choose = function (i) {
+    var q = Q.q; if (!q || Q.solved || q.type !== 'D') return;
+    var ok = i === q.answer.i, btns = $('q-inputs').querySelectorAll('.opt');
+    Array.prototype.forEach.call(btns, function (b, k) { b.disabled = true; if (k === q.answer.i) b.classList.add('right'); });
+    if (!ok) btns[i].classList.add('wrong');
+    if (!Q.scored) { Q.scored = true; bump('avg', ok); }
+    var top = q.rows[q.answer.i], next = 0;
+    q.rows.forEach(function (r, k) { if (k !== q.answer.i && r.p > next) next = r.p; });
+    $('q-fb').innerHTML = fbHTML(ok, nb('The average (' + q.avgText + ') is closest to ' + top.ms + ', so ' + top.hy + ' is the most abundant. ' +
+      (top.p - next < 10 ? 'It is only a little closer, so the two are almost equal. ' : '') + 'Real abundances: ' +
+      q.rows.map(function (r) { return r.label + ' ' + r.ps + '%'; }).join(', ') + '.') + numberLine(q.rows.map(function (r) { return { label: r.label, m: r.m, p: r.p, ms: r.ms }; }), q.avg));
+    Q.finish();
+  };
+  $('q-check').onclick = Q.check;
+  $('q-hint').onclick = function () { if (Q.shown < Q.q.steps.length) { Q.shown++; Q.paintSteps(); } };
+  $('q-sol').onclick = function () { Q.shown = Q.q.steps.length; Q.paintSteps(); };
+  $('q-next').onclick = function () { Q.next(); };
+  Array.prototype.forEach.call($('q-chips').children, function (b) {
+    b.onclick = function () {
+      Q.type = b.dataset.t;
+      Array.prototype.forEach.call($('q-chips').children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      Q.next();
+    };
+  });
+
+  // ================= MODE 4 UI =================
+  var K = { rows: [], preset: 'Cl' };
+  K.build = function () {
+    var tb = $('k-rows'); tb.innerHTML = '';
+    K.rows.forEach(function (r, i) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + r.label + '</td>' +
+        '<td><input class="num" type="text" inputmode="decimal" autocomplete="off" aria-label="Mass of ' + r.label + ' in amu" data-i="' + i + '" data-k="m"></td>' +
+        '<td><input class="num" type="text" inputmode="decimal" autocomplete="off" aria-label="Percent abundance of ' + r.label + '" data-i="' + i + '" data-k="p"></td>';
+      tb.appendChild(tr);
+      var ins = tr.querySelectorAll('input'); ins[0].value = r.m; ins[1].value = r.p;
+      Array.prototype.forEach.call(ins, function (inp) { inp.addEventListener('input', function () { K.rows[+inp.dataset.i][inp.dataset.k] = inp.value; K.update(); }); });
+    });
+    $('k-add').disabled = K.rows.length >= 4; $('k-del').disabled = K.rows.length <= 2;
+    K.update();
+  };
+  K.update = function () {
+    var r = calcCompute(K.rows), h = '<div class="lbl">Mass ' + TIMES + ' fraction</div>';
+    K.rows.forEach(function (row, i) {
+      var m = num(row.m), p = num(row.p);
+      h += eq(r.products[i] == null ? row.label + ': type a mass and a percent' : nice(m, 4) + ' ' + TIMES + ' ' + nice(p / 100, 6) + ' = ' + fx(r.products[i], 4));
+    });
+    if (r.complete) h += eq('Sum = <b>' + fx(r.sum, 4) + '</b>') +
+      '<p class="big">' + (r.balanced ? 'Average atomic mass = ' + fx(r.sum, 3) + ' amu' : 'Not an average yet: fix the percents') + '</p>';
+    $('k-work').innerHTML = h;
+    $('k-warn').innerHTML = !r.complete ? '<div class="fb note">Fill in every row to see the average.</div>'
+      : r.balanced ? '' : '<div class="fb no"><b>Percents do not total 100</b>They add to ' + nice(r.total, 4) + '. The sum above is only the average when they add to 100.</div>';
+    $('k-line').innerHTML = r.complete && r.items.length ? numberLine(r.items, r.balanced ? r.sum : NaN) : '';
+  };
+  K.loadPreset = function (sym) {
+    var el = dataFor(sym); K.preset = sym; $('k-preset').value = sym;
+    K.rows = el ? el.iso.map(function (i) { return { label: i.label, m: i.ms, p: i.ps }; }) : [{ label: 'Isotope 1', m: '', p: '' }, { label: 'Isotope 2', m: '', p: '' }];
+    K.build();
+  };
+  (function () {
+    var sel = $('k-preset'), h = '<option value="">Custom (blank)</option>';
+    DATA.forEach(function (e) { h += '<option value="' + e.sym + '">' + cap(e.name) + ' (' + e.sym + ')</option>'; });
+    sel.innerHTML = h;
+    sel.onchange = function () { K.loadPreset(sel.value); };
+  })();
+  $('k-add').onclick = function () { if (K.rows.length < 4) { K.rows.push({ label: 'Isotope ' + (K.rows.length + 1), m: '', p: '' }); K.build(); } };
+  $('k-del').onclick = function () { if (K.rows.length > 2) { K.rows.pop(); K.build(); } };
+  $('k-reset').onclick = function () { K.loadPreset(K.preset); };
+
+  $('reset-scores').onclick = function () { SCORE = { count: { c: 0, a: 0 }, pair: { c: 0, a: 0 }, avg: { c: 0, a: 0 } }; save(); paintScore(); };
+
+  // pure functions and data, for the test script and for checking by hand
+  window.AM = { DATA: DATA, ELEMENTS: ELEMENTS, average: average, particleCounts: particleCounts, chargeText: chargeText, hyphen: hyphen, speciesWords: speciesWords,
+    ionName: ionName, classify: classify, makeParticleItem: makeParticleItem, makeCompareItem: makeCompareItem, makeQuestion: makeQuestion, judge: judge,
+    calcCompute: calcCompute, b3Givens: b3Givens, cUnknowns: cUnknowns, num: num,
+    ui: { P: P, C: C, Q: Q, K: K }, score: function () { return JSON.parse(JSON.stringify(SCORE)); }, setMode: setMode };
+
+  load(); paintScore();
+  setMode(MODES.indexOf(SAVED.mode) >= 0 ? SAVED.mode : 'count', true);
+})();
+</script>
+</body>
+</html>

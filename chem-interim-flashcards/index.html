@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Chemistry Interim Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f1e7; --surface:#ffffff; --text:#201c15; --text-muted:#6f6858; --border:#ddd3ba;
+    --accent:#201c15; --accent-text:#f5f1e7;
+    --good:#157a45; --again:#b4371f;
+    --shadow:0 1px 2px rgba(32,28,21,.06), 0 6px 18px rgba(32,28,21,.07);
+    --c-ve:#0f766e; --c-ve-bg:#d5efeb;
+    --c-bond:#a8641f; --c-bond-bg:#f3e4ce;
+    --c-steps:#2f5d9e; --c-steps-bg:#dde7f6;
+    --c-count:#4a4f9c; --c-count-bg:#e1e2f5;
+    --c-ions:#7c3aed; --c-ions-bg:#e9e0fc;
+    --c-fc:#b4371f; --c-fc-bg:#f8ded6;
+    --c-exc:#157a45; --c-exc-bg:#dbeee0;
+    --c-models:#2f5d9e; --c-models-bg:#dde7f6; --c-parts:#0f766e; --c-parts-bg:#d5efeb; --c-iso:#a8641f; --c-iso-bg:#f3e4ce; --c-mass:#7c3aed; --c-mass-bg:#e9e0fc; --c-fus:#b4371f; --c-fus-bg:#f8ded6; --c-econf:#157a45; --c-econf-bg:#dbeee0; --c-light:#9a6b00; --c-light-bg:#f6ebc8; --c-spec:#4a4f9c; --c-spec-bg:#e1e2f5; --c-size:#0e7490; --c-size-bg:#d3eef5; --c-ie:#9d3b7a; --c-ie-bg:#f5dcec; --c-bond:#5b6470; --c-bond-bg:#e4e7eb; 
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#14161c; --surface:#1d2027; --text:#ece7db; --text-muted:#9a9385; --border:#333844;
+      --accent:#ece7db; --accent-text:#14161c;
+      --good:#6bce93; --again:#f08a70;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.3);
+      --c-ve:#5fd0c2; --c-ve-bg:#123330;
+      --c-bond:#d99a52; --c-bond-bg:#3a2c19;
+      --c-steps:#7fa8ea; --c-steps-bg:#1e2c46;
+      --c-count:#9ea3f0; --c-count-bg:#23254a;
+      --c-ions:#b294f6; --c-ions-bg:#2c2246;
+      --c-fc:#f08a70; --c-fc-bg:#3d1d16;
+      --c-exc:#6bce93; --c-exc-bg:#16321f;
+      --c-models:#7fa8ea; --c-models-bg:#1e2c46; --c-parts:#5fd0c2; --c-parts-bg:#123330; --c-iso:#d99a52; --c-iso-bg:#3a2c19; --c-mass:#b294f6; --c-mass-bg:#2c2246; --c-fus:#f08a70; --c-fus-bg:#3d1d16; --c-econf:#6bce93; --c-econf-bg:#16321f; --c-light:#e2bd4e; --c-light-bg:#3a3012; --c-spec:#9ea3f0; --c-spec-bg:#23254a; --c-size:#67cfe6; --c-size-bg:#10323c; --c-ie:#e58cc4; --c-ie-bg:#3a1a2e; --c-bond:#aab3c0; --c-bond-bg:#262b33; 
+    }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--text-muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; }
+  .subtitle { color:var(--text-muted); font-size:13.5px; margin:0 0 6px; line-height:1.5; }
+  .howto { font-size:12.5px; color:var(--text-muted); background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; margin:14px 0 16px; line-height:1.5; }
+
+  /* mode switch (only with JS) */
+  .modes { display:none; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:5px; margin:14px 0 16px; }
+  .js .modes { display:flex; }
+  .modes button { flex:1; border:0; background:transparent; color:var(--text-muted); font:600 14px "IBM Plex Sans",sans-serif; padding:10px; border-radius:10px; cursor:pointer; }
+  .modes button[aria-pressed="true"] { background:var(--accent); color:var(--accent-text); }
+  .js .howto.nojs { display:none; }
+  .howto.jsonly { display:none; }
+  .js .howto.jsonly { display:block; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 20px; }
+  .chip { font:600 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; text-decoration:none; border:1.5px solid transparent; cursor:pointer; }
+  .chip b { font-family:"IBM Plex Mono",monospace; font-weight:600; opacity:.75; margin-left:2px; }
+
+  .tools { display:none; justify-content:flex-end; gap:8px; margin:-8px 0 14px; }
+  .js .tools { display:flex; }
+  .btn-sm { border:1px solid var(--border); background:var(--surface); color:var(--text-muted); font:500 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; cursor:pointer; }
+
+  section { margin-bottom:26px; scroll-margin-top:12px; }
+  .sec-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .sec-badge { font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.03em; padding:4px 10px; border-radius:99px; }
+  .sec-count { font-size:12px; color:var(--text-muted); }
+
+  details.qa { background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); margin-bottom:8px; overflow:hidden; }
+  details.qa summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 16px; }
+  details.qa summary::-webkit-details-marker { display:none; }
+  details.qa summary::marker { content:""; }
+  .dot { flex:none; width:9px; height:9px; border-radius:50%; }
+  .q-text { flex:1; font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:15.5px; line-height:1.4; }
+  .chev { flex:none; color:var(--text-muted); font-size:20px; transition:transform .15s; }
+  details[open] .chev { transform:rotate(90deg); }
+  .a-text { margin:0; padding:0 16px 15px 37px; font-size:14.5px; line-height:1.55; }
+  .sup { display:inline-block; font:600 10px "IBM Plex Mono",monospace; letter-spacing:.02em; color:var(--text-muted); border:1px dashed var(--border); border-radius:6px; padding:1px 6px; margin-left:4px; vertical-align:1px; white-space:nowrap; }
+
+  /* study mode */
+  #study { display:none; }
+  .studying #study { display:block; }
+  .studying #browse { display:none; }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; }
+  .label { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); margin:0 0 8px; }
+  #pick .chip { border-color:transparent; opacity:.45; }
+  #pick .chip[aria-pressed="true"] { opacity:1; border-color:currentColor; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .btn { border:0; border-radius:12px; font:600 15px "IBM Plex Sans",sans-serif; padding:13px 18px; cursor:pointer; }
+  .btn-primary { background:var(--accent); color:var(--accent-text); flex:1; }
+  .btn-primary:disabled { opacity:.35; cursor:default; }
+  .btn-again { background:var(--c-fc-bg); color:var(--again); flex:1; }
+  .btn-good { background:var(--c-exc-bg); color:var(--good); flex:1; }
+  .btn-ghost { background:transparent; color:var(--text-muted); border:1px solid var(--border); }
+  label.opt { font-size:13px; color:var(--text-muted); display:flex; gap:6px; align-items:center; }
+
+  .bar { height:6px; background:var(--border); border-radius:99px; overflow:hidden; margin:2px 0 6px; }
+  .bar i { display:block; height:100%; width:0; background:var(--good); transition:width .25s; }
+  .meta { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:12px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); min-height:260px; padding:20px; display:flex; flex-direction:column; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; }
+  .card .sec-badge { align-self:flex-start; }
+  .card .cq { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(19px,5vw,23px); line-height:1.35; margin:18px 0 0; }
+  .card .ca { display:none; border-top:1px dashed var(--border); margin-top:18px; padding-top:16px; font-size:16px; line-height:1.55; }
+  .card.revealed .ca { display:block; animation:fade .18s ease-out; }
+  .card .hint { margin-top:auto; padding-top:18px; font-size:12px; color:var(--text-muted); text-align:center; }
+  .card.revealed .hint { display:none; }
+  @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  .actions { margin-top:12px; }
+  .done h2 { font-family:"Fraunces",Georgia,serif; margin:0 0 6px; }
+  .done p { color:var(--text-muted); margin:0 0 16px; line-height:1.5; }
+  .kbd { font-size:11.5px; color:var(--text-muted); text-align:center; margin-top:10px; }
+  @media (hover:none) { .kbd { display:none; } }
+
+  footer { font-size:12px; color:var(--text-muted); text-align:center; margin-top:30px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>Chemistry Interim: Flashcards</h1>
+  <p class="subtitle">Unit 1 atomic structure · Unit 2 periodic trends · Unit 3 chemical bonding — 225 cards</p>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button type="button" id="m-browse" aria-pressed="true">Browse all</button>
+    <button type="button" id="m-study" aria-pressed="false">Study mode</button>
+  </div>
+
+  <div id="browse">
+    <p class="howto nojs">Tap any question to reveal the answer; tap again to close it.</p>
+    <p class="howto jsonly">Tap a question to see its answer. Want to test yourself? Switch to <b>Study mode</b> for one shuffled card at a time, with “Again” cards coming back until you get them.</p>
+    <nav class="chips">
+    <a class="chip" href="#models" style="color:var(--c-models);background:var(--c-models-bg)">U1 Atomic models <b>16</b></a>
+    <a class="chip" href="#parts" style="color:var(--c-parts);background:var(--c-parts-bg)">U1 Subatomic particles <b>10</b></a>
+    <a class="chip" href="#iso" style="color:var(--c-iso);background:var(--c-iso-bg)">U1 Isotopes vs ions <b>10</b></a>
+    <a class="chip" href="#mass" style="color:var(--c-mass);background:var(--c-mass-bg)">U1 Average atomic mass <b>7</b></a>
+    <a class="chip" href="#fus" style="color:var(--c-fus);background:var(--c-fus-bg)">U1 Nuclear fusion <b>11</b></a>
+    <a class="chip" href="#econf" style="color:var(--c-econf);background:var(--c-econf-bg)">U1 Electron configuration <b>13</b></a>
+    <a class="chip" href="#light" style="color:var(--c-light);background:var(--c-light-bg)">U1 Light emission <b>14</b></a>
+    <a class="chip" href="#spec" style="color:var(--c-spec);background:var(--c-spec-bg)">U1 Emission spectra <b>11</b></a>
+    <a class="chip" href="#size" style="color:var(--c-size);background:var(--c-size-bg)">U2 Atomic and ionic radius <b>10</b></a>
+    <a class="chip" href="#ie" style="color:var(--c-ie);background:var(--c-ie-bg)">U2 Ionization energy and electronegativity <b>14</b></a>
+    <a class="chip" href="#bond" style="color:var(--c-bond);background:var(--c-bond-bg)">U3 Chemical bonding <b>109</b></a>
+    </nav>
+    <div class="tools"><button class="btn-sm" id="expand">Expand all</button><button class="btn-sm" id="collapse">Collapse all</button></div>
+  <section id="models" data-topic="models" data-title="Atomic models">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-models);background:var(--c-models-bg)">Unit 1 · Atomic models</span>
+      <span class="sec-count">16 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">The five models in order?</span><span class="chev">›</span></summary><p class="a-text">Dalton (solid sphere) → Thomson (plum pudding) → Rutherford (nucleus) → Bohr (energy levels) → quantum mechanical (electron cloud).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Three observations of the gold foil experiment, with conclusions?</span><span class="chev">›</span></summary><p class="a-text">Most went straight through: mostly empty space. A few were deflected: positive charge is concentrated. Very few bounced back: the nucleus is tiny, dense and positive.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Orbit vs orbital?</span><span class="chev">›</span></summary><p class="a-text">Orbit (Bohr): a fixed circular path. Orbital (quantum): a region where an electron is probably found.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Who discovered the electron?</span><span class="chev">›</span></summary><p class="a-text"><b>Thomson.</b> Thomson's cathode ray tube (1897): the ray bent toward a positive plate, so it was made of negative particles.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Which experiment showed that atoms have a small, dense, positive nucleus?</span><span class="chev">›</span></summary><p class="a-text"><b>The gold foil (alpha scattering) experiment.</b> Rutherford, 1911. A few alpha particles bounced back, so something tiny, dense and positive had to be in the way.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Thomson's model of the atom is known as the</span><span class="chev">›</span></summary><p class="a-text"><b>plum pudding model.</b> Electrons embedded in a sphere of positive charge, like fruit in a pudding.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">In the gold foil experiment, what did the few alpha particles that bounced straight back show?</span><span class="chev">›</span></summary><p class="a-text"><b>The positive charge and most of the mass are packed into a tiny nucleus.</b> Only a head-on hit with something small, dense and positive could turn an alpha particle around.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Most alpha particles passed straight through the gold foil because</span><span class="chev">›</span></summary><p class="a-text"><b>most of the atom is empty space.</b> They hit nothing. The nucleus is a tiny target.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">What did Millikan's oil drop experiment measure?</span><span class="chev">›</span></summary><p class="a-text"><b>The charge of an electron.</b> It gave the charge of one electron, which with Thomson's result also gave the electron's mass.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Which is a limitation of Rutherford's nuclear model?</span><span class="chev">›</span></summary><p class="a-text"><b>It cannot explain why orbiting electrons do not lose energy and spiral into the nucleus.</b> It also could not explain line spectra. Bohr's fixed energy levels answered both.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">What evidence did Bohr use to propose fixed energy levels?</span><span class="chev">›</span></summary><p class="a-text"><b>The line spectrum of hydrogen.</b> Only certain colors appear, so only certain energy changes are possible, so the levels must be fixed.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Why did Bohr's model have to be replaced?</span><span class="chev">›</span></summary><p class="a-text"><b>It only works for atoms with one electron, such as hydrogen.</b> It fails for the spectra of larger atoms, and electrons do not really follow neat circular paths.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Who discovered the neutron?</span><span class="chev">›</span></summary><p class="a-text"><b>Chadwick.</b> Chadwick, 1932, by bombarding beryllium with alpha particles.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">In the quantum mechanical model, an orbital is</span><span class="chev">›</span></summary><p class="a-text"><b>a region where an electron is likely to be found.</b> An orbital is a probability region (electron cloud). A fixed circular path is a Bohr orbit.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Which part of Dalton's atomic theory is no longer accepted?</span><span class="chev">›</span></summary><p class="a-text"><b>Atoms cannot be divided.</b> Atoms are made of protons, neutrons and electrons. Isotopes also show that atoms of one element are not all identical.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-models)"></span><span class="q-text">Which list puts the models in order from oldest to newest?</span><span class="chev">›</span></summary><p class="a-text"><b>Dalton, Thomson, Rutherford, Bohr, quantum.</b> Ball, pudding, nucleus, levels, cloud.</p></details>
+  </section>
+  <section id="parts" data-topic="parts" data-title="Subatomic particles">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-parts);background:var(--c-parts-bg)">Unit 1 · Subatomic particles</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">Charge, mass and location of the three particles?</span><span class="chev">›</span></summary><p class="a-text">Proton: +1, 1 amu, nucleus. Neutron: 0, 1 amu, nucleus. Electron: −1, about 1/1836 amu, electron cloud.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">The three counting rules?</span><span class="chev">›</span></summary><p class="a-text">Protons = atomic number. Neutrons = mass number − atomic number. Electrons = protons − charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">Which particle determines the identity of an element?</span><span class="chev">›</span></summary><p class="a-text"><b>The proton.</b> The number of protons is the atomic number. Change it and the element changes.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">Which particles are found in the nucleus?</span><span class="chev">›</span></summary><p class="a-text"><b>Protons and neutrons.</b> Electrons are outside the nucleus, in the electron cloud.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">What is the relative charge of a neutron?</span><span class="chev">›</span></summary><p class="a-text"><b>0.</b> Neutral. Proton +1, electron −1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">Which particle has the smallest mass?</span><span class="chev">›</span></summary><p class="a-text"><b>The electron.</b> An electron has about 1/1836 the mass of a proton.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">The mass number of an atom equals</span><span class="chev">›</span></summary><p class="a-text"><b>protons + neutrons.</b> Electrons are too light to count. Neutrons = mass number − atomic number.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">Where is most of the mass of an atom?</span><span class="chev">›</span></summary><p class="a-text"><b>In the nucleus.</b> Protons and neutrons are in the nucleus, and each is about 1836 times heavier than an electron.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">Compared with the whole atom, the nucleus is</span><span class="chev">›</span></summary><p class="a-text"><b>tiny, but it holds nearly all the mass.</b> The nucleus is about 100 000 times smaller than the atom. Most of the atom is empty space.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-parts)"></span><span class="q-text">Protons and neutrons together are called</span><span class="chev">›</span></summary><p class="a-text"><b>nucleons.</b> Both live in the nucleus.</p></details>
+  </section>
+  <section id="iso" data-topic="iso" data-title="Isotopes vs ions">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-iso);background:var(--c-iso-bg)">Unit 1 · Isotopes vs ions</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">Isotope vs ion in one line each?</span><span class="chev">›</span></summary><p class="a-text">Isotopes: same protons, different neutrons. Ions: same protons, different electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">How do you name ions?</span><span class="chev">›</span></summary><p class="a-text">Positive ion: element name + "ion" (sodium ion). Negative ion: ending changes to -ide (chloride ion).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">Isotopes of an element differ in their number of</span><span class="chev">›</span></summary><p class="a-text"><b>neutrons.</b> Same protons (same element), different neutrons, so a different mass number.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">An atom becomes an ion by gaining or losing</span><span class="chev">›</span></summary><p class="a-text"><b>electrons.</b> The nucleus does not change. Only the electron count does.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">Which pair are isotopes?</span><span class="chev">›</span></summary><p class="a-text"><b>¹²₆C and ¹⁴₆C.</b> Same protons (6), different neutrons (6 and 8). The second pair are different elements; the last two are an atom and its ion.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">A positively charged ion is called</span><span class="chev">›</span></summary><p class="a-text"><b>a cation.</b> Cation = positive (lost electrons). Anion = negative (gained electrons).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">What is the name of Cl⁻?</span><span class="chev">›</span></summary><p class="a-text"><b>Chloride ion.</b> A single-atom negative ion ends in -ide.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">What is the name of Na⁺?</span><span class="chev">›</span></summary><p class="a-text"><b>Sodium ion.</b> A positive ion keeps the element's name. Sodium has only one charge, so no Roman numeral.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">A neutral atom gains two electrons. Its charge becomes</span><span class="chev">›</span></summary><p class="a-text"><b>2−.</b> Electrons are negative, so gaining two makes the charge 2−.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-iso)"></span><span class="q-text">Why do isotopes of an element have the same chemical properties?</span><span class="chev">›</span></summary><p class="a-text"><b>They have the same number of protons and electrons.</b> Chemistry is decided by the electrons. Neutrons only change the mass.</p></details>
+  </section>
+  <section id="mass" data-topic="mass" data-title="Average atomic mass">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-mass);background:var(--c-mass-bg)">Unit 1 · Average atomic mass</span>
+      <span class="sec-count">7 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mass)"></span><span class="q-text">Average atomic mass formula?</span><span class="chev">›</span></summary><p class="a-text">Sum of (isotope mass × fractional abundance). Fraction = percent ÷ 100, and the fractions add to 1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mass)"></span><span class="q-text">Two isotopes, unknown percents: the set-up?</span><span class="chev">›</span></summary><p class="a-text">Let x and (1 − x) be the fractions. mass₁·x + mass₂·(1 − x) = average. Solve for x.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mass)"></span><span class="q-text">The atomic mass on the periodic table is</span><span class="chev">›</span></summary><p class="a-text"><b>the weighted average of the masses of the element's natural isotopes.</b> Each isotope counts in proportion to its abundance.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mass)"></span><span class="q-text">Neon has isotopes Ne-20, Ne-21 and Ne-22 and an average atomic mass of 20.18 amu. Which isotope is most abundant?</span><span class="chev">›</span></summary><p class="a-text"><b>Ne-20.</b> The average is always closest to the most abundant isotope.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mass)"></span><span class="q-text">Before using a percent abundance in the formula, you must</span><span class="chev">›</span></summary><p class="a-text"><b>divide it by 100 to get a decimal fraction.</b> 75.78% becomes 0.7578.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mass)"></span><span class="q-text">An element has two isotopes. If the fraction of one is x, the fraction of the other is</span><span class="chev">›</span></summary><p class="a-text"><b>1 − x.</b> The fractions must add up to 1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-mass)"></span><span class="q-text">Why is the atomic mass of chlorine (35.45 amu) not a whole number?</span><span class="chev">›</span></summary><p class="a-text"><b>It is a weighted average of isotopes with different masses.</b> No single chlorine atom has a mass of 35.45. It is the average over the natural mixture.</p></details>
+  </section>
+  <section id="fus" data-topic="fus" data-title="Nuclear fusion">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-fus);background:var(--c-fus-bg)">Unit 1 · Nuclear fusion</span>
+      <span class="sec-count">11 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">Fusion vs fission?</span><span class="chev">›</span></summary><p class="a-text">Fusion: light nuclei join (Sun, stars); needs extreme temperature and pressure. Fission: a heavy nucleus splits (power plants). Both release huge energy and form new elements.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">How do you balance a nuclear equation?</span><span class="chev">›</span></summary><p class="a-text">The mass numbers (top) add to the same total on both sides, and so do the atomic numbers (bottom).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">Nuclear fusion is</span><span class="chev">›</span></summary><p class="a-text"><b>two light nuclei combining to form a heavier nucleus.</b> Fusion joins. Fission splits.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">Where does fusion happen naturally?</span><span class="chev">›</span></summary><p class="a-text"><b>In the Sun and other stars.</b> Stars fuse hydrogen into helium. Power plants use fission.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">Why does fusion need an extremely high temperature?</span><span class="chev">›</span></summary><p class="a-text"><b>Nuclei are positive and repel, so they must move very fast to get close enough to fuse.</b> Like charges repel. Only very fast (very hot) nuclei collide hard enough to join.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">In the Sun, hydrogen nuclei fuse to form</span><span class="chev">›</span></summary><p class="a-text"><b>helium.</b> Hydrogen fuses to helium and releases the energy that makes the Sun shine.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">In a balanced nuclear equation, which totals must match on both sides?</span><span class="chev">›</span></summary><p class="a-text"><b>The mass numbers and the atomic numbers.</b> Add the top numbers and the bottom numbers separately on each side.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">Where does the energy released in fusion come from?</span><span class="chev">›</span></summary><p class="a-text"><b>A small amount of mass is converted into energy.</b> The products have slightly less mass than the reactants. E = mc².</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">How is a nuclear reaction different from a chemical reaction?</span><span class="chev">›</span></summary><p class="a-text"><b>The nucleus changes, so a new element forms.</b> Chemical reactions only rearrange electrons, and the elements stay the same.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">Nuclear fission is</span><span class="chev">›</span></summary><p class="a-text"><b>a heavy nucleus splitting into smaller nuclei.</b> For example, uranium-235 splitting when a neutron hits it.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-fus)"></span><span class="q-text">Compared with chemical reactions, nuclear reactions release</span><span class="chev">›</span></summary><p class="a-text"><b>far more energy.</b> Millions of times more energy for the same mass of fuel.</p></details>
+  </section>
+  <section id="econf" data-topic="econf" data-title="Electron configuration">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-econf);background:var(--c-econf-bg)">Unit 1 · Electron configuration</span>
+      <span class="sec-count">13 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">Filling order up to 4p?</span><span class="chev">›</span></summary><p class="a-text">1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p. Capacities: s 2, p 6, d 10, f 14.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">The three rules?</span><span class="chev">›</span></summary><p class="a-text">Aufbau: lowest energy first. Pauli: at most 2 electrons per orbital, opposite spins. Hund: one electron in each orbital of a sublevel before pairing.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">How do you spot an excited state?</span><span class="chev">›</span></summary><p class="a-text">Count the electrons to find the element, then compare with the filling order. An electron in a higher sublevel while a lower one is not full means excited.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">How do you write a noble gas configuration?</span><span class="chev">›</span></summary><p class="a-text">Put the previous noble gas (end of the row above) in brackets, then write only the electrons after it. [He] 2, [Ne] 10, [Ar] 18, [Kr] 36.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">What is the maximum number of electrons in one orbital?</span><span class="chev">›</span></summary><p class="a-text"><b>2.</b> Two electrons with opposite spins (Pauli exclusion principle).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">What is the maximum number of electrons in a p sublevel?</span><span class="chev">›</span></summary><p class="a-text"><b>6.</b> Three orbitals × 2 electrons. s holds 2, d holds 10, f holds 14.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">What is the maximum number of electrons in a d sublevel?</span><span class="chev">›</span></summary><p class="a-text"><b>10.</b> Five orbitals × 2 electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">Which sublevel fills straight after 3p?</span><span class="chev">›</span></summary><p class="a-text"><b>4s.</b> 4s is lower in energy than 3d. There is no 3f.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">Hund's rule says that</span><span class="chev">›</span></summary><p class="a-text"><b>each orbital in a sublevel gets one electron before any orbital gets two.</b> One in each box first, all with the same spin. Then pair.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">The Pauli exclusion principle says that</span><span class="chev">›</span></summary><p class="a-text"><b>an orbital holds at most two electrons, with opposite spins.</b> One up arrow and one down arrow per box, never two the same.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">The Aufbau principle says that</span><span class="chev">›</span></summary><p class="a-text"><b>electrons fill the lowest-energy sublevel first.</b> Build up from 1s, following the diagonal rule.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">What is the ground-state configuration of chromium?</span><span class="chev">›</span></summary><p class="a-text"><b>[Ar] 4s¹ 3d⁵.</b> An exception: a half-filled 3d sublevel is extra stable. Copper is the other one: [Ar] 4s¹ 3d¹⁰.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-econf)"></span><span class="q-text">Compared with its ground state, an atom in an excited state has</span><span class="chev">›</span></summary><p class="a-text"><b>the same number of electrons but more energy.</b> An electron has moved to a higher level. Nothing was added or removed.</p></details>
+  </section>
+  <section id="light" data-topic="light" data-title="Light emission">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-light);background:var(--c-light-bg)">Unit 1 · Light emission</span>
+      <span class="sec-count">14 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">Excitation and de-excitation?</span><span class="chev">›</span></summary><p class="a-text">Excitation: the electron absorbs energy and jumps up. De-excitation: it falls back and emits a photon with energy equal to the gap between the levels.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">How are energy, frequency and wavelength linked?</span><span class="chev">›</span></summary><p class="a-text">E = hf and c = λf. Higher energy means higher frequency and shorter wavelength. Violet is high energy; red is low.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">What happens when an electron in an atom absorbs energy?</span><span class="chev">›</span></summary><p class="a-text"><b>It jumps to a higher energy level.</b> This is excitation. The atom is now in an excited state.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">When does an atom emit light?</span><span class="chev">›</span></summary><p class="a-text"><b>When an electron falls from a higher level to a lower level.</b> This is de-excitation. The energy leaves as a photon.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">The energy of the photon emitted equals</span><span class="chev">›</span></summary><p class="a-text"><b>the difference in energy between the two levels.</b> E(photon) = E(high) − E(low).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">Which color of visible light has the highest energy?</span><span class="chev">›</span></summary><p class="a-text"><b>Violet.</b> Violet has the shortest wavelength and the highest frequency.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">As the wavelength of light decreases, its frequency</span><span class="chev">›</span></summary><p class="a-text"><b>increases.</b> c = λf and c is constant, so they change in opposite directions.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">As the frequency of light increases, the energy of its photons</span><span class="chev">›</span></summary><p class="a-text"><b>increases.</b> E = hf.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">An atom whose electrons are all in the lowest possible energy levels is in</span><span class="chev">›</span></summary><p class="a-text"><b>the ground state.</b> Any higher arrangement is an excited state.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">A bigger energy drop inside an atom emits light with</span><span class="chev">›</span></summary><p class="a-text"><b>a shorter wavelength.</b> More energy means higher frequency and shorter wavelength.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">Why does a glowing gas give a line spectrum and not a rainbow?</span><span class="chev">›</span></summary><p class="a-text"><b>Energy levels are fixed, so only certain energy changes are possible.</b> Quantized levels give only certain photon energies, so only certain colors.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">In a flame test, the color is produced when</span><span class="chev">›</span></summary><p class="a-text"><b>excited electrons fall back to lower energy levels.</b> The flame excites the electrons. The color comes out on the way back down.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">Which color of visible light has the longest wavelength?</span><span class="chev">›</span></summary><p class="a-text"><b>Red.</b> Red is about 700 nm, violet about 400 nm.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-light)"></span><span class="q-text">An excited state is</span><span class="chev">›</span></summary><p class="a-text"><b>unstable: the electron soon falls back and emits light.</b> Atoms return to the ground state almost at once.</p></details>
+  </section>
+  <section id="spec" data-topic="spec" data-title="Emission spectra">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-spec);background:var(--c-spec-bg)">Unit 1 · Emission spectra</span>
+      <span class="sec-count">11 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">The matching rule for emission spectra?</span><span class="chev">›</span></summary><p class="a-text">An element is present only if every one of its lines appears in the unknown. Leftover lines belong to another element.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">Hydrogen's four visible lines?</span><span class="chev">›</span></summary><p class="a-text">410 nm (violet), 434 nm (blue-violet), 486 nm (blue-green), 656 nm (red). All are drops to n = 2.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">Why is an emission spectrum called an element's fingerprint?</span><span class="chev">›</span></summary><p class="a-text"><b>Each element has its own unique set of lines.</b> Different elements have different energy levels, so different lines.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">When can you say an element is present in an unknown sample?</span><span class="chev">›</span></summary><p class="a-text"><b>When all of the element's lines appear in the unknown's spectrum.</b> Every line must match. One match is not enough.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">An unknown spectrum shows every line of hydrogen plus some extra lines. What can you conclude?</span><span class="chev">›</span></summary><p class="a-text"><b>Hydrogen is present, with at least one other element.</b> The extra lines must come from something else.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">A continuous spectrum contains</span><span class="chev">›</span></summary><p class="a-text"><b>all the colors with no gaps.</b> White light through a prism gives a continuous spectrum.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">A line emission spectrum is produced by</span><span class="chev">›</span></summary><p class="a-text"><b>a glowing (excited) gas of an element.</b> Excited atoms emit only their own particular colors.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">Each line in an emission spectrum corresponds to</span><span class="chev">›</span></summary><p class="a-text"><b>one particular electron transition (energy drop).</b> Each drop between two levels gives photons of one energy, so one line.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">Why do different elements give different spectra?</span><span class="chev">›</span></summary><p class="a-text"><b>Their energy levels are different.</b> Different nuclear charge and electron arrangement give different level spacings.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">The visible lines of hydrogen come from electrons dropping to</span><span class="chev">›</span></summary><p class="a-text"><b>n = 2.</b> Drops to n = 1 are ultraviolet and drops to n = 3 are infrared.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-spec)"></span><span class="q-text">How do astronomers know which elements are in a star?</span><span class="chev">›</span></summary><p class="a-text"><b>They match the lines in its spectrum with those of known elements.</b> The same matching rule you use on the exam.</p></details>
+  </section>
+  <section id="size" data-topic="size" data-title="Atomic and ionic radius">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-size);background:var(--c-size-bg)">Unit 2 · Atomic and ionic radius</span>
+      <span class="sec-count">10 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Atomic radius trends and the reason?</span><span class="chev">›</span></summary><p class="a-text">Decreases across a period (more protons, same shielding). Increases down a group (more energy levels, more shielding).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Ionic radius rules?</span><span class="chev">›</span></summary><p class="a-text">Cation smaller than its atom; anion larger. For ions with the same number of electrons, more protons means smaller.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Across a period from left to right, atomic radius generally</span><span class="chev">›</span></summary><p class="a-text"><b>decreases.</b> More protons pull the same energy level in closer.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Down a group, atomic radius</span><span class="chev">›</span></summary><p class="a-text"><b>increases.</b> Each row adds an energy level.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Why does atomic radius decrease across a period?</span><span class="chev">›</span></summary><p class="a-text"><b>More protons pull the electrons in the same energy level closer.</b> Nuclear charge rises while shielding stays about the same.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Why does atomic radius increase down a group?</span><span class="chev">›</span></summary><p class="a-text"><b>Each row adds an energy level, so the outer electrons are farther away and more shielded.</b> Distance and shielding outweigh the extra protons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Compared with its neutral atom, a cation is</span><span class="chev">›</span></summary><p class="a-text"><b>smaller.</b> It has lost electrons, often a whole energy level, and the same protons pull on fewer electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Compared with its neutral atom, an anion is</span><span class="chev">›</span></summary><p class="a-text"><b>larger.</b> Extra electrons repel each other, and the same protons hold more electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">Na⁺ and F⁻ both have 10 electrons. Why is Na⁺ smaller?</span><span class="chev">›</span></summary><p class="a-text"><b>It has more protons pulling on the same number of electrons.</b> 11 protons against 9, for the same 10 electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-size)"></span><span class="q-text">What is shielding?</span><span class="chev">›</span></summary><p class="a-text"><b>Inner electrons reducing the pull of the nucleus on the outer electrons.</b> Core electrons sit between the nucleus and the valence electrons.</p></details>
+  </section>
+  <section id="ie" data-topic="ie" data-title="Ionization energy and electronegativity">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-ie);background:var(--c-ie-bg)">Unit 2 · Ionization energy and electronegativity</span>
+      <span class="sec-count">14 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Ionization energy and electronegativity trends?</span><span class="chev">›</span></summary><p class="a-text">Both increase across a period and decrease down a group. F is the most electronegative; He has the highest ionization energy.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">How do you write a trend explanation?</span><span class="chev">›</span></summary><p class="a-text">Claim → cause (protons, shielding or energy levels) → effect (how strongly the outer electrons are held).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">What does a big jump in successive ionization energies tell you?</span><span class="chev">›</span></summary><p class="a-text">The jump comes when a core electron is removed, so the number of electrons before the jump is the number of valence electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">First ionization energy is the energy needed to</span><span class="chev">›</span></summary><p class="a-text"><b>remove the outermost electron from a gaseous atom.</b> The more tightly the electron is held, the higher the ionization energy.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Electronegativity is</span><span class="chev">›</span></summary><p class="a-text"><b>how strongly an atom attracts shared electrons in a bond.</b> It only applies to atoms in a bond.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Across a period, first ionization energy generally</span><span class="chev">›</span></summary><p class="a-text"><b>increases.</b> Greater nuclear charge with the same shielding holds the electrons more tightly.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Down a group, first ionization energy</span><span class="chev">›</span></summary><p class="a-text"><b>decreases.</b> The outer electron is farther away and more shielded.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Which element has the highest electronegativity?</span><span class="chev">›</span></summary><p class="a-text"><b>F.</b> Top right of the table (ignoring the noble gases).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Why does ionization energy decrease down a group?</span><span class="chev">›</span></summary><p class="a-text"><b>The outer electron is farther from the nucleus and more shielded, so it is held less tightly.</b> Distance and shielding win over the larger nuclear charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Why does ionization energy increase across a period?</span><span class="chev">›</span></summary><p class="a-text"><b>Nuclear charge increases while shielding stays about the same.</b> The outer electrons feel a stronger pull, so more energy is needed to remove one.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">A small atom usually has</span><span class="chev">›</span></summary><p class="a-text"><b>a high ionization energy and a high electronegativity.</b> Small atom, tight hold on electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Metals tend to have</span><span class="chev">›</span></summary><p class="a-text"><b>low ionization energies, so they form cations.</b> They lose electrons easily.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">Which element has the highest first ionization energy of all?</span><span class="chev">›</span></summary><p class="a-text"><b>He.</b> Helium is the smallest atom with a full level and no shielding.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-ie)"></span><span class="q-text">A large difference in electronegativity between two atoms gives</span><span class="chev">›</span></summary><p class="a-text"><b>an ionic bond.</b> Above about 1.7 the electron is transferred. This is the link between Unit 2 and Unit 3.</p></details>
+  </section>
+  <section id="bond" data-topic="bond" data-title="Chemical bonding">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-bond);background:var(--c-bond-bg)">Unit 3 · Chemical bonding</span>
+      <span class="sec-count">109 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">The ΔEN rule for bond type?</span><span class="chev">›</span></summary><p class="a-text">Less than 0.5: nonpolar covalent. 0.5 to 1.7: polar covalent. More than 1.7: ionic. Metal + metal is metallic.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Naming rules in one card?</span><span class="chev">›</span></summary><p class="a-text">Metal first: ionic, no prefixes, Roman numeral if the metal has more than one charge, polyatomic ions keep their names. Two non-metals: prefixes and -ide.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">When is a molecule polar?</span><span class="chev">›</span></summary><p class="a-text">When it has polar bonds and the dipoles do not cancel: a lone pair on the central atom, or outer atoms that differ.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which type of bond holds NaCl together?</span><span class="chev">›</span></summary><p class="a-text"><b>Ionic.</b> A metal (Na) with a non-metal (Cl): ΔEN = 3.0 − 0.9 = 2.1, so electrons are transferred and the ions attract.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which type of bond holds a piece of copper wire together?</span><span class="chev">›</span></summary><p class="a-text"><b>Metallic.</b> Copper is a metal: its + ions sit in a sea of free-moving electrons.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which type of bond is in a Cl₂ molecule?</span><span class="chev">›</span></summary><p class="a-text"><b>Nonpolar covalent.</b> Two identical non-metal atoms: ΔEN = 0, so the pair is shared equally.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">The O–H bond in water has ΔEN = 1.4. What kind of bond is it?</span><span class="chev">›</span></summary><p class="a-text"><b>Polar covalent.</b> Two non-metals with ΔEN between 0.5 and 1.7: shared unequally, pulled toward O.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">In an ionic bond, what happens to the electrons?</span><span class="chev">›</span></summary><p class="a-text"><b>They are transferred from the metal to the non-metal.</b> The metal loses electrons and becomes a + ion; the non-metal gains them and becomes a − ion. The opposite charges attract.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">In a metallic bond, what do the valence electrons do?</span><span class="chev">›</span></summary><p class="a-text"><b>They move freely among the positive metal ions.</b> This "sea of electrons" explains why metals conduct and can be bent.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A C–H bond has ΔEN = 0.4. What kind of bond is it?</span><span class="chev">›</span></summary><p class="a-text"><b>Nonpolar covalent.</b> Below 0.5 counts as nonpolar covalent.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A metal and a non-metal have ΔEN = 2.3. What kind of bond forms?</span><span class="chev">›</span></summary><p class="a-text"><b>Ionic.</b> Above about 1.7 between a metal and a non-metal, the electron is transferred: ionic.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Brass is made of copper and zinc. What holds it together?</span><span class="chev">›</span></summary><p class="a-text"><b>Metallic bonds.</b> Two metals: an alloy, held by metallic bonding.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">In the polar bond H–Cl, which atom is δ− (slightly negative)?</span><span class="chev">›</span></summary><p class="a-text"><b>Cl, because it is more electronegative.</b> The shared pair is pulled toward the more electronegative atom, Cl (3.0 vs 2.1).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Sodium nitrate, NaNO₃, contains which bonds?</span><span class="chev">›</span></summary><p class="a-text"><b>Both ionic and covalent.</b> Ionic between Na⁺ and NO₃⁻; covalent between N and O inside the nitrate ion.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the difference between a polar and a nonpolar covalent bond?</span><span class="chev">›</span></summary><p class="a-text"><b>Whether the shared electrons are shared unequally or equally.</b> Both share electrons. In a polar bond one atom pulls the pair closer.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What does ΔEN stand for?</span><span class="chev">›</span></summary><p class="a-text"><b>The difference in electronegativity between the two bonded atoms.</b> ΔEN = larger EN − smaller EN. Under 0.5 nonpolar, 0.5–1.7 polar covalent, over 1.7 ionic.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">In the dot diagram of CaCl₂, what do you draw?</span><span class="chev">›</span></summary><p class="a-text"><b>One [Ca]²⁺ and two [Cl]⁻, each Cl with 8 dots.</b> Ca gives away 2 electrons, one to each Cl. Charges: 2+ and 2 × 1− add to zero.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">How many valence electrons does CO₃²⁻ have in total?</span><span class="chev">›</span></summary><p class="a-text"><b>24.</b> C 4 + O 3 × 6 = 22, plus 2 for the 2− charge = 24.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">How many valence electrons does NH₄⁺ have in total?</span><span class="chev">›</span></summary><p class="a-text"><b>8.</b> N 5 + H 4 × 1 = 9, minus 1 for the + charge = 8.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which atom goes in the center of the Lewis structure of CH₂O?</span><span class="chev">›</span></summary><p class="a-text"><b>C.</b> Carbon forms the most bonds (4) and is the least electronegative. H is never central.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why can hydrogen never be the central atom?</span><span class="chev">›</span></summary><p class="a-text"><b>It can form only one bond.</b> H needs only 2 electrons, so it makes one bond and is always on the outside.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">How many lone pairs are on the O atom in H₂O?</span><span class="chev">›</span></summary><p class="a-text"><b>2.</b> 8 electrons: 2 O–H bonds use 4, the other 4 are 2 lone pairs on O.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What kind of bond joins the two atoms in N₂?</span><span class="chev">›</span></summary><p class="a-text"><b>A triple bond.</b> 10 electrons: N≡N with one lone pair on each N gives both atoms 8.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">How many electrons are in a double bond?</span><span class="chev">›</span></summary><p class="a-text"><b>4.</b> Each dash is one shared pair = 2 electrons. A double bond is 2 pairs.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What must the Lewis structure of a polyatomic ion always show?</span><span class="chev">›</span></summary><p class="a-text"><b>Square brackets with the charge outside.</b> The charge belongs to the whole ion, so it goes outside the brackets, top right.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">NO₃⁻ is drawn as three structures joined by ↔. What does that mean?</span><span class="chev">›</span></summary><p class="a-text"><b>The double bond can go to any of the three O atoms; the real ion is a blend.</b> That is resonance. All three N–O bonds are identical in the real ion.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the formal charge on N in NH₄⁺?</span><span class="chev">›</span></summary><p class="a-text"><b>+1.</b> FC = valence − lone-pair electrons − bonds = 5 − 0 − 4 = +1.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which carbon–carbon bond is the shortest and strongest?</span><span class="chev">›</span></summary><p class="a-text"><b>C≡C.</b> Higher bond order = more shared pairs = shorter and stronger.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">In step 4 of drawing a Lewis structure, the central atom has only 6 electrons. What do you do?</span><span class="chev">›</span></summary><p class="a-text"><b>Move a lone pair from an outer atom to make a double bond.</b> You never add electrons. You turn a lone pair into a shared pair.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which type of substance conducts electricity as a solid?</span><span class="chev">›</span></summary><p class="a-text"><b>Metallic.</b> Only metals have electrons that are free to move in the solid.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Solid NaCl does not conduct electricity, but melted NaCl does. Why?</span><span class="chev">›</span></summary><p class="a-text"><b>The ions are free to move once it melts.</b> Ions carry the current. In the solid they are locked in the lattice.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why are ionic crystals brittle?</span><span class="chev">›</span></summary><p class="a-text"><b>A shifted layer puts like charges next to each other, and they repel.</b> A knock moves one layer by one ion: + meets + and − meets −, so the crystal splits.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why can metals be hammered into sheets without breaking?</span><span class="chev">›</span></summary><p class="a-text"><b>The ion layers slide while the electron sea keeps holding them.</b> Malleable and ductile: nothing has to break when the layers move.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Sugar is covalent and melts at a low temperature. Why?</span><span class="chev">›</span></summary><p class="a-text"><b>The forces between its molecules are weak.</b> Melting separates molecules from each other. It does not break the bonds inside them.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A solid is hard, brittle, melts at 800 °C and conducts only when dissolved in water. What is it?</span><span class="chev">›</span></summary><p class="a-text"><b>Ionic.</b> High melting point, brittle, conducts only when the ions can move: ionic.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A solid is shiny, bends without breaking and conducts electricity. What is it?</span><span class="chev">›</span></summary><p class="a-text"><b>Metallic.</b> Lustre, malleability and conduction as a solid all come from the electron sea.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A substance is a gas at room temperature and does not conduct. What is it?</span><span class="chev">›</span></summary><p class="a-text"><b>Molecular covalent.</b> Small molecules with weak forces between them: low melting and boiling points.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A solid is extremely hard, melts above 3000 °C and does not conduct or dissolve. What is it?</span><span class="chev">›</span></summary><p class="a-text"><b>Covalent network.</b> Every atom is joined to its neighbors by covalent bonds, as in diamond.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">As bond order goes up (single → double → triple), what happens?</span><span class="chev">›</span></summary><p class="a-text"><b>The bond gets shorter and stronger.</b> More shared pairs pull the two nuclei closer and take more energy to break.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Water and methane have molecules of similar size, but water boils far higher. Why?</span><span class="chev">›</span></summary><p class="a-text"><b>Water molecules are polar, so they attract each other strongly.</b> Polar molecules attract each other; nonpolar ones have only weak attractions.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What are ionic compounds made of?</span><span class="chev">›</span></summary><p class="a-text"><b>A repeating lattice of + and − ions.</b> There is no "NaCl molecule": each Na⁺ is surrounded by Cl⁻ and each Cl⁻ by Na⁺.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of N₂O₅?</span><span class="chev">›</span></summary><p class="a-text"><b>Dinitrogen pentoxide.</b> Two non-metals: prefixes. The "a" of penta- is dropped before "oxide".</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of CO?</span><span class="chev">›</span></summary><p class="a-text"><b>Carbon monoxide.</b> No mono- on the first element, but the second always takes a prefix.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of MgCl₂?</span><span class="chev">›</span></summary><p class="a-text"><b>Magnesium chloride.</b> Metal + non-metal: no prefixes. Mg only forms 2+, so no Roman numeral either.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of FeCl₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Iron(III) chloride.</b> Three Cl⁻ make 3−, so the iron is Fe³⁺. Iron has more than one charge, so the numeral is needed.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of CuO?</span><span class="chev">›</span></summary><p class="a-text"><b>Copper(II) oxide.</b> O is 2−, so the single copper ion must be Cu²⁺.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of Cu₂O?</span><span class="chev">›</span></summary><p class="a-text"><b>Copper(I) oxide.</b> O is 2−, shared by two copper ions, so each is Cu⁺.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of NaNO₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Sodium nitrate.</b> NO₃⁻ is the polyatomic ion nitrate. Use its own name.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of CaCO₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Calcium carbonate.</b> CO₃²⁻ is carbonate. Calcium only forms 2+, so no numeral.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of (NH₄)₂SO₄?</span><span class="chev">›</span></summary><p class="a-text"><b>Ammonium sulfate.</b> Two polyatomic ions: ammonium NH₄⁺ and sulfate SO₄²⁻. No prefixes in ionic names.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of PCl₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Phosphorus trichloride.</b> Two non-metals: prefixes, with no mono- on the first element.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of SF₆?</span><span class="chev">›</span></summary><p class="a-text"><b>Sulfur hexafluoride.</b> Two non-metals: hexa- for 6.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the formula of aluminum oxide?</span><span class="chev">›</span></summary><p class="a-text"><b>Al₂O₃.</b> Al³⁺ and O²⁻: criss-cross the charge numbers to get Al₂O₃ (6+ and 6−).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the formula of calcium hydroxide?</span><span class="chev">›</span></summary><p class="a-text"><b>Ca(OH)₂.</b> Ca²⁺ needs two OH⁻. Two of the same polyatomic ion go in parentheses.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the formula of iron(II) sulfate?</span><span class="chev">›</span></summary><p class="a-text"><b>FeSO₄.</b> Fe²⁺ and SO₄²⁻ balance one to one.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the formula of dinitrogen tetroxide?</span><span class="chev">›</span></summary><p class="a-text"><b>N₂O₄.</b> Read the prefixes as subscripts: di = 2, tetra = 4.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">When do you use prefixes such as di- and tri- in a name?</span><span class="chev">›</span></summary><p class="a-text"><b>When both elements are non-metals (a covalent compound).</b> Ionic names never use prefixes: the charges fix the ratio.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">When does a name need a Roman numeral?</span><span class="chev">›</span></summary><p class="a-text"><b>When the metal can form more than one charge.</b> Iron, copper and most transition metals. Not Na, Ca, Al, Zn or Ag.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What does the (III) in iron(III) oxide tell you?</span><span class="chev">›</span></summary><p class="a-text"><b>Each iron ion has a 3+ charge.</b> The numeral is the charge of the metal ion. The formula is Fe₂O₃.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of the ion SO₃²⁻?</span><span class="chev">›</span></summary><p class="a-text"><b>Sulfite.</b> -ite has one oxygen fewer than -ate: sulfate is SO₄²⁻. Sulfide is S²⁻.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the name of H₂S?</span><span class="chev">›</span></summary><p class="a-text"><b>Hydrogen sulfide.</b> When hydrogen comes first it takes no prefix.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the formula of copper(II) nitrate?</span><span class="chev">›</span></summary><p class="a-text"><b>Cu(NO₃)₂.</b> Cu²⁺ needs two NO₃⁻, in parentheses.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which material is best for the core of an electrical cable, and why?</span><span class="chev">›</span></summary><p class="a-text"><b>Copper: its free electrons carry current and it can be drawn into wire.</b> Metallic bonding gives conduction in the solid and ductility.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which material is best for the coating around an electrical wire?</span><span class="chev">›</span></summary><p class="a-text"><b>A plastic (molecular covalent): it insulates and bends.</b> Molecular covalent materials have no free charges, so they insulate, and they are flexible.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which material is best for lining a furnace?</span><span class="chev">›</span></summary><p class="a-text"><b>An ionic ceramic: very high melting point.</b> Strong attraction between the ions means it survives very high temperatures.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which material is best for the tip of a drill that cuts rock?</span><span class="chev">›</span></summary><p class="a-text"><b>Diamond (covalent network): the hardest.</b> In a covalent network every atom is locked in by covalent bonds.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why is an alloy usually harder than the pure metal?</span><span class="chev">›</span></summary><p class="a-text"><b>Atoms of a different size stop the layers sliding easily.</b> Sliding layers are what make a pure metal soft. Disrupting them makes it harder and stronger.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is brass made of?</span><span class="chev">›</span></summary><p class="a-text"><b>Copper and zinc.</b> Brass = Cu + Zn. Bronze = Cu + Sn.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is bronze made of?</span><span class="chev">›</span></summary><p class="a-text"><b>Copper and tin.</b> Bronze = Cu + Sn. Brass = Cu + Zn.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which element added to steel makes stainless steel resist rust?</span><span class="chev">›</span></summary><p class="a-text"><b>Chromium.</b> Stainless steel is iron + carbon + chromium + nickel.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why would an ionic ceramic make a bad hammer head?</span><span class="chev">›</span></summary><p class="a-text"><b>It is brittle and would shatter.</b> Ionic materials are hard but brittle: fine for a tile, wrong for anything that takes impacts.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why are frying-pan handles made of plastic or wood, not metal?</span><span class="chev">›</span></summary><p class="a-text"><b>They are poor conductors of heat.</b> The metal body conducts heat to the food; the covalent handle keeps the heat from your hand.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">You need a coating that water will not stick to. Which should you choose?</span><span class="chev">›</span></summary><p class="a-text"><b>A nonpolar covalent material.</b> Water is polar. Nonpolar materials such as wax or nonstick coatings do not attract it.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">An alloy is best described as…</span><span class="chev">›</span></summary><p class="a-text"><b>A homogeneous mixture of a metal with other elements.</b> No new compound forms: the atoms are mixed, still held by metallic bonding.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">You need a substance that conducts electricity when dissolved in water. Which type?</span><span class="chev">›</span></summary><p class="a-text"><b>Ionic.</b> Dissolving frees the ions, and moving ions carry the current.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which property makes metals good for cooking pots?</span><span class="chev">›</span></summary><p class="a-text"><b>They conduct heat well.</b> The free electrons carry heat as well as charge.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A watch face must be transparent, very hard and able to stand heat. Which type of material fits?</span><span class="chev">›</span></summary><p class="a-text"><b>Covalent network, such as quartz (SiO₂).</b> Network solids are hard with very high melting points, and many are transparent.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the first step in choosing a material for a job?</span><span class="chev">›</span></summary><p class="a-text"><b>List the properties the job needs.</b> Then match those properties to the bond type that gives them.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">How many electron domains are around C in CO₂?</span><span class="chev">›</span></summary><p class="a-text"><b>2.</b> Two double bonds, and each counts as one domain.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of CH₄?</span><span class="chev">›</span></summary><p class="a-text"><b>Tetrahedral.</b> 4 bonded atoms and no lone pairs on C.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of NH₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Trigonal pyramidal.</b> 4 domains: 3 atoms + 1 lone pair.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of H₂O?</span><span class="chev">›</span></summary><p class="a-text"><b>Bent.</b> 4 domains: 2 atoms + 2 lone pairs.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of CO₂?</span><span class="chev">›</span></summary><p class="a-text"><b>Linear.</b> 2 domains and no lone pairs on C.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of BF₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Trigonal planar.</b> 3 domains and no lone pair on B.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of SO₂?</span><span class="chev">›</span></summary><p class="a-text"><b>Bent.</b> 3 domains: 2 atoms + 1 lone pair on S.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the bond angle in CH₄?</span><span class="chev">›</span></summary><p class="a-text"><b>109.5°.</b> Four domains point to the corners of a tetrahedron.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the bond angle in H₂O?</span><span class="chev">›</span></summary><p class="a-text"><b>About 104.5°.</b> Two lone pairs squeeze the angle below 109.5°.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the bond angle in BF₃?</span><span class="chev">›</span></summary><p class="a-text"><b>120°.</b> Three domains spread evenly in a plane.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the ELECTRON geometry of NH₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Tetrahedral.</b> Electron geometry counts all 4 domains, lone pair included.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the ELECTRON geometry of H₂O?</span><span class="chev">›</span></summary><p class="a-text"><b>Tetrahedral.</b> 2 bonded atoms + 2 lone pairs = 4 domains.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A central atom has 3 electron domains, one of them a lone pair. What is the shape?</span><span class="chev">›</span></summary><p class="a-text"><b>Bent, a little less than 120°.</b> Only 2 atoms are attached, so the atoms form a bent shape.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why is the bond angle in NH₃ (107°) smaller than in CH₄ (109.5°)?</span><span class="chev">›</span></summary><p class="a-text"><b>The lone pair repels more than a bonding pair.</b> Lone pairs take more space and push the bonds closer together.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What does a solid wedge mean in a 3-D drawing?</span><span class="chev">›</span></summary><p class="a-text"><b>The bond comes out of the page, toward you.</b> Plain = in the page, wedge = toward you, dash = away.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of the nitrate ion, NO₃⁻?</span><span class="chev">›</span></summary><p class="a-text"><b>Trigonal planar.</b> N has 3 bonded O atoms and no lone pair: 3 domains.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is the molecular geometry of PCl₃?</span><span class="chev">›</span></summary><p class="a-text"><b>Trigonal pyramidal.</b> 26 electrons: P has 3 bonds + 1 lone pair = 4 domains.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">CO₂ has two polar C=O bonds. Why is the molecule nonpolar?</span><span class="chev">›</span></summary><p class="a-text"><b>It is linear, so the two equal dipoles cancel.</b> Two equal arrows pointing in opposite directions add to zero.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Why is H₂O a polar molecule?</span><span class="chev">›</span></summary><p class="a-text"><b>It is bent, so the two O–H dipoles add instead of cancelling.</b> The shape decides: the two arrows point partly the same way.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Is a C–H bond polar? (EN: C 2.5, H 2.1)</span><span class="chev">›</span></summary><p class="a-text"><b>No: ΔEN is 0.4.</b> A bond with ΔEN below 0.5 counts as nonpolar.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">In an O–H bond, which atom is δ−?</span><span class="chev">›</span></summary><p class="a-text"><b>O.</b> O is more electronegative (3.5 vs 2.1), so it pulls the shared pair.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is true of CCl₄?</span><span class="chev">›</span></summary><p class="a-text"><b>Its bonds are polar but the molecule is nonpolar.</b> C–Cl is polar (ΔEN 0.5). Four equal dipoles in a tetrahedron cancel.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What is true of CH₄?</span><span class="chev">›</span></summary><p class="a-text"><b>Its bonds are nonpolar and the molecule is nonpolar.</b> C–H has ΔEN 0.4: no polar bonds, so nothing to add up.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">CF₂Cl₂ is tetrahedral. Is it polar?</span><span class="chev">›</span></summary><p class="a-text"><b>Yes: the outer atoms are not all the same.</b> The C–F dipoles are stronger than the C–Cl dipoles, so they cannot cancel.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">HCN is linear. Is it polar?</span><span class="chev">›</span></summary><p class="a-text"><b>Yes: the two ends are different.</b> Linear cancels only when both outer atoms are the same, as in CO₂.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A bond dipole arrow points toward…</span><span class="chev">›</span></summary><p class="a-text"><b>The more electronegative atom.</b> That is where the shared electrons are pulled: the δ− end.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">A molecule has polar bonds and a lone pair on its central atom (bent or pyramidal). It is…</span><span class="chev">›</span></summary><p class="a-text"><b>Polar.</b> The lone pair makes the shape unsymmetric, so the dipoles do not cancel.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">BF₃ or NF₃: which one is polar?</span><span class="chev">›</span></summary><p class="a-text"><b>NF₃: it has a lone pair and is trigonal pyramidal.</b> BF₃ is trigonal planar and symmetric, so its three dipoles cancel.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Is SO₂ polar?</span><span class="chev">›</span></summary><p class="a-text"><b>Yes: it is bent.</b> S has a lone pair, so SO₂ is bent and its S–O dipoles add.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">Which of these dissolves in water: NH₃ or CCl₄?</span><span class="chev">›</span></summary><p class="a-text"><b>NH₃, because it is polar like water.</b> "Like dissolves like": polar dissolves in polar.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-bond)"></span><span class="q-text">What decides whether a molecule with polar bonds is polar overall?</span><span class="chev">›</span></summary><p class="a-text"><b>Its shape: whether the bond dipoles cancel.</b> Molecular polarity is the vector sum of the bond dipoles.</p></details>
+  </section>
+  </div>
+
+  <div id="study">
+    <div id="setup" class="panel">
+      <p class="label">Topics to study</p>
+      <div class="chips" id="pick"></div>
+      <div class="row" style="margin-bottom:14px">
+        <button class="btn-sm" id="all">Select all</button><button class="btn-sm" id="none">Clear</button>
+        <label class="opt" style="margin-left:auto"><input type="checkbox" id="shuffle" checked> Shuffle</label>
+      </div>
+      <button class="btn btn-primary" id="start" style="width:100%">Start</button>
+    </div>
+
+    <div id="run" hidden>
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="meta"><span id="m-left"></span><span id="m-again"></span></div>
+      <div class="card" id="card" tabindex="0" role="button" aria-label="Flashcard. Tap to reveal the answer.">
+        <span class="sec-badge" id="c-topic"></span>
+        <div class="cq" id="c-q"></div>
+        <div class="ca" id="c-a"></div>
+        <div class="hint">Tap to reveal the answer</div>
+      </div>
+      <div class="actions row" id="rate" hidden>
+        <button class="btn btn-again" id="again">↺ Again</button>
+        <button class="btn btn-good" id="good">✓ Got it</button>
+      </div>
+      <div class="actions row" id="revealrow">
+        <button class="btn btn-primary" id="reveal">Show answer</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn-sm" id="quit">End session</button></div>
+      <p class="kbd">Keyboard: Space = show answer · 1 = Again · 2 = Got it</p>
+    </div>
+
+    <div id="done" class="panel done" hidden>
+      <h2 id="d-title"></h2>
+      <p id="d-text"></p>
+      <div class="row">
+        <button class="btn btn-primary" id="d-missed">Review the tricky ones</button>
+        <button class="btn btn-ghost" id="d-restart">New session</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Follows the Session C5 interim review and the teacher's topic lists for Units 1, 2 and 3.<br>Electronegativities are NCERT's Pauling values.</footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- deck from the page itself (single source of truth) ----
+  var topics = [], deck = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[data-topic]'), function (sec) {
+    var t = { id: sec.dataset.topic, title: sec.dataset.title, n: 0 };
+    topics.push(t);
+    Array.prototype.forEach.call(sec.querySelectorAll('details.qa'), function (d) {
+      deck.push({ t: t, q: d.querySelector('.q-text').innerHTML, a: d.querySelector('.a-text').innerHTML });
+      t.n++;
+    });
+  });
+
+  // ---- browse tools ----
+  function setAll(open) { Array.prototype.forEach.call(document.querySelectorAll('details.qa'), function (d) { d.open = open; }); }
+  $('expand').onclick = function () { setAll(true); };
+  $('collapse').onclick = function () { setAll(false); };
+
+  // ---- mode switch ----
+  function mode(study) {
+    document.body.classList.toggle('studying', study);
+    $('m-browse').setAttribute('aria-pressed', !study);
+    $('m-study').setAttribute('aria-pressed', study);
+    window.scrollTo(0, 0);
+  }
+  $('m-browse').onclick = function () { mode(false); };
+  $('m-study').onclick = function () { mode(true); };
+
+  // ---- topic picker ----
+  var pick = $('pick'), chosen = {};
+  topics.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    b.style.color = 'var(--c-' + t.id + ')'; b.style.background = 'var(--c-' + t.id + '-bg)';
+    b.innerHTML = t.title + ' <b>' + t.n + '</b>';
+    b.setAttribute('aria-pressed', 'true'); chosen[t.id] = true;
+    b.onclick = function () { chosen[t.id] = !chosen[t.id]; b.setAttribute('aria-pressed', chosen[t.id]); updStart(); };
+    t.btn = b; pick.appendChild(b);
+  });
+  function selected() { return deck.filter(function (c) { return chosen[c.t.id]; }); }
+  function updStart() {
+    var n = selected().length;
+    $('start').disabled = !n;
+    $('start').textContent = n ? 'Start · ' + n + ' cards' : 'Pick at least one topic';
+  }
+  function setChosen(v) { topics.forEach(function (t) { chosen[t.id] = v; t.btn.setAttribute('aria-pressed', v); }); updStart(); }
+  $('all').onclick = function () { setChosen(true); };
+  $('none').onclick = function () { setChosen(false); };
+  updStart();
+
+  // ---- session ----
+  var queue, cur, total, learned, missed, revealed;
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function begin(cards) {
+    queue = $('shuffle').checked ? shuffle(cards.slice()) : cards.slice();
+    total = queue.length; learned = 0; missed = [];
+    $('setup').hidden = true; $('done').hidden = true; $('run').hidden = false;
+    next();
+  }
+  function next() {
+    if (!queue.length) return finish();
+    cur = queue.shift(); revealed = false;
+    var c = $('card'); c.classList.remove('revealed');
+    var tp = $('c-topic');
+    tp.innerHTML = cur.t.title;
+    tp.style.color = 'var(--c-' + cur.t.id + ')'; tp.style.background = 'var(--c-' + cur.t.id + '-bg)';
+    $('c-q').innerHTML = cur.q; $('c-a').innerHTML = cur.a;
+    $('rate').hidden = true; $('revealrow').hidden = false;
+    $('barfill').style.width = (100 * learned / total) + '%';
+    $('m-left').textContent = learned + ' / ' + total + ' learned';
+    $('m-again').textContent = missed.length ? missed.length + ' marked “Again”' : '';
+  }
+  function reveal() {
+    if (revealed) return;
+    revealed = true; $('card').classList.add('revealed');
+    $('rate').hidden = false; $('revealrow').hidden = true;
+  }
+  function rate(ok) {
+    if (!revealed) return;
+    if (ok) { learned++; }
+    else {
+      if (missed.indexOf(cur) < 0) missed.push(cur);
+      queue.splice(Math.min(3, queue.length), 0, cur);  // comes back a few cards later
+    }
+    next();
+  }
+  function finish() {
+    $('run').hidden = true; $('done').hidden = false;
+    $('barfill').style.width = '100%';
+    $('d-title').textContent = 'All ' + total + ' cards done';
+    $('d-text').textContent = missed.length
+      ? missed.length + ' card' + (missed.length > 1 ? 's' : '') + ' needed another go. Run them again until they stick.'
+      : 'Every card was right first time.';
+    $('d-missed').hidden = !missed.length;
+  }
+  $('start').onclick = function () { begin(selected()); };
+  $('card').onclick = reveal;
+  $('reveal').onclick = reveal;
+  $('again').onclick = function () { rate(false); };
+  $('good').onclick = function () { rate(true); };
+  $('quit').onclick = function () { $('run').hidden = true; $('setup').hidden = false; };
+  $('d-missed').onclick = function () { begin(missed); };
+  $('d-restart').onclick = function () { $('done').hidden = true; $('setup').hidden = false; };
+  document.addEventListener('keydown', function (e) {
+    if (!document.body.classList.contains('studying') || $('run').hidden) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
+    else if (e.key === '1') rate(false);
+    else if (e.key === '2') rate(true);
+  });
+})();
+</script>
+</body>
+</html>

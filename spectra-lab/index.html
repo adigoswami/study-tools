@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Emission Spectra Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f1e7; --surface:#fff; --surface2:#faf7f0; --text:#201c15; --muted:#6f6858; --border:#ddd3ba;
+          --ink:#201c15; --ink-text:#f5f1e7; --accent:#2f5d9e; --accent-bg:#dde7f6;
+          --good:#157a45; --good-bg:#dbeee0; --bad:#b4371f; --bad-bg:#f8ded6;
+          --stage:#0d1016; --stage-line:#dfe5ee; --stage-muted:#8f98aa; --stage-abs:#8fb4f0; --electron:#ffd166;
+          --shadow:0 1px 2px rgba(32,28,21,.06),0 6px 18px rgba(32,28,21,.07); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14161c; --surface:#1d2027; --surface2:#181b21; --text:#ece7db; --muted:#9a9385; --border:#333844;
+            --ink:#ece7db; --ink-text:#14161c; --accent:#7fa8ea; --accent-bg:#1e2c46;
+            --good:#6bce93; --good-bg:#16321f; --bad:#f08a70; --bad-bg:#3d1d16;
+            --shadow:0 1px 2px rgba(0,0,0,.35),0 6px 18px rgba(0,0,0,.3); }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:1040px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--muted); text-decoration:none; display:inline-flex; align-items:center; min-height:40px; margin:-12px 0 -9px; padding-right:12px; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; }
+  .sub { color:var(--muted); font-size:13.5px; margin:0 0 14px; line-height:1.5; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .seg { display:flex; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:5px; margin:0 0 14px; }
+  .seg button { flex:1 1 0; min-width:0; min-height:44px; border:0; background:transparent; color:var(--muted); font:600 14px "IBM Plex Sans",sans-serif; line-height:1.2; padding:8px 4px; border-radius:10px; cursor:pointer; text-wrap:balance; }
+  .seg button small { display:block; font-weight:400; font-size:11.5px; opacity:.85; margin-top:2px; }
+  .seg button[aria-pressed="true"] { background:var(--ink); color:var(--ink-text); }
+
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:14px 16px; margin-bottom:12px; }
+  .lbl { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin:0 0 8px; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { border:1.5px solid var(--border); background:var(--surface); color:var(--text); font:600 13.5px "IBM Plex Sans",sans-serif; min-height:40px; padding:6px 12px; border-radius:99px; cursor:pointer; }
+  .chip[aria-pressed="true"] { background:var(--ink); color:var(--ink-text); border-color:var(--ink); }
+  .chip small { font-weight:400; opacity:.8; margin-left:4px; }
+  .btn { border:0; border-radius:11px; font:600 14.5px "IBM Plex Sans",sans-serif; min-height:42px; padding:11px 15px; cursor:pointer; background:var(--ink); color:var(--ink-text); }
+  .btn.ghost { background:transparent; color:var(--text); border:1px solid var(--border); }
+  .btn:disabled { opacity:.4; cursor:default; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .goal { border-radius:12px; padding:10px 12px; font-size:14px; line-height:1.5; background:var(--surface2); border:1.5px dashed var(--border); margin-bottom:10px; }
+  .goal.done { background:var(--good-bg); border:1.5px solid var(--good); }
+  .tip { margin:6px 0 0; font-size:13.5px; color:var(--muted); line-height:1.5; }
+  .facts { font-size:14.5px; line-height:1.5; margin:10px 0; }
+  .meta { display:flex; justify-content:space-between; gap:10px; font:600 12px "IBM Plex Mono",monospace; color:var(--muted); margin-bottom:8px; }
+  .bar { height:6px; background:var(--border); border-radius:99px; overflow:hidden; margin-bottom:10px; }
+  .bar i { display:block; height:100%; width:0; background:var(--good); transition:width .25s; }
+  ol.how, ul.how { margin:6px 0 0; padding-left:20px; font-size:14px; line-height:1.6; }
+  .formula { font:600 13px "IBM Plex Mono",monospace; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:2px 6px; white-space:nowrap; }
+  footer { margin-top:22px; font-size:12px; color:var(--muted); text-align:center; line-height:1.5; }
+
+  /* ---- mode 1: energy levels ---- */
+  .egrid { display:grid; gap:12px; grid-template-columns:minmax(0,1fr); }
+  .e-diag { width:100%; max-width:420px; margin:0 auto; }
+  @media (min-width:820px) {
+    .egrid { grid-template-columns:minmax(0,400px) minmax(0,1fr); column-gap:22px; grid-template-rows:auto 1fr; grid-template-areas:"diag top" "diag bot"; }
+    .e-top { grid-area:top; } .e-diag { grid-area:diag; } .e-bot { grid-area:bot; }
+  }
+  .status { font-size:14.5px; line-height:1.45; margin:0 0 10px; min-height:63px; }
+  .read { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:6px; }
+  .read > div { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:7px 10px; min-height:52px; }
+  .read .k { display:block; font:600 10.5px "IBM Plex Mono",monospace; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); margin-bottom:2px; }
+  .read b { font-size:15px; font-weight:600; line-height:1.3; display:block; }
+  @media (max-width:520px) { .read > div.tall { min-height:72px; } }
+  .read sup { font-size:.72em; line-height:0; }
+  .stage { background:var(--stage); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .stage svg { display:block; width:100%; height:auto; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent; }
+  .lv-h { font:600 9.5px "IBM Plex Mono",monospace; letter-spacing:.05em; fill:var(--stage-muted); }
+  .lv-n { font:600 14px "IBM Plex Sans",sans-serif; fill:var(--stage-line); }
+  .lv-e { font:500 12.5px "IBM Plex Mono",monospace; fill:var(--stage-line); }
+  .lv-g { font:500 10.5px "IBM Plex Sans",sans-serif; fill:var(--stage-muted); }
+  .lv-line { stroke:var(--stage-line); stroke-width:1.6; opacity:.55; }
+  .lv-line.cur { stroke-width:2.6; opacity:1; }
+  .lv-hit { fill:transparent; cursor:pointer; outline:none; }
+  @media (hover:hover) { .lv-hit:hover { fill:rgba(255,255,255,.05); } }
+  .lv-hit:focus-visible { stroke:var(--electron); stroke-width:2; }
+  .lv-tag { font:600 10.5px "IBM Plex Sans",sans-serif; fill:var(--electron); }
+  .lv-abs { stroke:var(--stage-abs); fill:var(--stage-abs); }
+  .lv-em { stroke:var(--stage-line); fill:var(--stage-line); }
+  .lv-abs-t { font:600 12px "IBM Plex Sans",sans-serif; fill:var(--stage-abs); paint-order:stroke; stroke:var(--stage); stroke-width:4px; stroke-linejoin:round; }
+  .lv-wl { font:600 12px "IBM Plex Mono",monospace; }
+  #elec { transition:transform .5s cubic-bezier(.3,.7,.3,1); }
+  #elec circle { fill:var(--electron); stroke:var(--stage); stroke-width:2; }
+  #elec text { font:700 10px "IBM Plex Sans",sans-serif; fill:#1a1608; }
+  .fly { animation:fly .55s ease-out .28s both; }
+  .fade { animation:fade .35s ease-out both; }
+  @keyframes fly { from { opacity:0; transform:translateX(-22px); } to { opacity:1; transform:none; } }
+  @keyframes fade { from { opacity:0; } to { opacity:1; } }
+  @media (prefers-reduced-motion: reduce) { #elec { transition:none; } .fly, .fade { animation:none; } }
+  .badges { margin:8px 0 0; }
+  .badge { font:600 12px "IBM Plex Mono",monospace; border:1px solid var(--border); background:var(--surface2); border-radius:99px; padding:4px 10px; white-space:nowrap; }
+  .badges .note { font-size:12.5px; color:var(--muted); }
+  .hist { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 12px; min-height:26px; }
+  .hist span { font:500 11.5px "IBM Plex Mono",monospace; border:1px solid var(--border); border-radius:8px; padding:3px 7px; white-space:nowrap; display:inline-flex; align-items:center; gap:5px; }
+  .hist i { width:9px; height:9px; border-radius:2px; display:inline-block; background:var(--muted); }
+
+  /* ---- spectrum strips ---- */
+  svg.strip { display:block; }
+  .st-band { fill:#000; stroke:var(--border); stroke-width:1; }
+  .st-a { font:500 10.5px "IBM Plex Mono",monospace; fill:var(--muted); }
+  .st-l { font:600 10px "IBM Plex Mono",monospace; fill:var(--text); }
+  .st-t { stroke:var(--muted); stroke-width:1; }
+  .st-m { font:700 10px "IBM Plex Sans",Arial,sans-serif; }
+  .st-m.ok { fill:var(--good); } .st-m.no { fill:var(--bad); }
+  .gl { stroke:var(--accent); stroke-width:2; stroke-dasharray:3 3; }
+  .tri { fill:none; stroke:#b9c0cc; stroke-width:1.2; }
+  .tri.on { fill:#fff; stroke:#fff; }
+
+  /* ---- mode 2: matching ---- */
+  .stack { position:relative; isolation:isolate; margin:4px 0 12px; }
+  .stack > * { position:relative; z-index:1; }
+  .stack > .guide { position:absolute; z-index:0; top:0; bottom:0; width:0; border-left:2px dashed var(--accent); transform:translateX(-1px); pointer-events:none; }
+  .stack > .unk { position:sticky; top:0; z-index:3; background:var(--surface); padding:6px 0 6px; border-bottom:1px solid var(--border); margin-bottom:10px; }
+  .unkhead { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:2px; }
+  .unkhead .lbl { margin:0; }
+  .gstep { display:flex; align-items:center; gap:4px; }
+  .gstep button { width:42px; height:40px; border-radius:10px; border:1px solid var(--border); background:var(--surface2); color:var(--text); cursor:pointer; display:grid; place-items:center; padding:0; }
+  .gstep button svg { width:16px; height:16px; display:block; }
+  .gstep output { min-width:66px; text-align:center; font:600 14px "IBM Plex Mono",monospace; }
+  .ginfo { margin:4px 0 0; font-size:12.5px; color:var(--muted); min-height:18px; line-height:1.4; }
+  .sp { touch-action:pan-y; cursor:crosshair; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent; }
+  .elrow { margin-bottom:10px; }
+  .pick { display:flex; align-items:center; gap:10px; width:100%; min-height:42px; border:1.5px solid var(--border); background:transparent; color:var(--text); border-radius:10px; padding:6px 10px; margin-bottom:4px; font:600 14.5px "IBM Plex Sans",sans-serif; cursor:pointer; text-align:left; }
+  .pick .box { flex:none; width:20px; height:20px; border:2px solid var(--muted); border-radius:5px; display:grid; place-items:center; font-size:14px; line-height:1; color:transparent; background:var(--surface); }
+  .pick .nm, .pick .st:not(:empty) { background:var(--surface); border-radius:5px; padding:2px 6px; }
+  .pick .nm { margin-left:-6px; }
+  .pick[aria-pressed="true"] .nm, .elrow.ok .pick .nm, .elrow.bad .pick .nm, .elrow.ok .pick .st, .elrow.bad .pick .st { background:transparent; }
+  .pick[aria-pressed="true"] { background:var(--accent-bg); border-color:var(--accent); }
+  .pick[aria-pressed="true"] .box { background:var(--accent); border-color:var(--accent); color:var(--surface); }
+  .pick .st { margin-left:auto; font:600 11px "IBM Plex Mono",monospace; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  .pick:disabled { cursor:default; opacity:1; }
+  .elrow.ok .pick { border-color:var(--good); background:var(--good-bg); }
+  .elrow.bad .pick { border-color:var(--bad); background:var(--bad-bg); }
+  .elrow.ok .pick .st { color:var(--good); } .elrow.bad .pick .st { color:var(--bad); }
+  .fb { margin-top:12px; padding:10px 12px; border-radius:12px; font-size:14.5px; line-height:1.5; }
+  .fb.ok { background:var(--good-bg); } .fb.no { background:var(--bad-bg); }
+  .fb > b { display:block; }
+  ul.why { list-style:none; margin:8px 0 0; padding:0; font-size:13.5px; line-height:1.45; }
+  ul.why li { padding:5px 0 5px 22px; position:relative; border-top:1px solid var(--border); }
+  ul.why li .mk { position:absolute; left:2px; top:5px; font-weight:700; }
+  ul.why li.ok .mk { color:var(--good); } ul.why li.no .mk { color:var(--bad); }
+  ul.why li.no { font-weight:600; }
+
+  /* ---- mode 3: quiz ---- */
+  .q { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(18px,4.6vw,21px); line-height:1.35; margin:4px 0 12px; }
+  .opts { display:grid; gap:8px; }
+  .opt { display:flex; align-items:center; gap:10px; text-align:left; min-height:46px; border:1.5px solid var(--border); background:var(--surface); color:var(--text); border-radius:12px; padding:11px 12px; cursor:pointer; font:500 15px "IBM Plex Sans",sans-serif; line-height:1.35; }
+  .opt:disabled { cursor:default; opacity:1; }
+  .opt.right { border-color:var(--good); background:var(--good-bg); }
+  .opt.wrong { border-color:var(--bad); background:var(--bad-bg); }
+  .missed { margin:4px 0 14px; padding:0; list-style:none; }
+  .missed li { border-top:1px solid var(--border); padding:10px 0; font-size:14px; line-height:1.5; }
+  .missed li b { display:block; margin-bottom:2px; }
+  .missed .ya { color:var(--bad); } .missed .ca { color:var(--good); font-weight:600; }
+  .missed .wy { color:var(--muted); font-size:13.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>Emission Spectra Lab</h1>
+  <p class="sub">How to use: 1. Tap energy levels to excite a hydrogen electron and watch it emit light. 2. Match line spectra to find the elements in an unknown. 3. Check yourself with 12 questions.</p>
+
+  <div class="seg" role="group" aria-label="Mode">
+    <button type="button" id="m-excite" aria-pressed="true">Excite and emit<small>hydrogen</small></button>
+    <button type="button" id="m-match" aria-pressed="false">Match the lines<small>6 elements</small></button>
+    <button type="button" id="m-quiz" aria-pressed="false">Quick check<small>12 questions</small></button>
+  </div>
+
+  <!-- ============ 1 · EXCITE AND EMIT ============ -->
+  <div id="excite">
+    <div class="card">
+      <div class="egrid">
+        <div class="e-top">
+          <div class="lbl">Hydrogen atom: tap a level</div>
+          <p class="status" id="e-status" aria-live="polite"></p>
+          <div class="read" id="e-read">
+            <div><span class="k">Transition</span><b id="rd-trans">–</b></div>
+            <div><span class="k" id="rd-elbl">Energy released</span><b id="rd-energy">–</b></div>
+            <div class="tall"><span class="k">Wavelength</span><b id="rd-wave">–</b></div>
+            <div class="tall"><span class="k">Region</span><b id="rd-region">–</b></div>
+          </div>
+        </div>
+        <div class="e-diag">
+          <div class="stage"><svg id="lev" viewBox="0 0 300 364" role="group" aria-label="Energy levels of hydrogen, n = 1 to 6"></svg></div>
+        </div>
+        <div class="e-bot">
+          <div class="goal" id="e-goal"></div>
+          <div class="lbl">Hydrogen lines you have made (nm)</div>
+          <div id="e-strip"></div>
+          <div class="row badges">
+            <span class="badge" id="b-uv">UV: 0</span>
+            <span class="badge" id="b-ir">IR: 0</span>
+            <span class="note">UV and IR photons are not visible, so they leave no line.</span>
+          </div>
+          <div class="hist" id="e-hist" aria-label="Photons emitted so far"></div>
+          <button type="button" class="btn ghost" id="e-reset">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="lbl">The rules</div>
+      <ul class="how">
+        <li><b>Ground state:</b> the electron is in the lowest level it can be in.</li>
+        <li><b>Excitation:</b> the electron <b>absorbs</b> energy (heat, electricity or light) and jumps to a higher level. This excited state is unstable.</li>
+        <li><b>De-excitation:</b> the electron falls to a lower level and <b>emits</b> one photon. Photon energy = E<sub>high</sub> − E<sub>low</sub>.</li>
+        <li><b>Bigger drop → more energy → higher frequency → shorter wavelength</b> (toward violet). A smaller drop gives a longer wavelength (toward red).</li>
+        <li>Dropping in steps emits one photon per step. 4 → 2 and then 2 → 1 gives <b>two</b> photons.</li>
+        <li>For these six levels: drops to n = 2 are visible, drops to n = 1 are ultraviolet, and drops to n = 3, 4 or 5 are infrared.</li>
+        <li>Only certain levels exist, so only certain colors are possible. That is why you get lines and not a rainbow.</li>
+      </ul>
+      <p class="tip">Formulas: <span class="formula">E = hf</span> <span class="formula">c = λf</span> <span class="formula">E = hc/λ</span></p>
+    </div>
+  </div>
+
+  <!-- ============ 2 · MATCH THE LINES ============ -->
+  <div id="match" hidden>
+    <div class="card">
+      <div class="meta"><span id="mt-count"></span><span id="mt-score"></span></div>
+      <div class="chips" id="mt-levels" role="group" aria-label="Level">
+        <button type="button" class="chip" data-l="1" aria-pressed="true">Level 1</button>
+        <button type="button" class="chip" data-l="2" aria-pressed="false">Level 2</button>
+        <button type="button" class="chip" data-l="3" aria-pressed="false">Level 3</button>
+      </div>
+      <p class="facts">Which elements are in the unknown? Tick an element only if <b>all</b> of its lines are in the unknown. Tap or drag on any spectrum to move the guide line.</p>
+      <div class="stack" id="stack">
+        <div class="guide" id="guide"></div>
+        <div class="unk">
+          <div class="unkhead">
+            <span class="lbl">Unknown</span>
+            <div class="gstep">
+              <button type="button" id="g-prev" aria-label="Move the guide line 1 nm left"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <output id="g-nm">–</output>
+              <button type="button" id="g-next" aria-label="Move the guide line 1 nm right"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </div>
+          </div>
+          <div class="sp" id="u-strip" data-k="U"></div>
+          <p class="ginfo" id="g-info" aria-live="polite"></p>
+        </div>
+        <div id="mt-rows"></div>
+        <div class="sp" id="mt-axis" data-k="A"></div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" id="mt-check">Check</button>
+        <button type="button" class="btn" id="mt-next" hidden>Next unknown →</button>
+      </div>
+      <div id="mt-fb" aria-live="polite"></div>
+    </div>
+    <div class="card">
+      <div class="lbl">The matching rule</div>
+      <ol class="how">
+        <li>An element is present only if <b>all</b> of its lines appear in the unknown.</li>
+        <li><b>One shared line is not enough.</b> Sodium and neon both have a line at 616 nm.</li>
+        <li>Lines left over belong to another element.</li>
+      </ol>
+      <p class="tip">Each element has its own set of energy levels, so its line spectrum is a fingerprint that no other element has.</p>
+    </div>
+  </div>
+
+  <!-- ============ 3 · QUICK CHECK ============ -->
+  <div id="quiz" hidden>
+    <div class="card" id="q-card">
+      <div class="meta"><span id="q-prog"></span><span id="q-score"></span></div>
+      <div class="bar"><i id="q-bar"></i></div>
+      <div id="q-body"></div>
+      <div class="row" style="margin-top:12px"><button type="button" class="btn" id="q-next" hidden>Next →</button></div>
+    </div>
+    <div class="card" id="q-done" hidden>
+      <p class="q" id="q-final"></p>
+      <p class="tip" id="q-best" style="margin:0 0 12px"></p>
+      <div id="q-review"></div>
+      <div class="row"><button type="button" class="btn" id="q-again">Try again</button><button type="button" class="btn ghost" id="q-tomatch">Go to Match the lines</button></div>
+    </div>
+  </div>
+
+  <footer>Hydrogen wavelengths are worked out from 1/λ = R(1/n<sub>low</sub>² − 1/n<sub>high</sub>²). The other elements use rounded classroom values.<br>Line colors on screen are close to the real ones, but not exact.</footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, attrs, parent, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var a in attrs) e.setAttribute(a, attrs[a]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function rnd(n) { return Math.floor(Math.random() * n); }
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = rnd(i + 1), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function listAnd(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+
+  // ---------------- saved scores (works without localStorage) ----------------
+  var store = (function () {
+    var KEY = 'spectra-lab-v1', mem = {};
+    try { var raw = window.localStorage.getItem(KEY); if (raw) mem = JSON.parse(raw); } catch (e) { mem = {}; }
+    if (!mem || typeof mem !== 'object' || Array.isArray(mem)) mem = {};
+    return {
+      get: function (k) { var v = mem[k]; return v && typeof v === 'object' ? v : {}; },
+      set: function (k, v) { mem[k] = v; try { window.localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) { /* private mode: keep in memory only */ } }
+    };
+  })();
+  function num(v, d) { return typeof v === 'number' && isFinite(v) && v >= 0 ? Math.floor(v) : d; }
+
+  // ---------------- science ----------------
+  var H_PLANCK = 6.626e-34, C_LIGHT = 2.998e8, RYD = 1.097e7, E_ONE = 2.179e-18, NMAX = 6;
+  function levelEnergy(n) { return -E_ONE / (n * n); }                        // joules
+  function photonEnergy(hi, lo) { return levelEnergy(hi) - levelEnergy(lo); } // joules, hi > lo
+  function lambdaNm(hi, lo) { return 1e9 / (RYD * (1 / (lo * lo) - 1 / (hi * hi))); }
+  function regionOf(nm) { return nm < 400 ? 'uv' : nm > 700 ? 'ir' : 'vis'; }
+  function colorName(nm) {
+    return nm < 424 ? 'violet' : nm < 450 ? 'blue-violet' : nm < 476 ? 'blue' : nm < 500 ? 'blue-green' : nm < 560 ? 'green' : nm < 590 ? 'yellow' : nm < 625 ? 'orange' : 'red';
+  }
+  function regionText(nm) {
+    var r = regionOf(nm);
+    return r === 'uv' ? 'ultraviolet (not visible)' : r === 'ir' ? 'infrared (not visible)' : 'visible: ' + colorName(nm);
+  }
+  // wavelength (400-700 nm) to an approximate screen color
+  function nmToRGB(nm) {
+    var r = 0, g = 0, b = 0;
+    if (nm < 440) { r = (440 - nm) / 60; b = 1; }            // violet
+    else if (nm < 490) { g = (nm - 440) / 50; b = 1; }       // blue
+    else if (nm < 510) { g = 1; b = (510 - nm) / 20; }       // cyan to green
+    else if (nm < 580) { r = (nm - 510) / 70; g = 1; }       // green to yellow
+    else if (nm < 645) { r = 1; g = (645 - nm) / 65; }       // yellow, orange
+    else { r = 1; }                                          // red
+    var lift = nm < 470 ? 0.32 : nm < 500 ? 0.22 : 0.08;     // keep thin blue and violet lines bright on black
+    return [r, g, b].map(function (c) { c = Math.max(0, Math.min(1, c)); return Math.round(255 * (lift + (1 - lift) * c)); });
+  }
+  function rgb(nm) { return 'rgb(' + nmToRGB(nm).join(',') + ')'; }
+  function sciHTML(x) {
+    var p = x.toExponential(2).split('e');
+    return p[0] + ' × 10<sup>' + String(parseInt(p[1], 10)).replace('-', '−') + '</sup>';
+  }
+
+  // ---------------- spectrum strip (percent coordinates, so it fits any width) ----------------
+  var PAD = 4.5;   // side margin in percent; the black band runs from 400 to 700 nm
+  function pos(nm) { return PAD + (nm - 400) / 300 * (100 - 2 * PAD); }
+  function pc(nm) { return pos(nm).toFixed(3) + '%'; }
+  // o: { labels, axis, marks:[lines that match], band, label }
+  function stripHTML(lines, o) {
+    o = o || {};
+    var top = o.labels ? 16 : 3, bh = o.band === 0 ? 0 : (o.band || 28), mh = o.marks ? 14 : 0, ah = o.axis ? 20 : 3;
+    var ht = top + bh + mh + ah, s = [];
+    s.push('<svg class="strip" width="100%" height="' + ht + '" role="img" aria-label="' + esc(o.label || '') + '" data-top="' + top + '" data-bh="' + bh + '" data-h="' + ht + '">');
+    if (bh) s.push('<rect class="st-band" x="' + PAD + '%" y="' + top + '" width="' + (100 - 2 * PAD) + '%" height="' + bh + '" rx="3"/>');
+    lines.forEach(function (nm) {
+      s.push('<line class="ln" data-nm="' + nm + '" x1="' + pc(nm) + '" x2="' + pc(nm) + '" y1="' + (top + 1.5) + '" y2="' + (top + bh - 1.5) + '" stroke="' + rgb(nm) + '" stroke-width="2.6"/>');
+      if (o.labels) s.push('<text class="st-l" x="' + pc(nm) + '" y="' + (top - 5) + '" text-anchor="middle">' + nm + '</text>');
+      if (o.marks) {
+        var ok = o.marks.indexOf(nm) >= 0;
+        s.push('<text class="st-m ' + (ok ? 'ok' : 'no') + '" x="' + pc(nm) + '" y="' + (top + bh + 11) + '" text-anchor="middle">' + (ok ? '✓' : '✗') + '</text>');
+      }
+    });
+    if (o.axis) {
+      var y0 = top + bh + mh;
+      for (var t = 400; t <= 700; t += 10) {
+        var big = t % 50 === 0;
+        s.push('<line class="st-t" x1="' + pc(t) + '" x2="' + pc(t) + '" y1="' + (y0 + 1) + '" y2="' + (y0 + (big ? 6 : 3.5)) + '"/>');
+        if (big) s.push('<text class="st-a" x="' + pc(t) + '" y="' + (y0 + 17) + '" text-anchor="middle">' + t + (t === 550 ? ' nm' : '') + '</text>');
+      }
+    }
+    s.push('<g class="gd"></g></svg>');
+    return s.join('');
+  }
+
+  // ======================= MODE 1 · EXCITE AND EMIT =======================
+  var LY = { 1: 330, 2: 246, 3: 182, 4: 130, 5: 85, 6: 43 };   // compressed, but in the right order
+  var VH = 364, XE = 96, X0 = 52, X1 = 232;
+  var BALMER = [6, 5, 4, 3].map(function (n) { return Math.round(lambdaNm(n, 2)); });   // 410, 434, 486, 656
+  var E = { n: 1, found: [], uv: 0, ir: 0, hist: [], last: null, note: '' };
+  (function () {
+    var sv = store.get('e');
+    if (Array.isArray(sv.found)) E.found = BALMER.filter(function (nm) { return sv.found.indexOf(nm) >= 0; });
+    E.uv = num(sv.uv, 0); E.ir = num(sv.ir, 0);
+  })();
+  function saveE() { store.set('e', { found: E.found, uv: E.uv, ir: E.ir }); }
+  var lev = $('lev'), dyn, elec;
+
+  function buildLevels() {
+    el('text', { x: 8, y: 13, 'class': 'lv-h' }, lev, 'LEVEL');
+    var h = el('text', { x: 294, y: 13, 'class': 'lv-h', 'text-anchor': 'end' }, lev);
+    el('tspan', {}, h, 'ENERGY (×10');
+    el('tspan', { dy: -4, 'font-size': 7.5 }, h, '−18');
+    el('tspan', { dy: 4 }, h, ' J)');
+    for (var n = 1; n <= NMAX; n++) {
+      var y = LY[n];
+      el('line', { x1: X0, x2: X1, y1: y, y2: y, 'class': 'lv-line', id: 'lv-line-' + n }, lev);
+      el('text', { x: 8, y: y + 5, 'class': 'lv-n' }, lev, 'n = ' + n);
+      el('text', { x: 294, y: y + 4.5, 'class': 'lv-e', 'text-anchor': 'end' }, lev, (levelEnergy(n) / 1e-18).toFixed(2).replace('-', '−'));
+    }
+    el('text', { x: 8, y: LY[1] + 20, 'class': 'lv-g' }, lev, 'ground state');
+    dyn = el('g', { id: 'lv-dyn' }, lev);
+    elec = el('g', { id: 'elec' }, lev);
+    el('circle', { r: 9 }, elec);
+    var t = el('text', { x: 0, y: 3.5, 'text-anchor': 'middle' }, elec);
+    el('tspan', {}, t, 'e');
+    el('tspan', { dy: -3, 'font-size': 8 }, t, '−');
+    for (var k = NMAX; k >= 1; k--) {
+      var top = k < NMAX ? (LY[k] + LY[k + 1]) / 2 : LY[NMAX] - 21, bot = k > 1 ? (LY[k] + LY[k - 1]) / 2 : VH;
+      var r = el('rect', { 'class': 'lv-hit', 'data-n': k, x: 1, y: top, width: 298, height: bot - top, rx: 6, role: 'button', tabindex: 0,
+        'aria-label': 'Level n = ' + k + ', energy ' + (levelEnergy(k) / 1e-18).toFixed(2) + ' times ten to the minus 18 joules' }, lev);
+      (function (k) {
+        r.addEventListener('click', function () { tapLevel(k); });
+        r.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tapLevel(k); } });
+      })(k);
+    }
+  }
+  function arrow(g, x, y1, y2, cls) {
+    var d = y2 > y1 ? 1 : -1, grp = el('g', { 'class': cls + ' fade' }, g);
+    if (Math.abs(y2 - y1) > 8) el('line', { x1: x, x2: x, y1: y1, y2: y2 - d * 7, 'stroke-width': 2, 'stroke-linecap': 'round' }, grp);
+    el('polygon', { points: [x - 5, y2 - d * 8, x + 5, y2 - d * 8, x, y2].join(' '), stroke: 'none' }, grp);
+  }
+  function wavePath(x0, x1, y, period, amp) {
+    var d = 'M' + x0 + ' ' + y;
+    for (var x = x0 + 1; x <= x1; x++) d += 'L' + x + ' ' + (y - amp * Math.sin((x - x0) / period * 2 * Math.PI)).toFixed(2);
+    return d;
+  }
+  function drawDyn() {
+    clear(dyn);
+    var L = E.last;
+    if (E.n > 1) el('text', { x: XE + 16, y: LY[E.n] - 9, 'class': 'lv-tag' }, dyn, 'excited state');
+    if (!L) return;
+    var ya = LY[L.from], yb = LY[L.to];
+    if (L.type === 'abs') {
+      arrow(dyn, XE, ya - 13, yb + 14, 'lv-abs');
+      el('text', { x: XE + 16, y: (LY[L.from] + LY[L.from + 1]) / 2 + 4, 'class': 'lv-abs-t fade' }, dyn, 'absorbs energy');
+    } else {
+      arrow(dyn, XE, ya + 13, yb - 14, 'lv-em');
+      var gap = LY[L.to] - LY[L.to + 1], yw = yb - Math.max(gap / 2, 27), vis = L.region === 'vis', col = vis ? rgb(Math.round(L.nm)) : '#9aa3b5';
+      // shorter wavelength = tighter wave
+      var period = 6 + 16 * (Math.log(L.nm) - Math.log(90)) / (Math.log(7500) - Math.log(90));
+      var x0 = XE + 18, x1 = x0 + Math.max(1, Math.round((182 - x0) / period)) * period;
+      var g = el('g', { 'class': 'fly' }, dyn);
+      el('path', { d: wavePath(x0, Math.floor(x1), yw, period, 5), fill: 'none', stroke: col, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-dasharray': vis ? 'none' : '5 3' }, g);
+      el('polygon', { points: [x1 + 1, yw - 5, x1 + 10, yw, x1 + 1, yw + 5].join(' '), fill: col }, g);
+      el('text', { x: x1 + 15, y: yw + 4, 'class': 'lv-wl', fill: col }, g, Math.round(L.nm) + ' nm' + (L.region === 'uv' ? ' UV' : L.region === 'ir' ? ' IR' : ''));
+    }
+  }
+  function renderE() {
+    var tr = 'translate(' + XE + 'px,' + LY[E.n] + 'px)';
+    elec.setAttribute('transform', 'translate(' + XE + ',' + LY[E.n] + ')');
+    elec.style.transform = tr;
+    for (var n = 1; n <= NMAX; n++) $('lv-line-' + n).setAttribute('class', 'lv-line' + (n === E.n ? ' cur' : ''));
+    drawDyn();
+    var L = E.last, st;
+    if (!L) st = 'The electron is in the <b>ground state</b> (n = 1). Tap a higher level to give it energy.';
+    else if (L.type === 'abs') st = '<b>Excited state</b> (n = ' + E.n + '). The electron absorbed energy and jumped up. It is unstable, so tap a lower level to let it fall.';
+    else if (E.n > 1) st = 'It fell to n = ' + E.n + ' and <b>emitted a photon</b>. It is still excited, so tap a lower level to drop again.';
+    else st = 'It fell to n = 1 and <b>emitted a photon</b>. It is back in the <b>ground state</b>. Tap a higher level to excite it again.';
+    if (E.note) st = E.note;
+    $('e-status').innerHTML = st;
+    $('rd-elbl').textContent = L && L.type === 'abs' ? 'Energy absorbed' : 'Energy released';
+    $('rd-trans').textContent = L ? L.from + ' → ' + L.to : '–';
+    $('rd-energy').innerHTML = L ? sciHTML(L.dE) + ' J' : '–';
+    $('rd-wave').textContent = L && L.type === 'emit' ? Math.round(L.nm) + ' nm' : '–';
+    $('rd-region').textContent = L ? (L.type === 'emit' ? regionText(L.nm) : 'no light emitted') : '–';
+    var found = E.found.slice().sort(function (a, b) { return a - b; });
+    $('e-strip').innerHTML = stripHTML(found, { labels: true, axis: true, band: 32,
+      label: found.length ? 'Hydrogen lines found so far: ' + listAnd(found) + ' nm' : 'Empty spectrum from 400 to 700 nm. No lines yet.' });
+    $('b-uv').textContent = 'UV: ' + E.uv; $('b-ir').textContent = 'IR: ' + E.ir;
+    var done = found.length === BALMER.length, g = $('e-goal');
+    g.className = 'goal' + (done ? ' done' : '');
+    g.innerHTML = done ? '✓ <b>All four visible lines found:</b> ' + listAnd(found) + ' nm. This set of lines is hydrogen\'s fingerprint.'
+      : '<b>Goal:</b> Find all four visible lines of hydrogen (drops to n = 2). <b>' + found.length + ' of 4</b> found.';
+    $('e-hist').innerHTML = E.hist.slice(-6).map(function (p) {
+      return '<span><i' + (p.region === 'vis' ? ' style="background:' + rgb(Math.round(p.nm)) + '"' : '') + '></i>' + p.from + ' → ' + p.to + ' · ' + Math.round(p.nm) + ' nm' + (p.region === 'vis' ? '' : ' ' + p.region.toUpperCase()) + '</span>';
+    }).join('');
+  }
+  function tapLevel(k) {
+    k = Number(k);
+    if (!(k >= 1 && k <= NMAX)) return;
+    E.note = '';
+    if (k === E.n) {
+      E.note = 'The electron is already at n = ' + k + '. Tap a ' + (k === 1 ? 'higher level to excite it.' : 'lower level to emit light, or a higher level to excite it more.');
+    } else if (k > E.n) {
+      E.last = { type: 'abs', from: E.n, to: k, dE: photonEnergy(k, E.n) };
+      E.n = k;
+    } else {
+      var nm = lambdaNm(E.n, k), reg = regionOf(nm);
+      E.last = { type: 'emit', from: E.n, to: k, dE: photonEnergy(E.n, k), nm: nm, region: reg };
+      E.hist.push(E.last);
+      if (reg === 'uv') E.uv++; else if (reg === 'ir') E.ir++;
+      else if (E.found.indexOf(Math.round(nm)) < 0) E.found.push(Math.round(nm));
+      E.n = k; saveE();
+    }
+    renderE();
+  }
+  $('e-reset').onclick = function () { E.n = 1; E.found = []; E.uv = 0; E.ir = 0; E.hist = []; E.last = null; E.note = ''; saveE(); renderE(); };
+
+  // ======================= MODE 2 · MATCH THE LINES =======================
+  var ELS = [
+    { k: 'H', name: 'Hydrogen', lines: [410, 434, 486, 656] },
+    { k: 'He', name: 'Helium', lines: [447, 471, 492, 502, 588, 668] },
+    { k: 'Li', name: 'Lithium', lines: [460, 497, 610, 671] },
+    { k: 'Na', name: 'Sodium', lines: [498, 569, 589, 616] },
+    { k: 'Hg', name: 'Mercury', lines: [405, 436, 546, 578] },
+    { k: 'Ne', name: 'Neon', lines: [540, 585, 603, 616, 627, 640, 660, 693] }
+  ];
+  var LINES = {}, NAMES = {}, ORDER = ELS.map(function (e) { LINES[e.k] = e.lines.slice(); NAMES[e.k] = e.name; return e.k; });
+  // all-lines rule: an element is present only if every one of its lines is in the list
+  function presentIn(lines) {
+    return ELS.filter(function (e) { return e.lines.every(function (l) { return lines.indexOf(l) >= 0; }); }).map(function (e) { return e.k; });
+  }
+  // two elements whose lines would sit almost on top of each other (1-2 nm apart) are not mixed: a phone cannot show the gap
+  function clash(a, b) {
+    return LINES[a].some(function (x) { return LINES[b].some(function (y) { return x !== y && Math.abs(x - y) < 3; }); });
+  }
+  function combos(size) {
+    var out = [];
+    (function rec(start, cur) {
+      if (cur.length === size) { out.push(cur.slice()); return; }
+      for (var i = start; i < ORDER.length; i++) {
+        if (cur.some(function (c) { return clash(c, ORDER[i]); })) continue;
+        cur.push(ORDER[i]); rec(i + 1, cur); cur.pop();
+      }
+    })(0, []);
+    return out;
+  }
+  var COMBOS = { 1: combos(1), 2: combos(2), 3: combos(3) };
+  function unknownFrom(keys, level, extra) {
+    var chosen = ORDER.filter(function (k) { return keys.indexOf(k) >= 0; }), set = {};
+    chosen.forEach(function (k) { LINES[k].forEach(function (l) { set[l] = 1; }); });
+    (extra || []).forEach(function (l) { set[l] = 1; });
+    var lines = Object.keys(set).map(Number).sort(function (a, b) { return a - b; });
+    // the answer key comes from the lines on screen, not from the elements that were mixed
+    return { level: level || chosen.length, chosen: chosen, lines: lines, present: presentIn(lines) };
+  }
+  var lastCombo = '';
+  function makeUnknown(level) {
+    level = level === 2 || level === 3 ? level : 1;
+    var list = COMBOS[level], c;
+    do { c = list[rnd(list.length)]; } while (list.length > 1 && c.join() === lastCombo);
+    lastCombo = c.join();
+    return unknownFrom(c, level);
+  }
+  function nmList(a) { return listAnd(a.map(String)) + ' nm'; }
+  function explain(key, lines) {
+    var name = NAMES[key], all = LINES[key];
+    var hit = all.filter(function (l) { return lines.indexOf(l) >= 0; }), miss = all.filter(function (l) { return lines.indexOf(l) < 0; });
+    if (!miss.length) return { key: key, present: true, hit: hit, miss: miss, text: name + ': present. All ' + all.length + ' lines match.' };
+    var t = name + ': absent. ';
+    if (!hit.length) t += nmList(miss) + (miss.length > 1 ? ' are all' : ' is') + ' missing from the unknown.';
+    else {
+      var other = key === 'Na' ? 'Ne' : key === 'Ne' ? 'Na' : null, present = presentIn(lines);
+      t += nmList(hit) + (hit.length > 1 ? ' match' : ' matches');
+      if (other && hit.length === 1 && hit[0] === 616 && present.indexOf(other) >= 0) t += ', but ' + NAMES[other].toLowerCase() + ' has that line too, and ' + NAMES[other].toLowerCase() + ' is present. ';
+      else t += ', but that is not all of them. ';
+      t += nmList(miss) + (miss.length > 1 ? ' are' : ' is') + ' missing, so ' + name.toLowerCase() + ' is absent. One shared line is not enough.';
+    }
+    return { key: key, present: false, hit: hit, miss: miss, text: t };
+  }
+
+  var M = { level: 1, cur: null, picks: {}, checked: false, right: 0, done: 0, streak: 0, best: 0, guide: 550 };
+  (function () {
+    var sv = store.get('m');
+    M.level = sv.level === 2 || sv.level === 3 ? sv.level : 1;
+    M.right = num(sv.right, 0); M.done = Math.max(num(sv.done, 0), M.right); M.streak = num(sv.streak, 0); M.best = Math.max(num(sv.best, 0), M.streak);
+  })();
+  function saveM() { store.set('m', { level: M.level, right: M.right, done: M.done, streak: M.streak, best: M.best }); }
+  var stack = $('stack');
+  function linesFor(k) { return k === 'U' ? M.cur.lines : LINES[k] || []; }
+  function drawGuides() {
+    var nm = M.guide, x = pc(nm), names = [];
+    $('guide').style.left = x;
+    $('g-nm').textContent = nm + ' nm';
+    Array.prototype.forEach.call(stack.querySelectorAll('.sp'), function (h) {
+      var svg = h.querySelector('svg.strip'); if (!svg) return;
+      var top = +svg.getAttribute('data-top'), bh = +svg.getAttribute('data-bh'), ht = +svg.getAttribute('data-h');
+      var k = h.getAttribute('data-k'), hit = linesFor(k).indexOf(nm) >= 0, s = '';
+      if (hit) names.push(k === 'U' ? 'Unknown' : NAMES[k]);
+      if (top > 4) s += '<line class="gl" x1="' + x + '" x2="' + x + '" y1="0" y2="' + top + '"/>';
+      if (ht - top - bh > 4) s += '<line class="gl" x1="' + x + '" x2="' + x + '" y1="' + (top + bh) + '" y2="' + ht + '"/>';
+      if (bh) {
+        if (hit) s += '<line x1="' + x + '" x2="' + x + '" y1="' + (top + 1.5) + '" y2="' + (top + bh - 1.5) + '" stroke="' + rgb(nm) + '" stroke-width="5"/>';
+        s += '<svg x="' + x + '" y="' + top + '" overflow="visible"><path class="tri' + (hit ? ' on' : '') + '" d="M-5 0.5H5L0 6.5Z"/><path class="tri' + (hit ? ' on' : '') + '" d="M-5 ' + (bh - 0.5) + 'H5L0 ' + (bh - 6.5) + 'Z"/></svg>';
+      }
+      svg.querySelector('.gd').innerHTML = s;
+    });
+    $('g-info').textContent = names.length ? nm + ' nm: line in ' + names.join(', ') : nm + ' nm: no lines here';
+  }
+  function setGuide(nm) { M.guide = Math.max(400, Math.min(700, Math.round(nm))); drawGuides(); }
+  function renderStrips() {
+    var u = M.cur;
+    $('u-strip').innerHTML = stripHTML(u.lines, { axis: true, band: 30, label: 'Unknown spectrum with lines at ' + nmList(u.lines) });
+    Array.prototype.forEach.call($('mt-rows').querySelectorAll('.elrow'), function (row) {
+      var k = row.getAttribute('data-k'), marks = M.checked ? LINES[k].filter(function (l) { return u.lines.indexOf(l) >= 0; }) : null;
+      row.querySelector('.sp').innerHTML = stripHTML(LINES[k], { marks: marks, label: NAMES[k] + ' reference spectrum with lines at ' + nmList(LINES[k]) });
+    });
+    $('mt-axis').innerHTML = stripHTML([], { axis: true, band: 0, label: 'Wavelength axis, 400 to 700 nm' });
+    drawGuides();
+  }
+  function renderM() {
+    var u = M.cur;
+    Array.prototype.forEach.call(document.querySelectorAll('#mt-levels .chip'), function (c) { c.setAttribute('aria-pressed', Number(c.getAttribute('data-l')) === M.level); });
+    $('mt-count').textContent = u.level + (u.level === 1 ? ' element' : ' elements') + ' mixed';
+    $('mt-score').textContent = 'Score ' + M.right + ' / ' + M.done + ' · Streak ' + M.streak;
+    $('mt-rows').innerHTML = ELS.map(function (e) {
+      return '<div class="elrow" data-k="' + e.k + '"><button type="button" class="pick" data-k="' + e.k + '" aria-pressed="false"><span class="box" aria-hidden="true">✓</span><span class="nm">' + e.name + '</span><span class="st"></span></button><div class="sp" data-k="' + e.k + '"></div></div>';
+    }).join('');
+    Array.prototype.forEach.call($('mt-rows').querySelectorAll('.pick'), function (b) {
+      b.onclick = function () { if (M.checked) return; var k = b.getAttribute('data-k'); M.picks[k] = !M.picks[k]; b.setAttribute('aria-pressed', !!M.picks[k]); };
+    });
+    $('mt-fb').innerHTML = ''; $('mt-check').hidden = false; $('mt-next').hidden = true;
+    renderStrips();
+  }
+  function loadUnknown(u) { M.cur = u; M.picks = {}; M.checked = false; M.guide = u.lines[0]; renderM(); }
+  function checkM() {
+    if (M.checked || !M.cur) return;
+    var u = M.cur, allOk = true, missedOne = false, items = [];
+    ELS.forEach(function (e) {
+      var ex = explain(e.k, u.lines), picked = !!M.picks[e.k], ok = picked === ex.present;
+      if (!ok) allOk = false;
+      if (ex.present && !picked) missedOne = true;
+      items.push({ k: e.k, ok: ok, picked: picked, ex: ex });
+    });
+    M.checked = true; M.done++;
+    if (allOk) { M.right++; M.streak++; M.best = Math.max(M.best, M.streak); } else M.streak = 0;
+    saveM();
+    items.forEach(function (it) {
+      var row = $('mt-rows').querySelector('.elrow[data-k="' + it.k + '"]'), b = row.querySelector('.pick');
+      row.className = 'elrow ' + (it.ok ? 'ok' : 'bad'); b.disabled = true;
+      b.querySelector('.st').textContent = it.ex.present ? 'present' : 'absent';
+    });
+    var names = u.present.map(function (k) { return NAMES[k].toLowerCase(); });
+    $('mt-fb').innerHTML = '<div class="fb ' + (allOk ? 'ok' : 'no') + '"><b>' + (allOk ? '✓ Correct' : '✗ Not quite') + '</b>The unknown contains ' + listAnd(names) + '.' +
+      (missedOne ? ' Your ticks did not explain every line. Lines left over belong to another element.' : '') +
+      '<ul class="why">' + items.map(function (it) {
+        return '<li class="' + (it.ok ? 'ok' : 'no') + '" data-k="' + it.k + '"><span class="mk">' + (it.ok ? '✓' : '✗') + '</span>' + esc(it.ex.text) + (it.ok ? '' : it.picked ? ' You ticked it.' : ' You missed it.') + '</li>';
+      }).join('') + '</ul></div>';
+    $('mt-score').textContent = 'Score ' + M.right + ' / ' + M.done + ' · Streak ' + M.streak;
+    $('mt-check').hidden = true; $('mt-next').hidden = false;
+    renderStrips();
+  }
+  $('mt-check').onclick = checkM;
+  $('mt-next').onclick = function () { loadUnknown(makeUnknown(M.level)); };
+  Array.prototype.forEach.call(document.querySelectorAll('#mt-levels .chip'), function (c) {
+    c.onclick = function () { M.level = Number(c.getAttribute('data-l')); saveM(); loadUnknown(makeUnknown(M.level)); };
+  });
+  $('g-prev').onclick = function () { setGuide(M.guide - 1); };
+  $('g-next').onclick = function () { setGuide(M.guide + 1); };
+  // tap or drag on any strip to move the guide; it snaps to a nearby line of the strip you touched
+  (function () {
+    var drag = null;
+    function moveTo(clientX) {
+      var r = stack.getBoundingClientRect(); if (!r.width) return;
+      var perNm = r.width * (100 - 2 * PAD) / 100 / 300;
+      var nm = 400 + ((clientX - r.left) / r.width * 100 - PAD) / (100 - 2 * PAD) * 300, best = null;
+      linesFor(drag.k).forEach(function (l) { if (best === null || Math.abs(l - nm) < Math.abs(best - nm)) best = l; });
+      if (best !== null && Math.abs(best - nm) * perNm <= 9) nm = best;
+      setGuide(nm);
+    }
+    stack.addEventListener('pointerdown', function (e) {
+      var h = e.target && e.target.closest ? e.target.closest('.sp') : null; if (!h) return;
+      drag = { k: h.getAttribute('data-k') };
+      try { stack.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ }
+      moveTo(e.clientX);
+    });
+    stack.addEventListener('pointermove', function (e) { if (drag) moveTo(e.clientX); });
+    function end() { drag = null; }
+    stack.addEventListener('pointerup', end); stack.addEventListener('pointercancel', end);
+  })();
+
+  // ======================= MODE 3 · QUICK CHECK =======================
+  // first option in each list is the correct one; options are shuffled when shown
+  var QUESTIONS = [
+    { q: 'An electron in an atom absorbs energy. What happens to it?',
+      a: ['It jumps to a higher energy level.', 'It falls to a lower energy level.', 'It gives off a photon of light.', 'It stays in the same level but moves faster.'],
+      why: 'Absorbing energy (heat, electricity or light) lifts the electron to a higher level. This is excitation, and the atom is now in an excited state.' },
+    { q: 'When does an atom emit light?',
+      a: ['When an electron falls from a higher level to a lower level.', 'When an electron jumps from a lower level to a higher level.', 'When an electron absorbs heat from a flame.', 'Whenever an electron is in the ground state.'],
+      why: 'Light comes out on the way down (de-excitation). The photon carries away the energy difference between the two levels.' },
+    { q: 'Which drop in a hydrogen atom emits light with the shortest wavelength?',
+      a: ['6 → 2', '5 → 2', '4 → 2', '3 → 2'],
+      why: 'The biggest drop releases the most energy, and more energy means a shorter wavelength. 6 → 2 gives violet light (410 nm). 3 → 2 gives red light (656 nm).' },
+    { q: 'Why does a glowing gas give a line spectrum and not a full rainbow?',
+      a: ['Electrons can only be in certain energy levels, so only certain energy drops are possible.', 'The gas is too cool to make all the colors.', 'The prism blocks most of the colors.', 'Electrons can have any energy, but only a few colors are bright enough to see.'],
+      why: 'Energy levels are quantized. Each allowed drop gives one exact photon energy, so one exact color: a line.' },
+    { q: 'Why is the emission spectrum of each element different?',
+      a: ['Each element has its own set of energy levels.', 'Each element is heated to a different temperature.', 'Each element has electrons of a different color.', 'The spectra are really the same. Only the brightness changes.'],
+      why: 'Different levels mean different energy drops, so different lines. That makes a line spectrum a fingerprint for the element.' },
+    { q: 'Which photon has more energy: red light or violet light?',
+      a: ['Violet, because it has a shorter wavelength and a higher frequency.', 'Red, because it has a longer wavelength.', 'They have the same energy, because all light travels at the same speed.', 'It depends only on how bright the light is.'],
+      why: 'E = hf = hc/λ. A shorter wavelength means a higher frequency and more energy in each photon.' },
+    { q: 'What is the ground state of an atom?',
+      a: ['Its electrons are in the lowest energy levels available.', 'One of its electrons has jumped to a higher level.', 'It has lost all of its electrons.', 'It is giving off light.'],
+      why: 'Ground state means lowest energy, and it is stable. After absorbing energy the atom is in an excited state, which is unstable.' },
+    { q: 'In a flame test, a sample turns the flame a certain color. What does the color tell you?',
+      a: ['Which element is in the sample.', 'How hot the flame is.', 'How much of the sample was used.', 'Whether the sample is a solid or a liquid.'],
+      why: 'The flame excites the electrons. When they fall back they emit that element\'s own colors, so the flame color identifies the element.' },
+    { q: 'An unknown spectrum has every line of hydrogen, plus some extra lines. What can you conclude?',
+      a: ['Hydrogen is present, and so is at least one other element.', 'Hydrogen is not present, because the two spectra are not identical.', 'The sample is pure hydrogen.', 'Nothing. Extra lines make the test fail.'],
+      why: 'All of hydrogen\'s lines are there, so hydrogen is present. The lines left over belong to another element.' },
+    { q: 'Light A has a longer wavelength than light B. What is true about their frequencies?',
+      a: ['A has the lower frequency.', 'A has the higher frequency.', 'They have the same frequency.', 'You cannot tell without knowing how bright they are.'],
+      why: 'c = λf, and the speed of light c is fixed. So a longer wavelength means a lower frequency.' },
+    { q: 'Which drop in a hydrogen atom releases more energy: 2 → 1 or 3 → 2?',
+      a: ['2 → 1', '3 → 2', 'The same, because each one is a drop of one level.', 'Neither, because a drop absorbs energy.'],
+      why: 'The levels are not evenly spaced. The gap from n = 2 to n = 1 is much bigger (1.63 against 0.30, in units of 10⁻¹⁸ J), so 2 → 1 releases more energy.' },
+    { q: 'An electron in hydrogen drops from n = 2 to n = 1. Can you see the light it emits?',
+      a: ['No. It is ultraviolet.', 'No. It is infrared.', 'Yes. It is red.', 'Yes. It is violet.'],
+      why: 'A drop to n = 1 is a big drop: about 122 nm, which is ultraviolet. Hydrogen\'s visible lines all come from drops to n = 2.' }
+  ].map(function (x, i) { return { id: i + 1, q: x.q, why: x.why, opts: x.a.map(function (t, j) { return { t: t, ok: j === 0 }; }) }; });
+
+  var Q = { started: false, qs: [], i: 0, score: 0, missed: [], best: num(store.get('q').best, 0), answered: false };
+  Q.start = function () {
+    Q.started = true; Q.i = 0; Q.score = 0; Q.missed = []; Q.answered = false;
+    Q.qs = shuffle(QUESTIONS.slice()).map(function (q) { return { id: q.id, q: q.q, why: q.why, opts: shuffle(q.opts.slice()) }; });
+    $('q-done').hidden = true; $('q-card').hidden = false;
+    Q.show();
+  };
+  Q.show = function () {
+    var q = Q.qs[Q.i], n = Q.qs.length, body = $('q-body'); body.innerHTML = ''; Q.answered = false;
+    $('q-prog').textContent = 'Question ' + (Q.i + 1) + ' of ' + n; $('q-score').textContent = 'Score ' + Q.score;
+    $('q-bar').style.width = (100 * Q.i / n) + '%'; $('q-next').hidden = true;
+    var p = document.createElement('p'); p.className = 'q'; p.textContent = q.q; body.appendChild(p);
+    var box = document.createElement('div'); box.className = 'opts'; body.appendChild(box);
+    q.opts.forEach(function (o) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.textContent = o.t;
+      b.onclick = function () {
+        if (Q.answered) return; Q.answered = true;
+        Array.prototype.forEach.call(box.querySelectorAll('.opt'), function (x, j) { x.disabled = true; if (q.opts[j].ok) x.classList.add('right'); });
+        if (o.ok) Q.score++; else { b.classList.add('wrong'); Q.missed.push({ q: q, picked: o.t }); }
+        var f = document.createElement('div'); f.className = 'fb ' + (o.ok ? 'ok' : 'no');
+        f.innerHTML = '<b>' + (o.ok ? '✓ Correct' : '✗ Not quite') + '</b><span class="why-t">' + esc(q.why) + '</span>'; body.appendChild(f);
+        $('q-score').textContent = 'Score ' + Q.score;
+        $('q-next').hidden = false; $('q-next').textContent = Q.i + 1 < n ? 'Next →' : 'See my score';
+      };
+      box.appendChild(b);
+    });
+  };
+  $('q-next').onclick = function () {
+    Q.i++;
+    if (Q.i < Q.qs.length) { Q.show(); return; }
+    var n = Q.qs.length;
+    Q.best = Math.max(Q.best, Q.score); store.set('q', { best: Q.best, last: Q.score });
+    $('q-card').hidden = true; $('q-done').hidden = false;
+    $('q-final').textContent = Q.score + ' / ' + n + (Q.score === n ? '. Every one right. You are ready.' : Q.score >= 10 ? '. Nearly there. Look over the ones you missed.' : Q.score >= 7 ? '. Good start. Read the missed questions, then try again.' : '. Go back to Excite and emit for a few minutes, then try again.');
+    $('q-best').textContent = 'Best score so far: ' + Q.best + ' / ' + n;
+    $('q-review').innerHTML = Q.missed.length ? '<div class="lbl">Missed questions</div><ul class="missed">' + Q.missed.map(function (m) {
+      var right = m.q.opts.filter(function (o) { return o.ok; })[0].t;
+      return '<li><b>' + esc(m.q.q) + '</b><span class="ya">Your answer: ' + esc(m.picked) + '</span><br><span class="ca">Correct answer: ' + esc(right) + '</span><br><span class="wy">' + esc(m.q.why) + '</span></li>';
+    }).join('') + '</ul>' : '';
+    window.scrollTo(0, 0);
+  };
+  $('q-again').onclick = Q.start;
+  $('q-tomatch').onclick = function () { setMode('match'); };
+
+  // ---------------- mode switch ----------------
+  var MODES = ['excite', 'match', 'quiz'], mode = 'excite';
+  function setMode(m) {
+    mode = m;
+    MODES.forEach(function (k) { $(k).hidden = k !== m; $('m-' + k).setAttribute('aria-pressed', k === m); });
+    if (m === 'match' && !M.cur) loadUnknown(makeUnknown(M.level));
+    if (m === 'quiz' && !Q.started) Q.start();
+    window.scrollTo(0, 0);
+  }
+  MODES.forEach(function (k) { $('m-' + k).onclick = function () { setMode(k); }; });
+
+  buildLevels(); renderE();
+
+  // small API for the test script
+  window.SL = {
+    H: H_PLANCK, C: C_LIGHT, R: RYD, E1: E_ONE, LINES: LINES, NAMES: NAMES, ORDER: ORDER, BALMER: BALMER, COMBOS: COMBOS, QUESTIONS: QUESTIONS,
+    lambdaNm: lambdaNm, levelEnergy: levelEnergy, photonEnergy: photonEnergy, regionOf: regionOf, regionText: regionText, colorName: colorName, nmToRGB: nmToRGB,
+    presentIn: presentIn, clash: clash, makeUnknown: makeUnknown, unknownFrom: unknownFrom, explain: explain,
+    tapLevel: tapLevel, setMode: setMode, setGuide: setGuide,
+    loadUnknown: function (keys, extra) { var u = unknownFrom(keys, keys.length, extra); loadUnknown(u); return u; },
+    current: function () { return M.cur; },
+    state: function () { return { mode: mode, e: { n: E.n, found: E.found.slice(), uv: E.uv, ir: E.ir }, m: { level: M.level, right: M.right, done: M.done, streak: M.streak, best: M.best, guide: M.guide, checked: M.checked },
+      q: { i: Q.i, score: Q.score, best: Q.best, order: Q.qs.map(function (q) { return q.id; }), correct: Q.qs.map(function (q) { return q.opts.filter(function (o) { return o.ok; })[0].t; }) } }; }
+  };
+})();
+</script>
+</body>
+</html>
