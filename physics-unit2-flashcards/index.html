@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Physics Unit 2 Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f1e7; --surface:#ffffff; --text:#201c15; --text-muted:#6f6858; --border:#ddd3ba;
+    --accent:#201c15; --accent-text:#f5f1e7;
+    --good:#157a45; --again:#b4371f;
+    --shadow:0 1px 2px rgba(32,28,21,.06), 0 6px 18px rgba(32,28,21,.07);
+    --c-ve:#0f766e; --c-ve-bg:#d5efeb;
+    --c-bond:#a8641f; --c-bond-bg:#f3e4ce;
+    --c-steps:#2f5d9e; --c-steps-bg:#dde7f6;
+    --c-count:#4a4f9c; --c-count-bg:#e1e2f5;
+    --c-ions:#7c3aed; --c-ions-bg:#e9e0fc;
+    --c-fc:#b4371f; --c-fc-bg:#f8ded6;
+    --c-exc:#157a45; --c-exc-bg:#dbeee0;
+    --c-sf:#b4371f; --c-sf-bg:#f8ded6; --c-kf:#a8641f; --c-kf-bg:#f3e4ce; --c-inc:#157a45; --c-inc-bg:#dbeee0; --c-grav:#4a4f9c; --c-grav-bg:#e1e2f5; --c-circ:#0e7490; --c-circ-bg:#d3eef5; --c-newt:#7c3aed; --c-newt-bg:#e9e0fc; 
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#14161c; --surface:#1d2027; --text:#ece7db; --text-muted:#9a9385; --border:#333844;
+      --accent:#ece7db; --accent-text:#14161c;
+      --good:#6bce93; --again:#f08a70;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.3);
+      --c-ve:#5fd0c2; --c-ve-bg:#123330;
+      --c-bond:#d99a52; --c-bond-bg:#3a2c19;
+      --c-steps:#7fa8ea; --c-steps-bg:#1e2c46;
+      --c-count:#9ea3f0; --c-count-bg:#23254a;
+      --c-ions:#b294f6; --c-ions-bg:#2c2246;
+      --c-fc:#f08a70; --c-fc-bg:#3d1d16;
+      --c-exc:#6bce93; --c-exc-bg:#16321f;
+      --c-sf:#f08a70; --c-sf-bg:#3d1d16; --c-kf:#d99a52; --c-kf-bg:#3a2c19; --c-inc:#6bce93; --c-inc-bg:#16321f; --c-grav:#9ea3f0; --c-grav-bg:#23254a; --c-circ:#67cfe6; --c-circ-bg:#10323c; --c-newt:#b294f6; --c-newt-bg:#2c2246; 
+    }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"IBM Plex Sans",Arial,sans-serif; padding:20px 16px 48px; -webkit-text-size-adjust:100%; }
+  .wrap { max-width:640px; margin:0 auto; }
+  a.back { font-size:12.5px; color:var(--text-muted); text-decoration:none; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:700; font-size:clamp(24px,6vw,30px); margin:6px 0 2px; letter-spacing:-.01em; }
+  .subtitle { color:var(--text-muted); font-size:13.5px; margin:0 0 6px; line-height:1.5; }
+  .howto { font-size:12.5px; color:var(--text-muted); background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; margin:14px 0 16px; line-height:1.5; }
+
+  /* mode switch (only with JS) */
+  .modes { display:none; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:5px; margin:14px 0 16px; }
+  .js .modes { display:flex; }
+  .modes button { flex:1; border:0; background:transparent; color:var(--text-muted); font:600 14px "IBM Plex Sans",sans-serif; padding:10px; border-radius:10px; cursor:pointer; }
+  .modes button[aria-pressed="true"] { background:var(--accent); color:var(--accent-text); }
+  .js .howto.nojs { display:none; }
+  .howto.jsonly { display:none; }
+  .js .howto.jsonly { display:block; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 20px; }
+  .chip { font:600 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; text-decoration:none; border:1.5px solid transparent; cursor:pointer; }
+  .chip b { font-family:"IBM Plex Mono",monospace; font-weight:600; opacity:.75; margin-left:2px; }
+
+  .tools { display:none; justify-content:flex-end; gap:8px; margin:-8px 0 14px; }
+  .js .tools { display:flex; }
+  .btn-sm { border:1px solid var(--border); background:var(--surface); color:var(--text-muted); font:500 12px "IBM Plex Sans",sans-serif; padding:6px 11px; border-radius:99px; cursor:pointer; }
+
+  section { margin-bottom:26px; scroll-margin-top:12px; }
+  .sec-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .sec-badge { font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.03em; padding:4px 10px; border-radius:99px; }
+  .sec-count { font-size:12px; color:var(--text-muted); }
+
+  details.qa { background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); margin-bottom:8px; overflow:hidden; }
+  details.qa summary { list-style:none; cursor:pointer; display:flex; align-items:center; gap:12px; padding:14px 16px; }
+  details.qa summary::-webkit-details-marker { display:none; }
+  details.qa summary::marker { content:""; }
+  .dot { flex:none; width:9px; height:9px; border-radius:50%; }
+  .q-text { flex:1; font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:15.5px; line-height:1.4; }
+  .chev { flex:none; color:var(--text-muted); font-size:20px; transition:transform .15s; }
+  details[open] .chev { transform:rotate(90deg); }
+  .a-text { margin:0; padding:0 16px 15px 37px; font-size:14.5px; line-height:1.55; }
+  .sup { display:inline-block; font:600 10px "IBM Plex Mono",monospace; letter-spacing:.02em; color:var(--text-muted); border:1px dashed var(--border); border-radius:6px; padding:1px 6px; margin-left:4px; vertical-align:1px; white-space:nowrap; }
+
+  /* study mode */
+  #study { display:none; }
+  .studying #study { display:block; }
+  .studying #browse { display:none; }
+  .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; }
+  .label { font:600 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); margin:0 0 8px; }
+  #pick .chip { border-color:transparent; opacity:.45; }
+  #pick .chip[aria-pressed="true"] { opacity:1; border-color:currentColor; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .btn { border:0; border-radius:12px; font:600 15px "IBM Plex Sans",sans-serif; padding:13px 18px; cursor:pointer; }
+  .btn-primary { background:var(--accent); color:var(--accent-text); flex:1; }
+  .btn-primary:disabled { opacity:.35; cursor:default; }
+  .btn-again { background:var(--c-fc-bg); color:var(--again); flex:1; }
+  .btn-good { background:var(--c-exc-bg); color:var(--good); flex:1; }
+  .btn-ghost { background:transparent; color:var(--text-muted); border:1px solid var(--border); }
+  label.opt { font-size:13px; color:var(--text-muted); display:flex; gap:6px; align-items:center; }
+
+  .bar { height:6px; background:var(--border); border-radius:99px; overflow:hidden; margin:2px 0 6px; }
+  .bar i { display:block; height:100%; width:0; background:var(--good); transition:width .25s; }
+  .meta { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:12px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); min-height:260px; padding:20px; display:flex; flex-direction:column; cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; }
+  .card .sec-badge { align-self:flex-start; }
+  .card .cq { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:clamp(19px,5vw,23px); line-height:1.35; margin:18px 0 0; }
+  .card .ca { display:none; border-top:1px dashed var(--border); margin-top:18px; padding-top:16px; font-size:16px; line-height:1.55; }
+  .card.revealed .ca { display:block; animation:fade .18s ease-out; }
+  .card .hint { margin-top:auto; padding-top:18px; font-size:12px; color:var(--text-muted); text-align:center; }
+  .card.revealed .hint { display:none; }
+  @keyframes fade { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  .actions { margin-top:12px; }
+  .done h2 { font-family:"Fraunces",Georgia,serif; margin:0 0 6px; }
+  .done p { color:var(--text-muted); margin:0 0 16px; line-height:1.5; }
+  .kbd { font-size:11.5px; color:var(--text-muted); text-align:center; margin-top:10px; }
+  @media (hover:none) { .kbd { display:none; } }
+
+  footer { font-size:12px; color:var(--text-muted); text-align:center; margin-top:30px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../">← All study tools</a>
+  <h1>Physics Unit 2: Flashcards</h1>
+  <p class="subtitle">Friction · inclined planes · universal gravitation · circular motion · Newton's laws — 115 cards</p>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button type="button" id="m-browse" aria-pressed="true">Browse all</button>
+    <button type="button" id="m-study" aria-pressed="false">Study mode</button>
+  </div>
+
+  <div id="browse">
+    <p class="howto nojs">Tap any question to reveal the answer; tap again to close it.</p>
+    <p class="howto jsonly">Tap a question to see its answer. Want to test yourself? Switch to <b>Study mode</b> for one shuffled card at a time, with “Again” cards coming back until you get them.</p>
+    <nav class="chips">
+    <a class="chip" href="#sf" style="color:var(--c-sf);background:var(--c-sf-bg)">Static friction <b>20</b></a>
+    <a class="chip" href="#kf" style="color:var(--c-kf);background:var(--c-kf-bg)">Kinetic friction <b>14</b></a>
+    <a class="chip" href="#inc" style="color:var(--c-inc);background:var(--c-inc-bg)">Inclined planes <b>18</b></a>
+    <a class="chip" href="#grav" style="color:var(--c-grav);background:var(--c-grav-bg)">Universal gravitation <b>22</b></a>
+    <a class="chip" href="#circ" style="color:var(--c-circ);background:var(--c-circ-bg)">Circular motion <b>22</b></a>
+    <a class="chip" href="#newt" style="color:var(--c-newt);background:var(--c-newt-bg)">Newton's laws <b>19</b></a>
+    </nav>
+    <div class="tools"><button class="btn-sm" id="expand">Expand all</button><button class="btn-sm" id="collapse">Collapse all</button></div>
+  <section id="sf" data-topic="sf" data-title="Static friction">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-sf);background:var(--c-sf-bg)">Static friction</span>
+      <span class="sec-count">20 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">Static friction formula</span><span class="chev">›</span></summary><p class="a-text">f<sub>s</sub> ≤ μ<sub>s</sub>N. It matches the push, up to a maximum of μ<sub>s</sub>N.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">Method: will it move?</span><span class="chev">›</span></summary><p class="a-text">Find N, then f<sub>s,max</sub> = μ<sub>s</sub>N. Compare with the applied force along the surface. Less: it stays put and f<sub>s</sub> = the push. More: it slides, and kinetic friction takes over.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">Normal force with an angled push or pull</span><span class="chev">›</span></summary><p class="a-text">Pull up at θ: N = mg − F sin θ. Push down at θ: N = mg + F sin θ. Only the horizontal part, F cos θ, moves it along.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">Maximum acceleration of a car, runner or truck load</span><span class="chev">›</span></summary><p class="a-text">a<sub>max</sub> = μ<sub>s</sub>g. The mass cancels.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">Static friction acts between two surfaces when</span><span class="chev">›</span></summary><p class="a-text"><b>they are not sliding relative to each other.</b> Static means no sliding. Once the surfaces slide, friction becomes kinetic.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">What does f<sub>s</sub> ≤ μ<sub>s</sub>N mean?</span><span class="chev">›</span></summary><p class="a-text"><b>Static friction can be anything from zero up to a maximum of μ<sub>s</sub>N.</b> Static friction only pushes as hard as it needs to, to stop sliding. μ<sub>s</sub>N is its limit, not its value.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">A box sits on a level floor and nobody pushes it. What is the friction force on it?</span><span class="chev">›</span></summary><p class="a-text"><b>Zero.</b> Nothing is trying to slide it, so static friction has nothing to oppose. Friction only appears when something pushes along the surface.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">You push harder and harder on a heavy crate, but it still does not move. The static friction force on the crate</span><span class="chev">›</span></summary><p class="a-text"><b>increases to match your push.</b> While the crate stays still the net force is zero, so friction equals your push. It grows with the push until it hits its maximum μ<sub>s</sub>N.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">A car speeds up on a level road without the tires skidding. The horizontal force that accelerates the car is</span><span class="chev">›</span></summary><p class="a-text"><b>static friction from the road on the tires, pointing forward.</b> The tires push back on the road. By Newton's third law the road pushes the tires forward. The tire surface is not sliding on the road, so this is static friction.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">When you walk forward, the friction force from the ground on your shoe points</span><span class="chev">›</span></summary><p class="a-text"><b>forward.</b> Your foot pushes backward on the ground. The ground pushes forward on your foot (third law). That forward static friction is what moves you.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">A crate rides on the flat bed of a truck that is speeding up. The crate does not slide. The friction force on the crate points</span><span class="chev">›</span></summary><p class="a-text"><b>forward, in the direction of the acceleration.</b> Something must accelerate the crate forward. The only horizontal force on it is static friction, so friction points forward.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">Why is it harder to start a heavy box moving than to keep it moving?</span><span class="chev">›</span></summary><p class="a-text"><b>μ<sub>s</sub> is usually larger than μ<sub>k</sub>.</b> The largest static friction (μ<sub>s</sub>N) is bigger than kinetic friction (μ<sub>k</sub>N), so you need more force to break it free than to keep it sliding.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">The coefficient of static friction depends on</span><span class="chev">›</span></summary><p class="a-text"><b>the two materials in contact.</b> μ is a property of the pair of surfaces (rubber on concrete, wood on wood). It does not depend on area or weight. The friction force depends on weight through N.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">What are the units of a coefficient of friction?</span><span class="chev">›</span></summary><p class="a-text"><b>It has no units.</b> μ = f/N is a newton divided by a newton, so the units cancel.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">A box rests on a ramp without sliding. The static friction on it points</span><span class="chev">›</span></summary><p class="a-text"><b>up the slope.</b> Gravity's component mg sin θ tries to slide it down the slope. Static friction opposes that, so it points up the slope.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">If the weight of a crate on a level floor is doubled (same surfaces), the maximum static friction force</span><span class="chev">›</span></summary><p class="a-text"><b>doubles.</b> f<sub>s,max</sub> = μ<sub>s</sub>N and N = mg on a level floor. Double the weight, double N, double the maximum friction.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">You push a lawn mower handle down at an angle below the horizontal. Compared with pushing horizontally, the normal force from the ground is</span><span class="chev">›</span></summary><p class="a-text"><b>larger, so the maximum friction is larger.</b> The downward part of your push (P sin θ) presses the mower into the ground: N = mg + P sin θ. Bigger N means bigger μN. That is why pulling up at an angle is easier than pushing down.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">Anti-lock brakes stop a car in a shorter distance because they</span><span class="chev">›</span></summary><p class="a-text"><b>keep the tires rolling so static friction (larger) acts instead of kinetic friction.</b> A skidding tire has kinetic friction. A rolling tire grips with static friction, and μ<sub>s</sub> > μ<sub>k</sub>, so the stopping force can be larger.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">A graph shows the friction force on a box as the horizontal push increases from zero. Which description is correct?</span><span class="chev">›</span></summary><p class="a-text"><b>Friction rises equal to the push up to μ<sub>s</sub>N, then drops to μ<sub>k</sub>N and stays constant.</b> Before sliding, static friction matches the push (a 45° line). At the peak μ<sub>s</sub>N the box breaks free; then the smaller, constant kinetic friction takes over.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-sf)"></span><span class="q-text">A book is held still against a vertical wall by a horizontal push. Which force holds the book up?</span><span class="chev">›</span></summary><p class="a-text"><b>Static friction from the wall, pointing up.</b> The push and the normal force are horizontal. Only friction is vertical, so friction (up) balances the weight (down). The normal force sets the maximum friction μ<sub>s</sub>N.</p></details>
+  </section>
+  <section id="kf" data-topic="kf" data-title="Kinetic friction">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-kf);background:var(--c-kf-bg)">Kinetic friction</span>
+      <span class="sec-count">14 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">Kinetic friction formula</span><span class="chev">›</span></summary><p class="a-text">f<sub>k</sub> = μ<sub>k</sub>N, opposite the sliding. Constant: it does not depend on speed or area.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">Sliding to a stop on level ground (no push)</span><span class="chev">›</span></summary><p class="a-text">a = μ<sub>k</sub>g (backward). Then use kinematics: d = v²/(2μ<sub>k</sub>g), t = v/(μ<sub>k</sub>g). Mass cancels.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">Constant velocity means…</span><span class="chev">›</span></summary><p class="a-text">Net force = 0, so the push equals f<sub>k</sub>. If pushed horizontally on level ground: μ<sub>k</sub> = P/(mg).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">Static vs kinetic</span><span class="chev">›</span></summary><p class="a-text">Usually μ<sub>s</sub> > μ<sub>k</sub>: harder to start it than to keep it going.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">Kinetic friction acts when</span><span class="chev">›</span></summary><p class="a-text"><b>two surfaces slide past each other.</b> Kinetic = moving. It acts only while the surfaces are sliding.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">The direction of kinetic friction on a sliding object is</span><span class="chev">›</span></summary><p class="a-text"><b>opposite to the direction it slides.</b> Friction opposes the relative motion of the surfaces. If a box slides right, kinetic friction on it points left, whatever the push is doing.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">For a box sliding on a floor, how does the kinetic friction force change if the box slides faster?</span><span class="chev">›</span></summary><p class="a-text"><b>It stays about the same.</b> In this course f<sub>k</sub> = μ<sub>k</sub>N, which does not depend on speed (unlike air resistance).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">A brick slides on its large face, then on its small end, with the same speed and the same surfaces. The kinetic friction force is</span><span class="chev">›</span></summary><p class="a-text"><b>the same in both cases.</b> f<sub>k</sub> = μ<sub>k</sub>N. The normal force is the brick's weight both ways and μ depends only on the materials, so area does not matter.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">A crate is pushed across a floor at constant velocity. The push is</span><span class="chev">›</span></summary><p class="a-text"><b>equal to the kinetic friction force.</b> Constant velocity means a = 0, so the net force is zero (Newton's first law). The push exactly balances kinetic friction.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">A puck slides across a rough floor with no push and slows down. Which forces act on it?</span><span class="chev">›</span></summary><p class="a-text"><b>Weight, normal force and friction opposite the motion.</b> Nothing pushes it forward once it is released. It keeps moving because of inertia, not a force. Friction alone slows it.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">Two boxes, 5 kg and 20 kg, made of the same material, slide across the same floor with the same starting speed. Which slides farther before it stops?</span><span class="chev">›</span></summary><p class="a-text"><b>They slide the same distance.</b> The deceleration is a = μ<sub>k</sub>mg/m = μ<sub>k</sub>g. The mass cancels, so both slow down at the same rate and stop in the same distance. The heavier box has more friction, but also more inertia.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">In the formula f<sub>k</sub> = μ<sub>k</sub>N, N is</span><span class="chev">›</span></summary><p class="a-text"><b>the normal force, which is not always equal to mg.</b> N is the perpendicular contact force. It equals mg only on a level surface with no other vertical forces. Angled pushes and inclines change it.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">A crate slides at constant velocity under a 150 N push. The push is increased to 200 N. What is the new net force on the crate?</span><span class="chev">›</span></summary><p class="a-text"><b>50 N forward.</b> At constant velocity, kinetic friction = 150 N. Friction does not change when you push harder, so net force = 200 − 150 = 50 N.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-kf)"></span><span class="q-text">Where does the kinetic energy of a sliding box go as friction stops it?</span><span class="chev">›</span></summary><p class="a-text"><b>It becomes thermal energy (the surfaces warm up).</b> Friction converts kinetic energy into internal (thermal) energy. Energy is conserved; it just changes form.</p></details>
+  </section>
+  <section id="inc" data-topic="inc" data-title="Inclined planes">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-inc);background:var(--c-inc-bg)">Inclined planes</span>
+      <span class="sec-count">18 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">Incline: the weight components</span><span class="chev">›</span></summary><p class="a-text">Along the slope (down): mg sin θ. Into the slope: mg cos θ. "Sin to slide, cos to squeeze."</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">Incline: normal force</span><span class="chev">›</span></summary><p class="a-text">N = mg cos θ (no other forces perpendicular to the slope).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">Incline: acceleration</span><span class="chev">›</span></summary><p class="a-text">Frictionless: a = g sin θ. Sliding down with friction: a = g(sin θ − μ<sub>k</sub> cos θ). Sliding up: deceleration g(sin θ + μ<sub>k</sub> cos θ).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">Angle of repose / constant velocity</span><span class="chev">›</span></summary><p class="a-text">Just about to slip: μ<sub>s</sub> = tan θ. Sliding at constant velocity: μ<sub>k</sub> = tan θ.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">Incline: four steps</span><span class="chev">›</span></summary><p class="a-text">1 Draw W, N, f. 2 Tilt the axes along and perpendicular to the slope. 3 Split W into mg sin θ and mg cos θ. 4 Perpendicular: N = mg cos θ; along: ΣF = ma.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">On an incline at angle θ, the component of the weight that pulls the object down along the slope is</span><span class="chev">›</span></summary><p class="a-text"><b>mg sin θ.</b> Sin for the slide, cos for the squeeze. Check the limits: at θ = 0 (flat) nothing pulls it along the surface, and sin 0 = 0.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">For a block on an incline with no other forces pressing it into the surface, the normal force is</span><span class="chev">›</span></summary><p class="a-text"><b>mg cos θ.</b> Perpendicular to the slope nothing accelerates, so N balances the "into the slope" component of the weight: N = mg cos θ, which is less than mg.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">As the angle of an incline increases, the normal force on a block</span><span class="chev">›</span></summary><p class="a-text"><b>decreases.</b> N = mg cos θ, and cos θ falls from 1 (flat) to 0 (vertical). The slope component mg sin θ rises at the same time.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">A heavy block and a light block slide down the same frictionless ramp from rest. Which reaches the bottom first?</span><span class="chev">›</span></summary><p class="a-text"><b>They arrive together.</b> a = g sin θ. The mass cancels, just as in free fall.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">A block slides down an incline at constant velocity. What is μ<sub>k</sub>?</span><span class="chev">›</span></summary><p class="a-text"><b>tan θ.</b> Constant velocity means balanced forces along the slope: mg sin θ = μ<sub>k</sub>mg cos θ, so μ<sub>k</sub> = sin θ/cos θ = tan θ.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">You slowly tilt a board until a block on it just begins to slip, at angle θ. What is μ<sub>s</sub>?</span><span class="chev">›</span></summary><p class="a-text"><b>tan θ.</b> At the point of slipping, mg sin θ = μ<sub>s</sub>mg cos θ, so μ<sub>s</sub> = tan θ. This angle is the angle of repose, and it is a quick lab method for μ<sub>s</sub>.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">A block is pushed up an incline and is still sliding upward. The kinetic friction on it points</span><span class="chev">›</span></summary><p class="a-text"><b>down the slope.</b> Friction opposes the sliding, which is up the slope, so friction points down the slope, adding to mg sin θ. The block slows faster going up than it speeds up coming down.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">Why do we tilt the axes to be parallel and perpendicular to the slope for incline problems?</span><span class="chev">›</span></summary><p class="a-text"><b>The acceleration is along the slope, so only the weight needs to be split into components.</b> With tilted axes, N and friction already lie on the axes. Only mg is resolved (mg sin θ and mg cos θ), and the perpendicular equation gives N directly.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">For a block on an incline, the angle between the weight vector and the line perpendicular to the slope is</span><span class="chev">›</span></summary><p class="a-text"><b>θ, the incline angle.</b> The perpendicular to the slope is tilted from the vertical by the same angle the slope is tilted from the horizontal. That is why the "into the slope" part is mg cos θ.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">A block sits at rest on an incline with μ<sub>s</sub> = 0.80. The incline angle is 20°. The static friction force on the block equals</span><span class="chev">›</span></summary><p class="a-text"><b>mg sin 20°.</b> Static friction is only as big as it needs to be. It balances the slope component of the weight: f = mg sin 20°. μ<sub>s</sub>mg cos 20° is just the maximum it could provide.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">What happens to the acceleration of a block sliding down a frictionless incline as the angle increases toward 90°?</span><span class="chev">›</span></summary><p class="a-text"><b>It increases toward g.</b> a = g sin θ. At 90° the ramp is a vertical wall and the block is in free fall: a = g.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">A block slides down a rough incline. Which equation gives its acceleration?</span><span class="chev">›</span></summary><p class="a-text"><b>a = g(sin θ − μ<sub>k</sub> cos θ).</b> Along the slope: mg sin θ − μ<sub>k</sub>mg cos θ = ma. Divide by m. Going UP the slope it would be + (friction and gravity both point down the slope).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-inc)"></span><span class="q-text">A block is placed at rest on an incline where tan θ is greater than μ<sub>s</sub>. What happens?</span><span class="chev">›</span></summary><p class="a-text"><b>It slides down.</b> It stays only if mg sin θ ≤ μ<sub>s</sub>mg cos θ, that is tan θ ≤ μ<sub>s</sub>. Here tan θ is bigger, so friction cannot hold it.</p></details>
+  </section>
+  <section id="grav" data-topic="grav" data-title="Universal gravitation">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-grav);background:var(--c-grav-bg)">Universal gravitation</span>
+      <span class="sec-count">22 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Universal gravitation</span><span class="chev">›</span></summary><p class="a-text">F = Gm₁m₂/r², G = 6.67 × 10⁻¹¹ N·m²/kg², r center to center.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Field strength at distance r from a planet</span><span class="chev">›</span></summary><p class="a-text">g = GM/r². At the surface r = R. Above it r = R + h.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Ratio shortcut</span><span class="chev">›</span></summary><p class="a-text">New F = old F × (mass factors) ÷ (distance factor)². Double r → F/4. Triple r → F/9. Halve r → 4F.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Circular orbit</span><span class="chev">›</span></summary><p class="a-text">GMm/r² = mv²/r → v = √(GM/r), T = 2πr/v, T² = 4π²r³/(GM). The satellite's mass cancels.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Earth data</span><span class="chev">›</span></summary><p class="a-text">M<sub>E</sub> = 5.97 × 10²⁴ kg, R<sub>E</sub> = 6.38 × 10⁶ m, g = 9.81 m/s².</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Newton's law of universal gravitation says the force between two masses is</span><span class="chev">›</span></summary><p class="a-text"><b>F = Gm₁m₂/r².</b> Proportional to each mass and to the inverse square of the center-to-center distance. G = 6.67 × 10⁻¹¹ N·m²/kg².</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">In F = Gm₁m₂/r², the distance r is measured</span><span class="chev">›</span></summary><p class="a-text"><b>between the centers of the two objects.</b> Spheres act as if all their mass is at the center. For a satellite, r = Earth's radius + the altitude.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Compare the force Earth exerts on the Moon with the force the Moon exerts on Earth.</span><span class="chev">›</span></summary><p class="a-text"><b>They are equal in size and opposite in direction.</b> They are a Newton's third law pair. Same size; the Moon just has much less mass, so it accelerates much more.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">What is the difference between G and g?</span><span class="chev">›</span></summary><p class="a-text"><b>G is a universal constant; g is the gravitational acceleration at a particular place.</b> G = 6.67 × 10⁻¹¹ N·m²/kg² everywhere in the universe. g = GM/r² depends on the planet and how far you are from its center (9.81 m/s² at Earth's surface).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Who first measured the value of G, and how?</span><span class="chev">›</span></summary><p class="a-text"><b>Cavendish, with a torsion balance.</b> Cavendish (1798) measured the tiny twist of a torsion balance as lead spheres attracted each other. That also let him "weigh the Earth".</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Astronauts in the International Space Station float because</span><span class="chev">›</span></summary><p class="a-text"><b>they and the station are in free fall around Earth together.</b> At ISS altitude g is still about 8.7 m/s² (89% of the surface value). Everything falls together, so nothing presses on anything: apparent weightlessness.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">An astronaut has a mass of 70 kg on Earth. On the Moon, her mass is</span><span class="chev">›</span></summary><p class="a-text"><b>70 kg.</b> Mass is the amount of matter and does not change. Her weight (mg) is about 1/6 as big on the Moon because g is smaller.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Why don't you notice the gravitational pull between you and the person next to you?</span><span class="chev">›</span></summary><p class="a-text"><b>G is so small that the force between everyday masses is tiny.</b> Two 70 kg people 1 m apart attract with about 3 × 10⁻⁷ N, far too small to feel. Gravity is noticeable only when at least one mass is enormous.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">A satellite moves in a circular orbit. What provides its centripetal force?</span><span class="chev">›</span></summary><p class="a-text"><b>Earth's gravitational pull.</b> Gravity points toward Earth's center, which is the center of the circle: GMm/r² = mv²/r.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Two satellites orbit Earth at the same height. One has twice the mass of the other. Compared with the lighter one, the heavier satellite's orbital speed is</span><span class="chev">›</span></summary><p class="a-text"><b>the same.</b> GMm/r² = mv²/r gives v = √(GM/r). The satellite's mass m cancels.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Compared with a satellite in a low orbit, a satellite in a higher orbit has</span><span class="chev">›</span></summary><p class="a-text"><b>a lower speed and a longer period.</b> v = √(GM/r) decreases as r grows, and it also has farther to go: T = 2πr/v grows. The Moon (r = 384,000 km) takes 27.3 days.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Kepler's third law says that for planets orbiting the Sun</span><span class="chev">›</span></summary><p class="a-text"><b>T² is proportional to r³.</b> From GMm/r² = m(2πr/T)²/r: T² = (4π²/GM)r³. Farther planets have much longer years.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">What are the units of gravitational field strength g, and what are they equal to?</span><span class="chev">›</span></summary><p class="a-text"><b>N/kg, which equals m/s².</b> g = F/m is force per unit mass (N/kg). Since 1 N = 1 kg·m/s², N/kg = m/s², the units of acceleration.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">At what distance from Earth's CENTER is g one quarter of its surface value?</span><span class="chev">›</span></summary><p class="a-text"><b>2 Earth radii (one Earth radius above the surface).</b> g ∝ 1/r². For g/4 you need r² four times bigger, so r = 2R<sub>E</sub>: one Earth radius above the surface.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">The gravitational force between two objects is</span><span class="chev">›</span></summary><p class="a-text"><b>always attractive.</b> Mass is always positive, so gravity always pulls. It also acts across empty space, with no contact needed.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">A satellite in a circular orbit has an acceleration that</span><span class="chev">›</span></summary><p class="a-text"><b>points toward Earth's center.</b> Its direction of motion keeps changing, so it is accelerating. The acceleration is centripetal, toward the center, and equals g at that height.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-grav)"></span><span class="q-text">Which graph shape shows how the gravitational force F between two masses depends on the distance r between them?</span><span class="chev">›</span></summary><p class="a-text"><b>A curve that drops steeply and flattens out, never reaching zero (F ∝ 1/r²).</b> Inverse-square: double r and F drops to ¼, triple r and F drops to 1/9. It gets small but never exactly zero.</p></details>
+  </section>
+  <section id="circ" data-topic="circ" data-title="Circular motion">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-circ);background:var(--c-circ-bg)">Circular motion</span>
+      <span class="sec-count">22 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">Centripetal acceleration</span><span class="chev">›</span></summary><p class="a-text">a<sub>c</sub> = v²/r = 4π²r/T², toward the center. v = 2πr/T.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">Centripetal force</span><span class="chev">›</span></summary><p class="a-text">ΣF<sub>toward center</sub> = mv²/r. It is a job done by a real force: tension, friction, gravity or normal. Never draw it as an extra arrow.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">Vertical circle: top and bottom</span><span class="chev">›</span></summary><p class="a-text">Top: T + mg = mv²/r. Bottom: T − mg = mv²/r. Minimum speed at the top: v = √(gr).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">Hill and dip</span><span class="chev">›</span></summary><p class="a-text">Top of a hill: N = mg − mv²/r (lighter; leaves the road at √(gr)). Bottom of a dip: N = mg + mv²/r (heavier).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">Flat curve and banked curve</span><span class="chev">›</span></summary><p class="a-text">Flat: v<sub>max</sub> = √(μ<sub>s</sub>gr). Banked, no friction: tan θ = v²/(rg).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">An object moves in a circle at constant speed. The direction of its acceleration is</span><span class="chev">›</span></summary><p class="a-text"><b>toward the center of the circle.</b> The speed is constant but the direction of the velocity keeps changing, so it accelerates. That centripetal acceleration points to the center: a<sub>c</sub> = v²/r.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">At any instant, the velocity of an object moving in a circle points</span><span class="chev">›</span></summary><p class="a-text"><b>along the tangent to the circle.</b> Velocity is tangent to the path; acceleration is toward the center. They are perpendicular, which is why the speed does not change.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">A ball whirled in a horizontal circle on a string is released when the string breaks. It moves</span><span class="chev">›</span></summary><p class="a-text"><b>in a straight line along the tangent at the point of release.</b> Once the inward force is gone, Newton's first law takes over: the ball keeps its velocity, which was tangent to the circle.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">Which statement about the "centripetal force" is correct?</span><span class="chev">›</span></summary><p class="a-text"><b>It is the name for the net inward force, supplied by a real force such as tension, friction, gravity or the normal force.</b> Never draw "F<sub>c</sub>" on a free-body diagram. Draw the real forces, then set their inward total equal to mv²/r.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">A car rounds a flat (unbanked) curve at constant speed. What force provides the centripetal force?</span><span class="chev">›</span></summary><p class="a-text"><b>Static friction from the road on the tires.</b> The tires are not sliding sideways, so it is static friction, pointing toward the center of the curve. On ice there is too little friction and the car slides off along the tangent.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">What provides the centripetal force that keeps the Moon in orbit?</span><span class="chev">›</span></summary><p class="a-text"><b>Earth's gravitational pull on the Moon.</b> Gravity points toward Earth's center, the center of the orbit.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">If the speed of an object moving in a circle is doubled (same radius), the centripetal force needed becomes</span><span class="chev">›</span></summary><p class="a-text"><b>4 times as large.</b> F<sub>c</sub> = mv²/r. Doubling v multiplies v² by 4. That is why fast curves are dangerous.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">At the same speed, a car takes a curve with twice the radius. The centripetal force needed is</span><span class="chev">›</span></summary><p class="a-text"><b>half as large.</b> F<sub>c</sub> = mv²/r, so doubling r halves the force. Gentle curves need less friction.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">In a car turning left, you feel pushed toward the right door. This is because</span><span class="chev">›</span></summary><p class="a-text"><b>your body tends to keep moving in a straight line (inertia) while the car turns.</b> There is no outward force on you in the ground frame. Your body tries to go straight, the car turns under you, and the door pushes you inward to make you turn too.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">A bucket of water is swung in a vertical circle. At the top, which forces act on the water?</span><span class="chev">›</span></summary><p class="a-text"><b>Gravity and the push of the bucket bottom, both downward.</b> At the top both real forces point down, toward the center: N + mg = mv²/r. At the minimum speed N = 0 and gravity alone provides the centripetal force.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">For a ball on a string swung in a vertical circle, the tension is greatest</span><span class="chev">›</span></summary><p class="a-text"><b>at the bottom.</b> At the bottom T − mg = mv²/r, so T = mg + mv²/r: tension must hold up the weight and supply the centripetal force. At the top gravity helps, so T = mv²/r − mg.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">A car drives over the top of a rounded hill. Compared with driving on flat ground, the normal force on the car is</span><span class="chev">›</span></summary><p class="a-text"><b>smaller.</b> At the top the center is below the car: mg − N = mv²/r, so N = mg − mv²/r < mg. Riders feel lighter. At v = √(gr), N = 0 and the car leaves the road.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">A car drives through the bottom of a dip in the road. The normal force on the car is</span><span class="chev">›</span></summary><p class="a-text"><b>larger than its weight.</b> At the bottom the center is above: N − mg = mv²/r, so N = mg + mv²/r. Riders feel heavier.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">On a banked curve at the design speed (no friction needed), what supplies the centripetal force?</span><span class="chev">›</span></summary><p class="a-text"><b>The horizontal component of the normal force.</b> Tilting the road tilts N toward the center. N cos θ balances mg and N sin θ supplies mv²/r, giving tan θ = v²/(rg).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">An object moves in a circle at constant speed. The work done by the centripetal force is zero because</span><span class="chev">›</span></summary><p class="a-text"><b>the force is always perpendicular to the velocity.</b> A force perpendicular to the motion changes only the direction of the velocity, never the speed.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">The period of circular motion is</span><span class="chev">›</span></summary><p class="a-text"><b>the time for one complete revolution.</b> T in seconds. The number of revolutions per second is the frequency f = 1/T (in hertz).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-circ)"></span><span class="q-text">In a spin cycle, water leaves the clothes through the holes in the drum because</span><span class="chev">›</span></summary><p class="a-text"><b>the drum cannot push on the water at the holes, so the water continues along the tangent.</b> Where there is a hole there is no inward normal force, so nothing makes that water turn. It moves off in a straight line (tangent), out of the drum.</p></details>
+  </section>
+  <section id="newt" data-topic="newt" data-title="Newton's laws">
+    <div class="sec-head">
+      <span class="sec-badge" style="color:var(--c-newt);background:var(--c-newt-bg)">Newton's laws</span>
+      <span class="sec-count">19 cards</span>
+    </div>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Newton's three laws</span><span class="chev">›</span></summary><p class="a-text">1: no net force → constant velocity. 2: F<sub>net</sub> = ma. 3: A on B = −(B on A), different objects, same type.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Elevator (apparent weight)</span><span class="chev">›</span></summary><p class="a-text">N = m(g + a) accelerating up; N = m(g − a) accelerating down; N = mg at constant velocity; N = 0 in free fall.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Connected objects</span><span class="chev">›</span></summary><p class="a-text">Treat the whole system for a (internal tensions cancel), then one object alone for the tension or contact force.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Free-body diagram checklist</span><span class="chev">›</span></summary><p class="a-text">One dot, real forces only (W, N, T, f, applied), each from a named object. Arrow lengths to scale. No "F<sub>c</sub>", no "force of motion".</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Newton's first law says that an object with zero net force</span><span class="chev">›</span></summary><p class="a-text"><b>stays at rest or keeps moving at constant velocity.</b> No net force means no change in velocity. Motion does not need a force; changes in motion do.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Inertia is measured by an object's</span><span class="chev">›</span></summary><p class="a-text"><b>mass.</b> More mass means more resistance to changes in motion. Weight is the gravitational force, which changes from planet to planet; mass does not.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">A hockey puck slides across frictionless ice at constant velocity. The net force on it is</span><span class="chev">›</span></summary><p class="a-text"><b>zero.</b> Constant velocity means a = 0, so F<sub>net</sub> = 0. It keeps moving by inertia.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">The same net force acts on a 2 kg cart and a 6 kg cart. Compared with the 2 kg cart, the 6 kg cart's acceleration is</span><span class="chev">›</span></summary><p class="a-text"><b>one third as large.</b> a = F/m. Three times the mass gives one third the acceleration.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Newton's third law force pairs</span><span class="chev">›</span></summary><p class="a-text"><b>act on two different objects and are equal and opposite.</b> A pushes B, B pushes A: same size, opposite direction, same type of force, different objects. Because they act on different objects they never cancel.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">A book rests on a table. The reaction force to the Earth's gravitational pull on the book is</span><span class="chev">›</span></summary><p class="a-text"><b>the book's gravitational pull on the Earth.</b> Swap the objects: "Earth pulls book" becomes "book pulls Earth". The normal force balances the weight, but it is not its third-law pair (different type, same object).</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">You stand on a scale in an elevator that is accelerating upward. The scale reads</span><span class="chev">›</span></summary><p class="a-text"><b>more than your weight.</b> N − mg = ma with a up, so N = m(g + a) > mg. The scale reads N.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">An elevator moves upward at constant velocity. Compared with your weight, the scale reading is</span><span class="chev">›</span></summary><p class="a-text"><b>equal.</b> Constant velocity means a = 0, so N = mg, whichever way it moves.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">A skydiver falls at terminal velocity. Which statement is true?</span><span class="chev">›</span></summary><p class="a-text"><b>Air resistance equals her weight, so the net force is zero.</b> At terminal velocity she no longer speeds up, so a = 0 and the forces balance.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">A rocket accelerates in empty space because</span><span class="chev">›</span></summary><p class="a-text"><b>it pushes exhaust gas backward, and the gas pushes the rocket forward.</b> Newton's third law: rocket pushes gas back, gas pushes rocket forward. No air is needed.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">A horse pulls a cart and they accelerate forward. What makes the horse (and the cart) speed up?</span><span class="chev">›</span></summary><p class="a-text"><b>The ground pushing forward on the horse's hooves is larger than the cart pulling back on the horse.</b> Horse and cart pull each other equally (third law). The horse speeds up because the forward friction from the ground on its hooves beats the cart's backward pull.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">A truck and a small car collide head-on. During the collision, the force on the car is</span><span class="chev">›</span></summary><p class="a-text"><b>equal in size to the force on the truck.</b> Third law: equal and opposite. The car has less mass, so the same force gives it a larger acceleration (a = F/m), which is why it is damaged more.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">You pull a box across the floor with a rope angled upward. Compared with the box's weight, the normal force is</span><span class="chev">›</span></summary><p class="a-text"><b>less.</b> The upward part of the pull (F sin θ) supports some of the weight: N = mg − F sin θ.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">In free fall (an elevator whose cable has snapped), the scale under your feet would read</span><span class="chev">›</span></summary><p class="a-text"><b>zero.</b> With a = g downward, N = m(g − a) = 0. You and the scale fall together: apparent weightlessness, like the astronauts in the ISS.</p></details>
+    <details class="qa"><summary><span class="dot" style="background:var(--c-newt)"></span><span class="q-text">Which pair of forces is a Newton's third law pair?</span><span class="chev">›</span></summary><p class="a-text"><b>Your foot pushes back on the ground; the ground pushes forward on your foot.</b> Third-law pairs always involve exactly two objects that swap places. The other options are pairs of forces on ONE object.</p></details>
+  </section>
+  </div>
+
+  <div id="study">
+    <div id="setup" class="panel">
+      <p class="label">Topics to study</p>
+      <div class="chips" id="pick"></div>
+      <div class="row" style="margin-bottom:14px">
+        <button class="btn-sm" id="all">Select all</button><button class="btn-sm" id="none">Clear</button>
+        <label class="opt" style="margin-left:auto"><input type="checkbox" id="shuffle" checked> Shuffle</label>
+      </div>
+      <button class="btn btn-primary" id="start" style="width:100%">Start</button>
+    </div>
+
+    <div id="run" hidden>
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="meta"><span id="m-left"></span><span id="m-again"></span></div>
+      <div class="card" id="card" tabindex="0" role="button" aria-label="Flashcard. Tap to reveal the answer.">
+        <span class="sec-badge" id="c-topic"></span>
+        <div class="cq" id="c-q"></div>
+        <div class="ca" id="c-a"></div>
+        <div class="hint">Tap to reveal the answer</div>
+      </div>
+      <div class="actions row" id="rate" hidden>
+        <button class="btn btn-again" id="again">↺ Again</button>
+        <button class="btn btn-good" id="good">✓ Got it</button>
+      </div>
+      <div class="actions row" id="revealrow">
+        <button class="btn btn-primary" id="reveal">Show answer</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn-sm" id="quit">End session</button></div>
+      <p class="kbd">Keyboard: Space = show answer · 1 = Again · 2 = Got it</p>
+    </div>
+
+    <div id="done" class="panel done" hidden>
+      <h2 id="d-title"></h2>
+      <p id="d-text"></p>
+      <div class="row">
+        <button class="btn btn-primary" id="d-missed">Review the tricky ones</button>
+        <button class="btn btn-ghost" id="d-restart">New session</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Follows Sessions S06 and S09 and the Unit 2 topic list from class (no Hooke's law).<br>g = 9.81 m/s² · G = 6.67 × 10⁻¹¹ N·m²/kg² · M<sub>E</sub> = 5.97 × 10²⁴ kg · R<sub>E</sub> = 6.38 × 10⁶ m</footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- deck from the page itself (single source of truth) ----
+  var topics = [], deck = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[data-topic]'), function (sec) {
+    var t = { id: sec.dataset.topic, title: sec.dataset.title, n: 0 };
+    topics.push(t);
+    Array.prototype.forEach.call(sec.querySelectorAll('details.qa'), function (d) {
+      deck.push({ t: t, q: d.querySelector('.q-text').innerHTML, a: d.querySelector('.a-text').innerHTML });
+      t.n++;
+    });
+  });
+
+  // ---- browse tools ----
+  function setAll(open) { Array.prototype.forEach.call(document.querySelectorAll('details.qa'), function (d) { d.open = open; }); }
+  $('expand').onclick = function () { setAll(true); };
+  $('collapse').onclick = function () { setAll(false); };
+
+  // ---- mode switch ----
+  function mode(study) {
+    document.body.classList.toggle('studying', study);
+    $('m-browse').setAttribute('aria-pressed', !study);
+    $('m-study').setAttribute('aria-pressed', study);
+    window.scrollTo(0, 0);
+  }
+  $('m-browse').onclick = function () { mode(false); };
+  $('m-study').onclick = function () { mode(true); };
+
+  // ---- topic picker ----
+  var pick = $('pick'), chosen = {};
+  topics.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    b.style.color = 'var(--c-' + t.id + ')'; b.style.background = 'var(--c-' + t.id + '-bg)';
+    b.innerHTML = t.title + ' <b>' + t.n + '</b>';
+    b.setAttribute('aria-pressed', 'true'); chosen[t.id] = true;
+    b.onclick = function () { chosen[t.id] = !chosen[t.id]; b.setAttribute('aria-pressed', chosen[t.id]); updStart(); };
+    t.btn = b; pick.appendChild(b);
+  });
+  function selected() { return deck.filter(function (c) { return chosen[c.t.id]; }); }
+  function updStart() {
+    var n = selected().length;
+    $('start').disabled = !n;
+    $('start').textContent = n ? 'Start · ' + n + ' cards' : 'Pick at least one topic';
+  }
+  function setChosen(v) { topics.forEach(function (t) { chosen[t.id] = v; t.btn.setAttribute('aria-pressed', v); }); updStart(); }
+  $('all').onclick = function () { setChosen(true); };
+  $('none').onclick = function () { setChosen(false); };
+  updStart();
+
+  // ---- session ----
+  var queue, cur, total, learned, missed, revealed;
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function begin(cards) {
+    queue = $('shuffle').checked ? shuffle(cards.slice()) : cards.slice();
+    total = queue.length; learned = 0; missed = [];
+    $('setup').hidden = true; $('done').hidden = true; $('run').hidden = false;
+    next();
+  }
+  function next() {
+    if (!queue.length) return finish();
+    cur = queue.shift(); revealed = false;
+    var c = $('card'); c.classList.remove('revealed');
+    var tp = $('c-topic');
+    tp.innerHTML = cur.t.title;
+    tp.style.color = 'var(--c-' + cur.t.id + ')'; tp.style.background = 'var(--c-' + cur.t.id + '-bg)';
+    $('c-q').innerHTML = cur.q; $('c-a').innerHTML = cur.a;
+    $('rate').hidden = true; $('revealrow').hidden = false;
+    $('barfill').style.width = (100 * learned / total) + '%';
+    $('m-left').textContent = learned + ' / ' + total + ' learned';
+    $('m-again').textContent = missed.length ? missed.length + ' marked “Again”' : '';
+  }
+  function reveal() {
+    if (revealed) return;
+    revealed = true; $('card').classList.add('revealed');
+    $('rate').hidden = false; $('revealrow').hidden = true;
+  }
+  function rate(ok) {
+    if (!revealed) return;
+    if (ok) { learned++; }
+    else {
+      if (missed.indexOf(cur) < 0) missed.push(cur);
+      queue.splice(Math.min(3, queue.length), 0, cur);  // comes back a few cards later
+    }
+    next();
+  }
+  function finish() {
+    $('run').hidden = true; $('done').hidden = false;
+    $('barfill').style.width = '100%';
+    $('d-title').textContent = 'All ' + total + ' cards done';
+    $('d-text').textContent = missed.length
+      ? missed.length + ' card' + (missed.length > 1 ? 's' : '') + ' needed another go. Run them again until they stick.'
+      : 'Every card was right first time.';
+    $('d-missed').hidden = !missed.length;
+  }
+  $('start').onclick = function () { begin(selected()); };
+  $('card').onclick = reveal;
+  $('reveal').onclick = reveal;
+  $('again').onclick = function () { rate(false); };
+  $('good').onclick = function () { rate(true); };
+  $('quit').onclick = function () { $('run').hidden = true; $('setup').hidden = false; };
+  $('d-missed').onclick = function () { begin(missed); };
+  $('d-restart').onclick = function () { $('done').hidden = true; $('setup').hidden = false; };
+  document.addEventListener('keydown', function (e) {
+    if (!document.body.classList.contains('studying') || $('run').hidden) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
+    else if (e.key === '1') rate(false);
+    else if (e.key === '2') rate(true);
+  });
+})();
+</script>
+</body>
+</html>
